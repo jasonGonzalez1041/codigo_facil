@@ -263,7 +263,7 @@ export default function HeroSection() {
                 </div>
                 <div className="bg-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col">
                   <div className="bg-gray-800 p-3 text-sm text-gray-300 font-mono">
-                    <span className="text-white/80">codigofacil.com</span> ~ Technologies
+                    <span className="text-white/80">ezdev.cr</span> ~ Technologies
                   </div>
                   <div className="p-6 text-green-500 font-mono overflow-auto flex flex-col justify-start space-y-5 min-h-[500px]">
                     {/* Línea de inicio */}

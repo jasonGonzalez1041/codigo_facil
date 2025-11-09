@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CodigoFacil.com - Soluciones Digitales Profesionales",
+  title: "EzDel CR - Soluciones Digitales Profesionales",
   description: "Transformamos sus ideas en experiencias digitales excepcionales. Nuestras soluciones web están diseñadas para destacar su marca, aumentar conversiones y brindar resultados tangibles para su negocio.",
 };
 

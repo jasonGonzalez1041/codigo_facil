@@ -11,8 +11,8 @@ export default function Footer() {
                     {/* Column 1 - About */}
                     <div>
                         <div className="text-2xl font-bold mb-6">
-                            <span className="text-primary">Codigo</span>
-                            <span className="text-white">Facil.com</span>
+                            <span className="text-primary">EzDev</span>
+                            <span className="text-white">CR</span>
                         </div>
                         <p className="mb-6">
                             Transformamos sus ideas en experiencias digitales excepcionales para impulsar su negocio.
@@ -111,7 +111,7 @@ export default function Footer() {
                             </li>
                             <li className="flex items-center">
                                 <Mail className="mr-3 text-primary" size={18} />
-                                <span>info@codigofacil.com</span>
+                                <span>info@ezdev.cr</span>
                             </li>
                         </ul>
                     </div>
@@ -119,7 +119,7 @@ export default function Footer() {
 
                 {/* Copyright */}
                 <div className="border-t border-gray-800 mt-12 pt-8 text-center">
-                    <p>© {year} CodigoFacil.com. Todos los derechos reservados.</p>
+                    <p>© {year} Ezdev CR. Todos los derechos reservados.</p>
                 </div>
             </div>
         </footer>
