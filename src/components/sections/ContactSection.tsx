@@ -441,7 +441,7 @@ export default function ContactSection() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Ubicación de Ezdev CR"
+                title="Ubicación de CodigoFacil.com"
                 className="rounded-2xl grayscale group-hover:grayscale-0 transition-all duration-500"
               />
 
