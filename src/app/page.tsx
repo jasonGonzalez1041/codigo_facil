@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import ServicesSection from "@/components/sections/ServicesSection";
-import ProjectsSection from "@/components/sections/ProjectsSection";
+// import ProjectsSection from "@/components/sections/ProjectsSection"; // Temporalmente comentado
 import BlogSection from "@/components/sections/BlogSection";
 import ContactSection from "@/components/sections/ContactSection";
 import gsap from "gsap";
@@ -70,9 +70,10 @@ export default function HomePage() {
       <div id="pricing">
         <PricingSection />
       </div>
-      <div id="proyectos">
+      {/* Proyectos - Temporalmente comentado */}
+      {/* <div id="proyectos">
         <ProjectsSection />
-      </div>
+      </div> */}
       <div id="blog">
         <BlogSection />
       </div>

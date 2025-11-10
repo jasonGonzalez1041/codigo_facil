@@ -12,89 +12,142 @@ import {
     Sparkles,
     Check
 } from "lucide-react";
+import { CostCalculator } from "@/components/ui/cost-calculator";
 
 const pricingPlans = [
     {
         icon: Globe,
-        name: "Static Basic",
-        description: "Perfecto para landing pages y sitios corporativos simples",
+        name: "Estático Simple",
+        description: "Sitio web básico con hasta 3 páginas y diseño sencillo",
         prices: {
             monthly: 25,
-            annual: 255,
-            oneTime: 100
+            annual: 250,
+            oneTime: 350
         },
-        setupFee: 75,
-        features: [
-            "Hosting incluido",
-            "SSL gratuito",
-            "5 páginas",
-            "Diseño responsive",
-            "Soporte básico",
-            "Backups automáticos"
-        ],
+        setupFee: 25,
+        features: {
+            base: [
+                "Hasta 3 páginas (Inicio, Servicios, Contacto)",
+                "Diseño sencillo y responsivo",
+                "Optimización SEO básica",
+                "Formulario de contacto simple",
+                "1 revisión de diseño incluida"
+            ],
+            recurring: [
+                "Hosting y SSL incluido",
+                "Backups automáticos",
+                "2 horas de soporte mensual",
+                "Actualizaciones de seguridad"
+            ],
+            oneTime: [
+                "Código fuente completo",
+                "Sin hosting (tú lo gestionas)",
+                "Soporte limitado (30 días)",
+                "Documentación técnica"
+            ]
+        },
         color: "from-blue-500 to-cyan-500",
         recommended: false
     },
     {
-        icon: Sparkles,
-        name: "Static Premium",
-        description: "Sitios web avanzados con funcionalidades personalizadas",
+        icon: ShoppingCart,
+        name: "E-commerce Completo",
+        description: "Tienda online profesional con gestión completa de productos",
         prices: {
-            monthly: 45,
-            annual: 459,
-            oneTime: 120
+            monthly: 49,
+            annual: 490,
+            oneTime: 1200
         },
-        setupFee: 75,
-        features: [
-            "Todo de Basic",
-            "10 páginas",
-            "Animaciones avanzadas",
-            "SEO optimizado",
-            "Analytics integrado",
-            "Formularios personalizados"
-        ],
-        color: "from-purple-500 to-pink-500",
+        setupFee: 99,
+        features: {
+            base: [
+                "Catálogo de productos ilimitado",
+                "Carrito de compras avanzado",
+                "Pasarelas de pago integradas",
+                "Panel de administración completo",
+                "Gestión de inventarios"
+            ],
+            recurring: [
+                "Hosting optimizado para e-commerce",
+                "SSL y seguridad avanzada",
+                "5 horas de soporte mensual",
+                "Backups diarios automáticos"
+            ],
+            oneTime: [
+                "Código fuente completo",
+                "Sin hosting (tú lo gestionas)",
+                "Soporte limitado (60 días)",
+                "Manual de administración"
+            ]
+        },
+        color: "from-green-500 to-emerald-500",
         recommended: true
     },
     {
-        icon: ShoppingCart,
-        name: "E-commerce Basic",
-        description: "Tu tienda online lista para vender desde el día uno",
+        icon: Calendar,
+        name: "Corporativo Premium",
+        description: "Sitio web empresarial con funcionalidades avanzadas",
         prices: {
-            monthly: 45,
-            annual: 459,
-            oneTime: 120
+            monthly: 35,
+            annual: 350,
+            oneTime: 800
         },
-        setupFee: 75,
-        features: [
-            "Todo de Static Basic",
-            "Hasta 50 productos",
-            "Pasarela de pago",
-            "Gestión de inventario",
-            "Carrito de compras",
-            "Panel de administración"
-        ],
-        color: "from-green-500 to-emerald-500",
+        setupFee: 50,
+        features: {
+            base: [
+                "Hasta 10 páginas personalizadas",
+                "Blog integrado con CMS",
+                "Formularios de contacto múltiples",
+                "Galería de imágenes optimizada",
+                "Integración con redes sociales"
+            ],
+            recurring: [
+                "Hosting premium incluido",
+                "CDN global para velocidad",
+                "4 horas de soporte mensual",
+                "Análisis de rendimiento mensual"
+            ],
+            oneTime: [
+                "Código fuente completo",
+                "Sin hosting (tú lo gestionas)",
+                "Soporte limitado (45 días)",
+                "Documentación completa"
+            ]
+        },
+        color: "from-purple-500 to-pink-500",
         recommended: false
     },
     {
-        icon: Calendar,
-        name: "E-commerce Premium",
-        description: "E-commerce empresarial con todas las funcionalidades",
+        icon: Sparkles,
+        name: "App Web Avanzada",
+        description: "Aplicación web personalizada con funcionalidades específicas",
         prices: {
-            monthly: 65,
-            annual: 663,
-            oneTime: 140
+            monthly: 75,
+            annual: 750,
+            oneTime: 2500
         },
-        setupFee: 75,
-        features: [
-            "Todo de E-commerce Basic",
-            "Productos ilimitados",
-            "Múltiples pasarelas",
-            "Email marketing",
-            "Cupones y descuentos",
-            "Reportes avanzados"
-        ],
+        setupFee: 150,
+        features: {
+            base: [
+                "Funcionalidades personalizadas",
+                "Base de datos optimizada",
+                "API REST completa",
+                "Dashboard administrativo",
+                "Autenticación de usuarios"
+            ],
+            recurring: [
+                "Infraestructura escalable",
+                "Monitoreo 24/7",
+                "10 horas de soporte mensual",
+                "Actualizaciones de funcionalidades"
+            ],
+            oneTime: [
+                "Código fuente completo",
+                "Sin hosting (tú lo gestionas)",
+                "Soporte limitado (90 días)",
+                "Documentación técnica detallada"
+            ]
+        },
         color: "from-orange-500 to-red-500",
         recommended: false
     }
@@ -165,46 +218,6 @@ export default function PricingSection() {
         return () => ctx.revert();
     }, []);
 
-    const handleMouseEnter = (index: number) => {
-        const card = cardsRef.current[index];
-        if (card) {
-            gsap.to(card, {
-                scale: 1.05,
-                y: -15,
-                duration: 0.4,
-                ease: "power2.out"
-            });
-
-            const icon = card.querySelector('.pricing-icon');
-            gsap.to(icon, {
-                rotation: 360,
-                scale: 1.15,
-                duration: 0.6,
-                ease: "back.out(1.7)"
-            });
-        }
-    };
-
-    const handleMouseLeave = (index: number) => {
-        const card = cardsRef.current[index];
-        if (card) {
-            gsap.to(card, {
-                scale: 1,
-                y: 0,
-                duration: 0.3,
-                ease: "power2.inOut"
-            });
-
-            const icon = card.querySelector('.pricing-icon');
-            gsap.to(icon, {
-                rotation: 0,
-                scale: 1,
-                duration: 0.3,
-                ease: "power2.inOut"
-            });
-        }
-    };
-
     const getPrice = (prices: any) => {
         switch (billingCycle) {
             case "monthly":
@@ -233,196 +246,192 @@ export default function PricingSection() {
 
     return (
         <section
+            id="precios"
             ref={sectionRef}
             className="py-24 md:py-32 bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 relative overflow-hidden"
         >
-            {/* Elementos decorativos */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/4 left-0 w-96 h-96 bg-purple-500/10 dark:bg-purple-500/5 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/5 rounded-full blur-3xl"></div>
-            </div>
-
-            <div className="container mx-auto px-4 relative z-10">
-                {/* Título */}
-                <motion.div ref={titleRef} className="text-center mb-12">
-                    <span className="text-blue-600 dark:text-blue-400 text-sm font-semibold uppercase tracking-wider mb-3 block">
-                        Precios Transparentes
-                    </span>
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6">
-                        Planes que{" "}
-                        <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                            se Adaptan a Ti
-                        </span>
+            <div className="container mx-auto px-6">
+                {/* Header */}
+                <motion.div
+                    ref={titleRef}
+                    className="text-center mb-16"
+                >
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        Planes{" "}
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                            Accesibles
+                        </span>{" "}
+                        para LATAM
                     </h2>
                     <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-                        Sin costos ocultos. Elige el plan perfecto para tu proyecto y escala cuando lo necesites.
+                        Soluciones web profesionales con precios justos. Hosting incluido, soporte en español y desarrollo de calidad.
                     </p>
 
-                    {/* Toggle de ciclo de facturación */}
-                    <div className="inline-flex items-center bg-white dark:bg-gray-800 rounded-xl p-1.5 shadow-lg">
-                        <button
-                            onClick={() => setBillingCycle("monthly")}
-                            className={`px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-300 ${billingCycle === "monthly"
-                                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
-                                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                                }`}
-                        >
-                            Mensual
-                        </button>
-                        <button
-                            onClick={() => setBillingCycle("annual")}
-                            className={`px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-300 relative ${billingCycle === "annual"
-                                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
-                                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                                }`}
-                        >
-                            Anual
-                            <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">
-                                -15%
-                            </span>
-                        </button>
-                        <button
-                            onClick={() => setBillingCycle("oneTime")}
-                            className={`px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-300 ${billingCycle === "oneTime"
-                                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
-                                    : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                                }`}
-                        >
-                            Pago Único
-                        </button>
+                    {/* Billing Cycle Toggle */}
+                    <div className="flex items-center justify-center mb-12">
+                        <div className="bg-gray-100 dark:bg-gray-700 rounded-xl p-1 flex">
+                            {[
+                                { key: "monthly", label: "Mensual" },
+                                { key: "annual", label: "Anual" },
+                                { key: "oneTime", label: "Pago Único" }
+                            ].map((option) => (
+                                <button
+                                    key={option.key}
+                                    onClick={() => setBillingCycle(option.key)}
+                                    className={`px-6 py-2 rounded-lg transition-all duration-300 ${billingCycle === option.key
+                                        ? "bg-blue-600 text-white shadow-md"
+                                        : "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
+                                        }`}
+                                >
+                                    {option.label}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </motion.div>
 
-                {/* Grid de precios */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                    {pricingPlans.map((plan, index) => {
-                        const Icon = plan.icon;
-                        return (
-                            <div
-                                key={index}
-                                ref={(el) => { cardsRef.current[index] = el; }}
-                                onMouseEnter={() => handleMouseEnter(index)}
-                                onMouseLeave={() => handleMouseLeave(index)}
-                                className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden cursor-pointer ${plan.recommended ? "ring-2 ring-blue-500 dark:ring-blue-400" : ""
-                                    }`}
-                            >
-                                {/* Badge de recomendado */}
-                                {plan.recommended && (
-                                    <div className="absolute top-0 right-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
-                                        Recomendado
+                {/* Pricing Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                    {pricingPlans.map((plan, index) => (
+                        <div
+                            key={plan.name}
+                            ref={(el) => {
+                                cardsRef.current[index] = el;
+                            }}
+                            className={`bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 ${plan.recommended
+                                ? "ring-2 ring-blue-500 ring-opacity-50"
+                                : ""
+                                }`}
+                        >
+                            {plan.recommended && (
+                                <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-2 text-sm font-semibold">
+                                    ⭐ Más Popular
+                                </div>
+                            )}
+
+                            <div className="p-8">
+                                {/* Icon & Title */}
+                                <div className="text-center mb-6">
+                                    <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-r ${plan.color} text-white mb-4 pricing-icon`}>
+                                        <plan.icon size={32} />
                                     </div>
-                                )}
-
-                                {/* Gradiente de fondo */}
-                                <div className={`absolute inset-0 bg-gradient-to-br ${plan.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-
-                                <div className="relative p-6">
-                                    {/* Ícono */}
-                                    <div className="mb-4">
-                                        <div className={`pricing-icon w-14 h-14 rounded-xl bg-gradient-to-br ${plan.color} p-3 shadow-lg inline-flex items-center justify-center`}>
-                                            <Icon className="w-full h-full text-white" strokeWidth={2} />
-                                        </div>
-                                    </div>
-
-                                    {/* Nombre y descripción */}
                                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                                         {plan.name}
                                     </h3>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                                    <p className="text-gray-600 dark:text-gray-300 text-sm">
                                         {plan.description}
                                     </p>
-
-                                    {/* Precio */}
-                                    <div className="mb-6">
-                                        <div className="flex items-baseline">
-                                            <span className="text-4xl font-extrabold text-gray-900 dark:text-white">
-                                                ${getPrice(plan.prices)}
-                                            </span>
-                                            <span className="text-gray-600 dark:text-gray-400 ml-2">
-                                                {getCycleLabel()}
-                                            </span>
-                                        </div>
-                                        {billingCycle !== "oneTime" && (
-                                            <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                                                Setup único: ${plan.setupFee}
-                                            </p>
-                                        )}
-                                        {billingCycle === "monthly" && (
-                                            <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                                                Contrato mínimo 12 meses
-                                            </p>
-                                        )}
-                                        {billingCycle === "oneTime" && (
-                                            <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                                                Incluye setup de ${plan.setupFee}
-                                            </p>
-                                        )}
-                                    </div>
-
-                                    {/* Características */}
-                                    <ul className="space-y-3 mb-6">
-                                        {plan.features.map((feature, idx) => (
-                                            <li key={idx} className="flex items-start text-sm text-gray-700 dark:text-gray-300">
-                                                <Check className={`w-5 h-5 mr-2 flex-shrink-0 bg-gradient-to-br ${plan.color} rounded-full p-1 text-white`} />
-                                                <span>{feature}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-
-                                    {/* Botón CTA */}
-                                    <button
-                                        className={`w-full py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${plan.recommended
-                                                ? `bg-gradient-to-r ${plan.color} text-white shadow-lg hover:shadow-xl transform hover:scale-105`
-                                                : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
-                                            }`}
-                                    >
-                                        Comenzar Ahora
-                                    </button>
                                 </div>
+
+                                {/* Pricing */}
+                                <div className="text-center mb-6">
+                                    <span className="text-4xl font-bold text-gray-900 dark:text-white">
+                                        ${getPrice(plan.prices)}
+                                    </span>
+                                    <span className="text-gray-600 dark:text-gray-300 ml-2">
+                                        {getCycleLabel()}
+                                    </span>
+                                    {billingCycle === "monthly" && (
+                                        <p className="text-xs text-gray-500 mt-1">
+                                            Setup único: ${plan.setupFee}
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* Features */}
+                                <ul className="space-y-3 mb-6">
+                                    {plan.features.base.map((feature, featureIndex) => (
+                                        <li key={`base-${featureIndex}`} className="flex items-start text-sm text-gray-700 dark:text-gray-300">
+                                            <Check className="w-5 h-5 mr-2 flex-shrink-0 text-green-500" />
+                                            <span>{feature}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                {/* CTA Button */}
+                                <button
+                                    onClick={() => {
+                                        const price = getPrice(plan.prices);
+                                        const cycle = getCycleLabel();
+                                        const setupFee = billingCycle === "monthly" ? ` (Setup: $${plan.setupFee})` : '';
+                                        const message = `¡Hola! Me interesa el plan *${plan.name}* de CodigoFacil.com
+
+🏷️ *Precio:* $${price}${cycle}${setupFee}
+
+📝 *Incluye:*
+${plan.features.base.slice(0, 3).map(f => `• ${f}`).join('\n')}
+
+¿Podrían brindarme más información sobre este plan?`;
+                                        
+                                        const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(message)}`;
+                                        window.open(whatsappUrl, '_blank');
+                                    }}
+                                    className={`w-full py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${plan.recommended
+                                        ? `bg-gradient-to-r ${plan.color} text-white shadow-lg hover:shadow-xl transform hover:scale-105`
+                                        : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
+                                        }`}
+                                >
+                                    💬 Consultar por WhatsApp
+                                </button>
                             </div>
-                        );
-                    })}
+                        </div>
+                    ))}
                 </div>
 
-                {/* Información adicional */}
+                {/* Development Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-center"
+                    className="text-center mb-16"
                 >
-                    <div className="bg-blue-50 dark:bg-gray-800/50 rounded-2xl p-8 max-w-4xl mx-auto">
+                    <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-xl p-8 max-w-4xl mx-auto">
                         <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                            Todos los planes incluyen
+                            Desarrollo Personalizado - $20/hora
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-700 dark:text-gray-300">
-                            <div className="flex items-center justify-center">
-                                <Check className="w-5 h-5 mr-2 text-green-500" />
-                                Hosting y SSL gratuito
-                            </div>
-                            <div className="flex items-center justify-center">
-                                <Check className="w-5 h-5 mr-2 text-green-500" />
-                                Backups automáticos diarios
-                            </div>
-                            <div className="flex items-center justify-center">
-                                <Check className="w-5 h-5 mr-2 text-green-500" />
-                                Soporte técnico &lt;4 horas
-                            </div>
-                        </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-6">
-                            * IVA no incluido. Pagos seguros con Stripe o Mercado Pago.
+                        <p className="text-gray-600 dark:text-gray-300 mb-6">
+                            ¿Necesitas algo específico? Desarrollamos tu sistema web personalizado por horas.
                         </p>
-                    </div>
+                        <button 
+                            onClick={() => {
+                                const message = `¡Hola! Necesito una cotización personalizada de CodigoFacil.com
 
-                    <div className="mt-8">
-                        <p className="text-gray-600 dark:text-gray-300 mb-4">
-                            ¿Necesitas algo más personalizado?
-                        </p>
-                        <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                            Hablar con un Especialista
+🎯 *Servicio:* Desarrollo Personalizado ($20/hora)
+
+📋 *Mi proyecto requiere:*
+• [Describir brevemente tu proyecto]
+
+¿Podrían ayudarme con una cotización detallada?`;
+                                
+                                const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(message)}`;
+                                window.open(whatsappUrl, '_blank');
+                            }}
+                            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                        >
+                            💬 Hablar con un Especialista
                         </button>
                     </div>
+                </motion.div>
+
+                {/* Cost Calculator */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    viewport={{ once: true }}
+                    className="mt-16"
+                >
+                    <div className="text-center mb-12">
+                        <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                            💡 ¿No estás seguro del costo?
+                        </h3>
+                        <p className="text-xl text-gray-600 dark:text-gray-300">
+                            Usa nuestra calculadora para estimar tu proyecto
+                        </p>
+                    </div>
+                    
+                    <CostCalculator />
                 </motion.div>
             </div>
         </section>

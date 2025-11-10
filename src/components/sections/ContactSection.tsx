@@ -397,11 +397,16 @@ export default function ContactSection() {
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
-                        Teléfono
+                        Teléfonos
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        +506 8888-8888
-                      </p>
+                      <div className="space-y-1">
+                        <p className="text-gray-600 dark:text-gray-300">
+                          Kevin: +569 95022549
+                        </p>
+                        <p className="text-gray-600 dark:text-gray-300">
+                          Soporte: +506 86462423
+                        </p>
+                      </div>
                     </div>
                   </div>
 
@@ -417,7 +422,7 @@ export default function ContactSection() {
                         Correo Electrónico
                       </h4>
                       <p className="text-gray-600 dark:text-gray-300">
-                        info@ezdel.cr
+                        info@codigofacil.com
                       </p>
                     </div>
                   </div>
@@ -441,7 +446,7 @@ export default function ContactSection() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Ubicación de CodigoFacil.com"
+                title="Ubicación de Ezdev CR"
                 className="rounded-2xl grayscale group-hover:grayscale-0 transition-all duration-500"
               />
 
@@ -460,7 +465,7 @@ export default function ContactSection() {
           </div>
         </div>
 
-        {/* CTA adicional */}
+        {/* CTA adicional con WhatsApp */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -468,15 +473,49 @@ export default function ContactSection() {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <div className="inline-block bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl px-8 py-6 shadow-lg">
-            <p className="text-lg text-gray-700 dark:text-gray-300 mb-2">
-              <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                ¿Tienes dudas?
+          <div className="inline-block bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-2xl px-8 py-6 shadow-lg">
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+              <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">
+                💬 ¿Listo para empezar tu proyecto?
               </span>
             </p>
-            <p className="text-gray-600 dark:text-gray-400">
-              Nuestro equipo está disponible para responder todas tus preguntas
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              Contáctanos por WhatsApp y recibe atención inmediata
             </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => {
+                  const message = `¡Hola! Me interesa conocer más sobre los servicios de CodigoFacil.com
+
+🚀 Quiero iniciar mi proyecto web
+
+¿Podrían orientarme sobre cuál plan se adapta mejor a mis necesidades?`;
+                  
+                  const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(message)}`;
+                  window.open(whatsappUrl, '_blank');
+                }}
+                className="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                💬 WhatsApp Kevin
+                <span className="text-sm opacity-90">+569 95022549</span>
+              </button>
+              <button
+                onClick={() => {
+                  const message = `¡Hola! Necesito soporte técnico de CodigoFacil.com
+
+🔧 Tengo una consulta sobre mi proyecto
+
+¿Podrían ayudarme?`;
+                  
+                  const whatsappUrl = `https://wa.me/50686462423?text=${encodeURIComponent(message)}`;
+                  window.open(whatsappUrl, '_blank');
+                }}
+                className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                🛠️ Soporte Técnico
+                <span className="text-sm opacity-90">+506 86462423</span>
+              </button>
+            </div>
           </div>
         </motion.div>
       </div>

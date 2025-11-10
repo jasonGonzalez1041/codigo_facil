@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,51 +18,51 @@ import {
 const projects = [
     {
         id: 1,
-        title: "TechBlog Pro",
-        category: "Blog & Content",
-        description: "Plataforma de contenido moderna con sistema de gestión avanzado, optimización SEO y experiencia de lectura excepcional.",
-        imageUrl: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80",
-        icon: Globe,
-        gradient: "from-blue-500 via-cyan-500 to-teal-500",
-        demoUrl: "#demo1",
-        detailsUrl: "#details1",
-        tags: ["Next.js", "MDX", "SEO", "CMS"]
+        title: "EcomPlus Costa Rica",
+        category: "E-Commerce",
+        description: "Tienda online completa para empresa costarricense con pasarelas de pago locales, gestión de inventario y sistema de envíos nationwide.",
+        imageUrl: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
+        icon: ShoppingBag,
+        gradient: "from-green-500 via-emerald-500 to-blue-500",
+        demoUrl: "https://demo-ecom.codigofacil.com",
+        detailsUrl: "/proyectos/ecomplus-costa-rica",
+        tags: ["Next.js", "Stripe", "PayPal", "PostgreSQL"]
     },
     {
         id: 2,
-        title: "LuxeShop",
-        category: "E-Commerce",
-        description: "Tienda online de alta conversión con pasarelas de pago integradas, gestión de inventario en tiempo real y analytics avanzados.",
-        imageUrl: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&q=80",
-        icon: ShoppingBag,
-        gradient: "from-purple-500 via-pink-500 to-rose-500",
-        demoUrl: "#demo2",
-        detailsUrl: "#details2",
-        tags: ["Shopify", "Stripe", "Analytics", "React"]
+        title: "TurisCR Platform",
+        category: "Tourism Platform",
+        description: "Plataforma turística para promocionar destinos de Costa Rica con sistema de reservas, tours virtuales y gestión de hoteles.",
+        imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+        icon: Calendar,
+        gradient: "from-blue-500 via-cyan-500 to-green-500",
+        demoUrl: "https://demo-turis.codigofacil.com",
+        detailsUrl: "/proyectos/turiscr-platform",
+        tags: ["React", "Maps API", "Booking System", "CMS"]
     },
     {
         id: 3,
-        title: "ReservaPlus",
-        category: "Booking System",
-        description: "Sistema de reservas inteligente con calendario interactivo, notificaciones automáticas y gestión de disponibilidad.",
-        imageUrl: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=80",
-        icon: Calendar,
-        gradient: "from-green-500 via-emerald-500 to-cyan-500",
-        demoUrl: "#demo3",
-        detailsUrl: "#details3",
-        tags: ["React", "Node.js", "PostgreSQL", "WebSockets"]
+        title: "ClinicaPro Management",
+        category: "Healthcare SaaS",
+        description: "Sistema integral para gestión de clínicas médicas con expedientes digitales, citas online y facturación automatizada.",
+        imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&q=80",
+        icon: CreditCard,
+        gradient: "from-purple-500 via-pink-500 to-red-500",
+        demoUrl: "https://demo-clinica.codigofacil.com",
+        detailsUrl: "/proyectos/clinicapro-management",
+        tags: ["Node.js", "PostgreSQL", "Security", "API"]
     },
     {
         id: 4,
-        title: "CloudPOS",
-        category: "SaaS Platform",
-        description: "Sistema de punto de venta en la nube con gestión de ventas, inventario, clientes y reportes en tiempo real.",
-        imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-        icon: CreditCard,
-        gradient: "from-orange-500 via-red-500 to-pink-500",
-        demoUrl: "#demo4",
-        detailsUrl: "#details4",
-        tags: ["SaaS", "Cloud", "API", "Dashboard"]
+        title: "AgroTech Dashboard",
+        category: "Agriculture Tech",
+        description: "Dashboard inteligente para agricultores costarricenses con monitoreo de cultivos, predicción climática y análisis de productividad.",
+        imageUrl: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800&q=80",
+        icon: Globe,
+        gradient: "from-orange-500 via-yellow-500 to-green-500",
+        demoUrl: "https://demo-agro.codigofacil.com",
+        detailsUrl: "/proyectos/agrotech-dashboard",
+        tags: ["IoT", "React", "Charts", "Real-time Data"]
     }
 ];
 
@@ -70,7 +71,6 @@ export default function ProjectsSection() {
     const titleRef = useRef(null);
     const subtitleRef = useRef(null);
     const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-    const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -181,7 +181,6 @@ export default function ProjectsSection() {
     }, []);
 
     const handleMouseEnter = (index: number) => {
-        setHoveredCard(index);
         const card = cardsRef.current[index];
         if (card) {
             // Efecto de levitación y escala
@@ -263,7 +262,6 @@ export default function ProjectsSection() {
     };
 
     const handleMouseLeave = (index: number) => {
-        setHoveredCard(null);
         const card = cardsRef.current[index];
         if (card) {
             gsap.to(card, {
@@ -412,10 +410,12 @@ export default function ProjectsSection() {
 
                                     {/* Imagen del proyecto */}
                                     <div className="relative h-64 overflow-hidden">
-                                        <img
+                                        <Image
                                             src={project.imageUrl}
                                             alt={project.title}
-                                            className="project-image w-full h-full object-cover"
+                                            fill
+                                            className="project-image object-cover"
+                                            unoptimized
                                         />
 
                                         {/* Overlay oscuro sobre la imagen */}
@@ -501,9 +501,12 @@ export default function ProjectsSection() {
                                 Hagámoslo realidad juntos
                             </span>
                         </p>
-                        <button className="group relative px-10 py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-bold text-lg rounded-2xl shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300 overflow-hidden">
+                        <button 
+                            onClick={() => window.open('https://wa.me/56995022549?text=Hola,%20estoy%20interesado%20en%20desarrollar%20un%20proyecto%20similar%20a%20los%20que%20vi%20en%20su%20portfolio.%20%C2%BFPodemos%20conversar?', '_blank')}
+                            className="group relative px-10 py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-bold text-lg rounded-2xl shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300 overflow-hidden"
+                        >
                             <span className="relative z-10 flex items-center gap-3">
-                                Contacta con nosotros
+                                💬 Conversemos tu proyecto
                                 <ExternalLink className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </span>
                             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

@@ -11,23 +11,23 @@ export default function Footer() {
                     {/* Column 1 - About */}
                     <div>
                         <div className="text-2xl font-bold mb-6">
-                            <span className="text-primary">Codigo</span>
-                            <span className="text-white">Facil.com</span>
+                            <span className="text-primary">CodigoFacil.com</span>
+                            <span className="text-white"></span>
                         </div>
                         <p className="mb-6">
                             Transformamos sus ideas en experiencias digitales excepcionales para impulsar su negocio.
                         </p>
                         <div className="flex space-x-4">
-                            <a href="#" className="hover:text-primary transition-colors">
+                            <a href="https://facebook.com/codigofacil" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 transform duration-200">
                                 <Facebook size={20} />
                             </a>
-                            <a href="#" className="hover:text-primary transition-colors">
+                            <a href="https://twitter.com/codigofacil" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 transform duration-200">
                                 <Twitter size={20} />
                             </a>
-                            <a href="#" className="hover:text-primary transition-colors">
+                            <a href="https://instagram.com/codigofacil" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 transform duration-200">
                                 <Instagram size={20} />
                             </a>
-                            <a href="#" className="hover:text-primary transition-colors">
+                            <a href="https://linkedin.com/company/codigofacil" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 transform duration-200">
                                 <Linkedin size={20} />
                             </a>
                         </div>
@@ -47,11 +47,12 @@ export default function Footer() {
                                     Servicios
                                 </Link>
                             </li>
-                            <li>
+                            {/* Proyectos - Temporalmente comentado */}
+                            {/* <li>
                                 <Link href="/proyectos" className="hover:text-primary transition-colors">
                                     Proyectos
                                 </Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <Link href="/nosotros" className="hover:text-primary transition-colors">
                                     Nosotros
@@ -119,7 +120,7 @@ export default function Footer() {
 
                 {/* Copyright */}
                 <div className="border-t border-gray-800 mt-12 pt-8 text-center">
-                    <p>© {year} CodigoFacil.com. Todos los derechos reservados.</p>
+                    <p>© {year} Ezdev CR. Todos los derechos reservados.</p>
                 </div>
             </div>
         </footer>

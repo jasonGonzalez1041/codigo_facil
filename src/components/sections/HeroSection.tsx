@@ -1,23 +1,9 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-no-comment-textnodes */
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
-
-// Componente Button simplificado
-const Button = ({ children, size, variant, className  , ...props }: { children: React.ReactNode, size?: string, variant?: string, className?: string, onClick?: () => void }) => {
-  const baseStyles = "px-6 py-3 rounded-lg font-semibold transition-all duration-300";
-  const sizeStyles = size === "lg" ? "text-lg px-8 py-4" : "";
-  const variantStyles = variant === "outline"
-    ? "border-2"
-    : "bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl";
-
-  return (
-    <button className={`${baseStyles} ${sizeStyles} ${variantStyles} ${className}`} {...props}>
-      {children}
-    </button>
-  );
-};
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -25,9 +11,9 @@ export default function HeroSection() {
   const [showCursor, setShowCursor] = useState(true);
 
   const titles = useMemo(() => [
-    "Sitios Web que Convierten Visitantes en Clientes Reales",
-    "Diseño Web Profesional que Hace Crecer tu Presencia Digital",
-    "Tu Sitio Web Trabajando 24/7 para Atraer Más Clientes"
+    "Sitios Web Profesionales para Empresas de LATAM",
+    "Tu Tienda Online Funcionando 24/7 en Toda Latinoamérica",
+    "Desarrollo Web que Impulsa Negocios desde México hasta Chile"
   ], []);
 
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
@@ -190,7 +176,7 @@ export default function HeroSection() {
   }, [databaseText, databaseDeleting, databaseIndex, techCategories]);
 
   return (
-    <section className="relative min-h-screen flex items-center bg-gradient-to-br from-blue-50 to-indigo-100 overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center bg-gradient-to-br from-blue-50 to-indigo-100 overflow-hidden">
       {/* YouTube Video Background with stronger overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
@@ -216,7 +202,7 @@ export default function HeroSection() {
         <div className="absolute -left-20 bottom-0 w-[600px] h-[600px] rounded-full bg-indigo-200/20 blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 py-24 md:py-36">
+      <div className="container mx-auto px-4 relative z-10 py-24 md:py-30">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -231,20 +217,59 @@ export default function HeroSection() {
               <span className={`ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`}>|</span>
             </h1>
             <p className="text-xl text-white/90 mb-8 max-w-lg">
-              Transformamos sus ideas en experiencias digitales excepcionales. Nuestras soluciones web están diseñadas para destacar su marca, aumentar conversiones y brindar resultados tangibles para su negocio.
+              Desarrollamos sitios web y tiendas online para empresas en toda Latinoamérica. Planes accesibles desde $99 USD, con hosting incluido y soporte en español. ¡Tu presencia digital lista en 7 días!
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-              <Button
-                size="lg"
-                variant="default"
-                className="text-base"
+              <button
                 onClick={() => window.open('https://wa.me/50686462423?text=Hola,%20estoy%20interesado%20en%20sus%20servicios%20de%20desarrollo%20web', '_blank')}
+                className="group relative px-8 py-4 text-lg font-bold text-white rounded-xl overflow-hidden transition-all duration-500 transform hover:scale-110 hover:rotate-1"
+                style={{
+                  background: 'linear-gradient(45deg, #25D366, #128C7E, #25D366, #128C7E)',
+                  backgroundSize: '400% 400%',
+                  animation: 'gradient-shift 3s ease infinite',
+                  boxShadow: '0 0 30px rgba(37, 211, 102, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.1)',
+                }}
               >
-                Contactar por WhatsApp
-              </Button>
-              <Button size="lg" variant="outline" className="text-base bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20">
-                Ver Proyectos
-              </Button>
+                {/* Efecto de brillo que se mueve */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
+                </div>
+
+                {/* Partículas flotantes */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute top-1 left-2 w-1 h-1 bg-white rounded-full animate-ping"></div>
+                  <div className="absolute top-3 right-4 w-0.5 h-0.5 bg-white rounded-full animate-ping" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="absolute bottom-2 left-6 w-1 h-1 bg-white rounded-full animate-ping" style={{ animationDelay: '0.4s' }}></div>
+                  <div className="absolute bottom-1 right-2 w-0.5 h-0.5 bg-white rounded-full animate-ping" style={{ animationDelay: '0.6s' }}></div>
+                </div>
+
+                {/* Borde animado */}
+                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 rounded-xl border-2 border-white/50 animate-pulse"></div>
+                </div>
+
+                {/* Texto con efecto de elevación */}
+                <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-yellow-200 transition-colors duration-300">
+                  <span className="text-2xl group-hover:scale-125 group-hover:rotate-12 transition-transform duration-300">📱</span>
+                  Contactar por WhatsApp
+                  <span className="text-xl group-hover:scale-125 group-hover:-rotate-12 transition-transform duration-300">⚡</span>
+                </span>
+
+                {/* Efecto de ondas al hover */}
+                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute inset-0 rounded-xl border border-white/30 animate-ping"></div>
+                  <div className="absolute inset-0 rounded-xl border border-white/20 animate-ping" style={{ animationDelay: '0.3s' }}></div>
+                </div>
+              </button>
+
+              <style jsx>{`
+                @keyframes gradient-shift {
+                  0% { background-position: 0% 50%; }
+                  50% { background-position: 100% 50%; }
+                  100% { background-position: 0% 50%; }
+                }
+              `}</style>
+              {/* Botón Ver Proyectos removido temporalmente */}
             </div>
           </motion.div>
 
@@ -261,76 +286,121 @@ export default function HeroSection() {
                   <div className="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
                   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 </div>
-                <div className="bg-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col">
-                  <div className="bg-gray-800 p-3 text-sm text-gray-300 font-mono">
-                    <span className="text-white/80">codigofacil.com</span> ~ Technologies
+                <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl flex flex-col border border-gray-700">
+                  {/* Header del terminal mejorado */}
+                  <div className="bg-gradient-to-r from-gray-800 to-gray-700 p-4 text-sm text-gray-300 font-mono border-b border-gray-600">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="flex space-x-2">
+                          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <span className="text-white/90 font-semibold">codigofacil.com</span>
+                        <span className="text-gray-400">~</span>
+                        <span className="text-cyan-400">TechStack</span>
+                      </div>
+                      <div className="text-xs text-gray-400">⚡ Live Development</div>
+                    </div>
                   </div>
-                  <div className="p-6 text-green-500 font-mono overflow-auto flex flex-col justify-start space-y-5 min-h-[500px]">
-                    {/* Línea de inicio */}
-                    <div className="text-gray-400 text-sm">
-                      <span className="text-purple-400">function</span>{" "}
-                      <span className="text-yellow-300">buildYourSuccess</span>
+
+                  <div className="p-6 text-green-500 font-mono overflow-auto flex flex-col justify-start space-y-4 min-h-[500px] bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800">
+                    {/* Línea de inicio con mejor estilo */}
+                    <div className="text-sm">
+                      <span className="text-gray-500">$</span>{" "}
+                      <span className="text-purple-400 font-semibold">function</span>{" "}
+                      <span className="text-yellow-300 font-bold">buildYourSuccess</span>
                       <span className="text-white">() {"{"}</span>
                     </div>
 
-                    {/* Frontend */}
-                    <div className="flex items-center text-base pl-4">
-                      <span className="text-blue-400">const</span>
-                      <span className="text-yellow-400 mx-2">Frontend</span>
-                      <span className="text-white">=</span>
-                      <span className="text-[#00ff41] ml-2 min-w-[140px] font-semibold" style={{ textShadow: '0 0 10px rgba(0, 255, 65, 0.8)' }}>
+                    {/* Frontend con iconos y mejor visualización */}
+                    <div className="flex items-center text-base pl-6 group hover:bg-gray-800/50 p-2 rounded transition-colors">
+                      <span className="text-blue-400 font-semibold">const</span>
+                      <span className="text-yellow-400 mx-3 font-bold">Frontend</span>
+                      <span className="text-white font-bold">=</span>
+                      <span className="text-orange-400 mx-2">"</span>
+                      <span className="text-[#00ff41] font-bold text-lg" style={{ textShadow: '0 0 15px rgba(0, 255, 65, 0.8)' }}>
                         {frontendText}
                         <span className={`ml-1 ${techCursorVisible ? 'opacity-100' : 'opacity-0'}`}>|</span>
                       </span>
+                      <span className="text-orange-400">"</span>
+                      <span className="text-gray-500 ml-4 text-xs">⚡ Cutting-edge UI</span>
                     </div>
 
                     {/* Backend */}
-                    <div className="flex items-center text-base pl-4">
-                      <span className="text-blue-400">const</span>
-                      <span className="text-yellow-400 mx-2">Backend</span>
-                      <span className="text-white">=</span>
-                      <span className="text-[#00ff41] ml-2 min-w-[140px] font-semibold" style={{ textShadow: '0 0 10px rgba(0, 255, 65, 0.8)' }}>
+                    <div className="flex items-center text-base pl-6 group hover:bg-gray-800/50 p-2 rounded transition-colors">
+                      <span className="text-blue-400 font-semibold">const</span>
+                      <span className="text-yellow-400 mx-3 font-bold">Backend</span>
+                      <span className="text-white font-bold">=</span>
+                      <span className="text-orange-400 mx-2">"</span>
+                      <span className="text-[#00ff41] font-bold text-lg" style={{ textShadow: '0 0 15px rgba(0, 255, 65, 0.8)' }}>
                         {backendText}
                         <span className={`ml-1 ${techCursorVisible ? 'opacity-100' : 'opacity-0'}`}>|</span>
                       </span>
+                      <span className="text-orange-400">"</span>
+                      <span className="text-gray-500 ml-4 text-xs">🚀 High Performance</span>
                     </div>
 
                     {/* Database */}
-                    <div className="flex items-center text-base pl-4">
-                      <span className="text-blue-400">const</span>
-                      <span className="text-yellow-400 mx-2">Database</span>
-                      <span className="text-white">=</span>
-                      <span className="text-[#00ff41] ml-2 min-w-[140px] font-semibold" style={{ textShadow: '0 0 10px rgba(0, 255, 65, 0.8)' }}>
+                    <div className="flex items-center text-base pl-6 group hover:bg-gray-800/50 p-2 rounded transition-colors">
+                      <span className="text-blue-400 font-semibold">const</span>
+                      <span className="text-yellow-400 mx-3 font-bold">Database</span>
+                      <span className="text-white font-bold">=</span>
+                      <span className="text-orange-400 mx-2">"</span>
+                      <span className="text-[#00ff41] font-bold text-lg" style={{ textShadow: '0 0 15px rgba(0, 255, 65, 0.8)' }}>
                         {databaseText}
                         <span className={`ml-1 ${techCursorVisible ? 'opacity-100' : 'opacity-0'}`}>|</span>
                       </span>
+                      <span className="text-orange-400">"</span>
+                      <span className="text-gray-500 ml-4 text-xs">💾 Scalable Data</span>
                     </div>
 
-                    {/* Mensaje persuasivo */}
-                    <div className="mt-6 pt-4 border-t border-gray-700 pl-4">
-                      <div className="text-cyan-400 text-sm mb-3">
-                        <span className="text-gray-500">// </span>Tecnología de vanguardia para impulsar tu presencia digital
+                    {/* Línea vacía para separación */}
+                    <div className="h-2"></div>
+
+                    {/* Return statement mejorado */}
+                    <div className="pl-6 space-y-3">
+                      <div className="text-purple-400 font-semibold">
+                        <span className="text-blue-400">return</span>{" "}
+                        <span className="text-white">{"{"}</span>
                       </div>
-                      <div className="text-white/90 text-sm leading-relaxed space-y-2">
-                        <div>
-                          <span className="text-purple-400">¿Listo para transformar tu negocio</span> y alcanzar{" "}
-                          <span className="text-yellow-300">resultados extraordinarios en el mundo digital</span>?
+
+                      <div className="pl-6 space-y-2 text-sm">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-cyan-400 font-semibold">success:</span>
+                          <span className="text-green-400 font-bold">"GUARANTEED"</span>
+                          <span className="text-gray-500">// 🎯 Resultados comprobados</span>
                         </div>
-                        <div className="text-gray-300 mt-3">
-                          <span className="text-green-400">✓</span> Sitios web optimizados para máxima conversión
+                        <div className="flex items-center space-x-2">
+                          <span className="text-cyan-400 font-semibold">timeline:</span>
+                          <span className="text-yellow-300 font-bold">"7 días"</span>
+                          <span className="text-gray-500">// ⚡ Entrega ultrarrápida</span>
                         </div>
-                        <div className="text-gray-300">
-                          <span className="text-green-400">✓</span> Diseño responsive perfectamente adaptado
+                        <div className="flex items-center space-x-2">
+                          <span className="text-cyan-400 font-semibold">support:</span>
+                          <span className="text-blue-300 font-bold">"24/7"</span>
+                          <span className="text-gray-500">// 🛡️ Soporte continuo</span>
                         </div>
-                        <div className="text-gray-300">
-                          <span className="text-green-400">✓</span> SEO integrado y estrategias avanzadas
-                        </div>
-                        <div className="text-gray-300">
-                          <span className="text-green-400">✓</span> Soporte técnico continuo 24/7
+                        <div className="flex items-center space-x-2">
+                          <span className="text-cyan-400 font-semibold">price:</span>
+                          <span className="text-green-300 font-bold">"desde $25 USD al mes"</span>
+                          <span className="text-gray-500">// 💰 Precio justo</span>
                         </div>
                       </div>
+
+                      <div className="text-white font-semibold pl-6">{"}"}</div>
+                    </div>
+
+                    {/* Comentario motivacional */}
+                    <div className="mt-6 pt-4 border-t border-gray-700">
+                      <div className="text-cyan-400 text-sm mb-3 font-semibold">
+                        <span className="text-gray-500">/* </span>
+                        🚀 Tu próximo proyecto puede cambiar todo
+                        <span className="text-gray-500"> */</span>
+                      </div>
+
                       <div
-                        className="text-green-400 text-sm mt-4 animate-pulse cursor-pointer hover:text-green-300 transition-colors"
+                        className="bg-gradient-to-r from-green-600 to-blue-600 text-white text-sm px-4 py-3 rounded-lg cursor-pointer hover:from-green-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-105 font-semibold text-center shadow-lg"
                         onClick={() => {
                           const contactSection = document.querySelector('#contact-section');
                           if (contactSection) {
@@ -338,13 +408,14 @@ export default function HeroSection() {
                           }
                         }}
                       >
-                        → Contacta ahora y recibe una <span className="text-yellow-300 font-semibold">consultoría estratégica gratis</span>
+                        💬 Iniciar mi proyecto ahora → Consulta GRATIS
                       </div>
                     </div>
 
                     {/* Cierre de función */}
-                    <div className="text-gray-400 text-sm">
+                    <div className="text-gray-400 text-sm font-semibold">
                       <span className="text-white">{"}"}</span>
+                      <span className="text-gray-500 ml-2">// buildYourSuccess()</span>
                     </div>
                   </div>
                 </div>
