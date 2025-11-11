@@ -107,8 +107,15 @@ export default function Footer() {
                                 <span>Guápiles, Limón, Costa Rica</span>
                             </li>
                             <li className="flex items-center">
-                                <Phone className="mr-3 text-primary" size={18} />
-                                <span>+506 8888-8888</span>
+                                <a
+                                    href="https://wa.me/56950225491"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center hover:text-primary transition-colors"
+                                >
+                                    <Phone className="mr-3 text-primary" size={18} />
+                                    <span>+56 9 5022 5491</span>
+                                </a>
                             </li>
                             <li className="flex items-center">
                                 <Mail className="mr-3 text-primary" size={18} />
