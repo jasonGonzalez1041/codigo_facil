@@ -12,35 +12,36 @@ export interface Service {
 }
 
 export const servicesData: Service[] = [
-  {
-    id: "web-development",
-    title: "Desarrollo Web Personalizado",
-    description: "Sitios web únicos y profesionales adaptados a tu negocio",
-    icon: "🚀",
-    fullDescription: "🚀 Creamos sitios web completamente personalizados usando las últimas tecnologías. Cada proyecto es único y está diseñado específicamente para cumplir los objetivos de tu negocio, desde landing pages impactantes hasta aplicaciones web complejas que transforman tu presencia digital.",
-    benefits: [
-      "🎯 Diseño 100% personalizado y único para tu marca",
-      "🔍 Optimización SEO integrada desde el desarrollo", 
-      "📱 Responsive design perfecto para todos los dispositivos",
-      "⚡ Performance súper optimizado para carga ultrarrápida",
-      "🏠 Hosting premium incluido por 1 año GRATIS",
-      "🔒 SSL certificado y seguridad avanzada garantizada",
-      "💻 Panel de administración súper intuitivo y fácil",
-      "🛡️ Soporte técnico continuo 24/7 en español"
-    ],
-    process: [
-      "🤝 Consulta inicial y definición detallada de requerimientos",
-      "🎨 Diseño UX/UI profesional y prototipo interactivo", 
-      "⚡ Desarrollo frontend con las tecnologías más modernas",
-      "🔧 Implementación de backend y funcionalidades avanzadas",
-      "🧪 Testing exhaustivo en múltiples dispositivos y browsers",
-      "🚀 Lanzamiento épico y configuración de hosting optimizado",
-      "📚 Capacitación completa del equipo y entrega con documentación"
-    ],
-    technologies: ["Next.js ⚛️", "React 🔥", "TypeScript 💙", "Tailwind CSS 🎨", "Node.js 🟢", "PostgreSQL 🐘", "Cloudflare ☁️"],
-    price: "$1,200 - $3,500 💰",
-    timeline: "3-6 semanas ⚡"
-  },
+    {
+        id: "web-app",
+        title: "Aplicación Web",
+        description: "Aplicaciones web complejas con funcionalidades avanzadas",
+        icon: "⚡",
+        fullDescription: "⚡ Desarrollamos aplicaciones web robustas y súper escalables para automatizar procesos de negocio y multiplicar tu productividad. Desde CRMs personalizados hasta plataformas SaaS completas, creamos soluciones revolucionarias que transforman completamente la forma en que trabajas.",
+        benefits: [
+            "🤖 Automatización total de procesos empresariales complejos",
+            "🎯 Interfaz súper intuitiva y fácil de usar para todos",
+            "👥 Acceso multi-usuario con roles y permisos granulares",
+            "💾 Base de datos robusta y escalable para millones de registros",
+            "🔗 APIs poderosas para integraciones con cualquier sistema",
+            "📊 Reportes y dashboards en tiempo real con gráficos dinámicos",
+            "🛡️ Respaldos automáticos y seguridad de nivel empresarial",
+            "🚀 Escalabilidad infinita para tu crecimiento futuro"
+        ],
+        process: [
+            "🔍 Análisis profundo de procesos y requerimientos técnicos",
+            "🏗️ Diseño de arquitectura escalable y base de datos optimizada",
+            "🎨 Prototipado interactivo de funcionalidades clave",
+            "⚡ Desarrollo iterativo con feedback continuo y demos semanales",
+            "🔗 Integración de APIs y servicios externos necesarios",
+            "🧪 Testing riguroso de seguridad y performance",
+            "🚀 Deployment en infraestructura cloud escalable",
+            "📚 Documentación técnica completa y capacitación intensiva"
+        ],
+        technologies: ["Next.js ⚛️", "Node.js 🟢", "PostgreSQL 🐘", "Redis ⚡", "Docker 🐳", "AWS ☁️", "TypeScript 💙"],
+        price: "$3,500 - $8,000 💰",
+        timeline: "6-12 semanas ⚡"
+    },
   {
     id: "ecommerce",
     title: "E-commerce Profesional",
@@ -71,37 +72,46 @@ export const servicesData: Service[] = [
     price: "$2,500 - $6,000 💰",
     timeline: "5-8 semanas 🚀"
   },
-  {
-    id: "web-app",
-    title: "Aplicación Web",
-    description: "Aplicaciones web complejas con funcionalidades avanzadas",
-    icon: "⚡",
-    fullDescription: "⚡ Desarrollamos aplicaciones web robustas y súper escalables para automatizar procesos de negocio y multiplicar tu productividad. Desde CRMs personalizados hasta plataformas SaaS completas, creamos soluciones revolucionarias que transforman completamente la forma en que trabajas.",
-    benefits: [
-      "🤖 Automatización total de procesos empresariales complejos",
-      "🎯 Interfaz súper intuitiva y fácil de usar para todos",
-      "👥 Acceso multi-usuario con roles y permisos granulares",
-      "💾 Base de datos robusta y escalable para millones de registros",
-      "🔗 APIs poderosas para integraciones con cualquier sistema",
-      "📊 Reportes y dashboards en tiempo real con gráficos dinámicos",
-      "🛡️ Respaldos automáticos y seguridad de nivel empresarial",
-      "🚀 Escalabilidad infinita para tu crecimiento futuro"
-    ],
-    process: [
-      "🔍 Análisis profundo de procesos y requerimientos técnicos",
-      "🏗️ Diseño de arquitectura escalable y base de datos optimizada",
-      "🎨 Prototipado interactivo de funcionalidades clave",
-      "⚡ Desarrollo iterativo con feedback continuo y demos semanales",
-      "🔗 Integración de APIs y servicios externos necesarios",
-      "🧪 Testing riguroso de seguridad y performance",
-      "🚀 Deployment en infraestructura cloud escalable",
-      "📚 Documentación técnica completa y capacitación intensiva"
-    ],
-    technologies: ["Next.js ⚛️", "Node.js 🟢", "PostgreSQL 🐘", "Redis ⚡", "Docker 🐳", "AWS ☁️", "TypeScript 💙"],
-    price: "$3,500 - $8,000 💰",
-    timeline: "6-12 semanas ⚡"
-  },
-  {
+    {
+        id: "mobile-app",
+        title: "Aplicación Móvil",
+        description: "Apps móviles nativas y multiplataforma de alto rendimiento",
+        icon: "📱",
+        fullDescription: "📱 Creamos aplicaciones móviles potentes, fluidas y seguras, diseñadas para ofrecer experiencias excepcionales en iOS y Android. Desde soluciones empresariales hasta apps de consumo masivo, desarrollamos productos escalables y listos para el futuro con una experiencia de usuario impecable.",
+        benefits: [
+            "⚡ Rendimiento nativo en iOS y Android con un solo código base",
+            "🎨 Interfaz moderna, fluida y totalmente personalizada a tu marca",
+            "🔔 Notificaciones push, GPS, cámara, pagos y funciones avanzadas",
+            "🌎 Publicación en App Store y Google Play con soporte completo",
+            "💬 Integración con APIs, chats en tiempo real y servicios cloud",
+            "🧩 Arquitectura modular, fácil de escalar y mantener",
+            "🛡️ Seguridad avanzada con cifrado de datos y autenticación biométrica",
+            "🚀 Actualizaciones OTA (Over-The-Air) sin necesidad de reinstalar"
+        ],
+        process: [
+            "🔍 Análisis profundo del concepto, público y objetivos de la app",
+            "🧠 Definición de funcionalidades clave y arquitectura móvil óptima",
+            "🎨 Diseño UI/UX centrado en la experiencia del usuario",
+            "⚙️ Desarrollo ágil con iteraciones semanales y retroalimentación continua",
+            "🔗 Integración con APIs, pasarelas de pago y servicios externos",
+            "🧪 Testing intensivo en dispositivos reales (Android y iOS)",
+            "📦 Publicación en App Store y Google Play con optimización ASO",
+            "📚 Entrega final, documentación técnica y soporte post-lanzamiento"
+        ],
+        technologies: [
+            "React Native ⚛️",
+            "Expo 🚀",
+            "TypeScript 💙",
+            "Node.js 🟢",
+            "Firebase 🔥",
+            "Supabase 🧩",
+            "AWS ☁️",
+            "GraphQL 🔗"
+        ],
+        price: "$4,000 - $9,000 💰",
+        timeline: "8-14 semanas ⏱️"
+    },
+    {
     id: "maintenance",
     title: "Mantenimiento Web",
     description: "Soporte continuo y actualizaciones para tu sitio web",

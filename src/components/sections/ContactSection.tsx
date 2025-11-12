@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import emailjs from '@emailjs/browser';
 
 export default function ContactSection() {
     const sectionRef = useRef(null);
@@ -18,6 +19,9 @@ export default function ContactSection() {
     const mapCardRef = useRef<HTMLDivElement>(null);
     const infoItemsRef = useRef<(HTMLDivElement | null)[]>([]);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const formRef = useRef<HTMLFormElement>(null);
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -151,10 +155,11 @@ export default function ContactSection() {
         return () => ctx.revert();
     }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault(); // ✅ SOLUCIÓN: Prevenir refresh de página
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
         if (!formData.name || !formData.email || !formData.message) {
+            alert("Por favor completa los campos obligatorios: Nombre, Email y Mensaje");
             return;
         }
 
@@ -170,8 +175,27 @@ export default function ContactSection() {
             });
         }
 
-        // Simular envío
-        setTimeout(() => {
+        // ⭐⭐ CONFIGURACIÓN EMAILJS - REEMPLAZA CON TUS DATOS ⭐⭐
+        const serviceID = 'service_veiqier'; // Reemplaza con tu Service ID del dashboard
+        const templateID = 'template_1tbb98q'; // Reemplaza con tu Template ID del dashboard
+        const publicKey = 'raQI5NTeYw5TTPZET'; // Tu public key
+
+        try {
+            setIsLoading(true);
+
+            // Preparar los datos para EmailJS
+            const templateParams = {
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+                message: formData.message,
+                time: new Date().toLocaleString('es-ES') // Fecha y hora actual
+            };
+
+            // Enviar el email usando EmailJS
+            await emailjs.send(serviceID, templateID, templateParams, publicKey);
+
+            // Éxito
             setIsSubmitted(true);
             setFormData({
                 name: "",
@@ -180,11 +204,17 @@ export default function ContactSection() {
                 message: ""
             });
 
-            // Resetear después de 3 segundos
+            // Reset después de 3 segundos
             setTimeout(() => {
                 setIsSubmitted(false);
             }, 3000);
-        }, 500);
+
+        } catch (error) {
+            console.error('Error enviando el formulario:', error);
+            alert('Error al enviar el mensaje. Por favor intenta nuevamente.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleInputFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -271,7 +301,7 @@ export default function ContactSection() {
                                     </p>
                                 </motion.div>
                             ) : (
-                                <form onSubmit={handleSubmit} className="space-y-6"> {/* ✅ SOLUCIÓN: Agregar form tag */}
+                                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <Label htmlFor="name" className="text-gray-700 dark:text-gray-300 font-medium">
@@ -279,12 +309,14 @@ export default function ContactSection() {
                                             </Label>
                                             <Input
                                                 id="name"
+                                                name="name"
                                                 value={formData.name}
                                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                                 placeholder="Juan Pérez"
                                                 onFocus={handleInputFocus}
                                                 onBlur={handleInputBlur}
                                                 className="bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-all"
+                                                disabled={isLoading}
                                             />
                                         </div>
                                         <div className="space-y-2">
@@ -293,6 +325,7 @@ export default function ContactSection() {
                                             </Label>
                                             <Input
                                                 id="email"
+                                                name="email"
                                                 type="email"
                                                 value={formData.email}
                                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -300,6 +333,7 @@ export default function ContactSection() {
                                                 onFocus={handleInputFocus}
                                                 onBlur={handleInputBlur}
                                                 className="bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-all"
+                                                disabled={isLoading}
                                             />
                                         </div>
                                     </div>
@@ -310,6 +344,7 @@ export default function ContactSection() {
                                         </Label>
                                         <Input
                                             id="phone"
+                                            name="phone"
                                             type="tel"
                                             value={formData.phone}
                                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -317,6 +352,7 @@ export default function ContactSection() {
                                             onFocus={handleInputFocus}
                                             onBlur={handleInputBlur}
                                             className="bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-all"
+                                            disabled={isLoading}
                                         />
                                     </div>
 
@@ -326,6 +362,7 @@ export default function ContactSection() {
                                         </Label>
                                         <Textarea
                                             id="message"
+                                            name="message"
                                             value={formData.message}
                                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                             placeholder="Cuéntanos sobre tu proyecto..."
@@ -333,16 +370,24 @@ export default function ContactSection() {
                                             onFocus={handleInputFocus}
                                             onBlur={handleInputBlur}
                                             className="bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-all resize-none"
+                                            disabled={isLoading}
                                         />
                                     </div>
 
                                     <Button
                                         id="submit-button"
-                                        type="submit" // ✅ SOLUCIÓN: Cambiar a type="submit"
-                                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300"
+                                        type="submit"
+                                        disabled={isLoading}
+                                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
-                                        <Send className="w-5 h-5 mr-2" />
-                                        Enviar mensaje
+                                        {isLoading ? (
+                                            "Enviando..."
+                                        ) : (
+                                            <>
+                                                <Send className="w-5 h-5 mr-2" />
+                                                Enviar mensaje
+                                            </>
+                                        )}
                                     </Button>
 
                                     <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
@@ -352,11 +397,10 @@ export default function ContactSection() {
                             )}
                         </div>
 
-                        {/* Borde animado - ✅ SOLUCIÓN: Agregar pointer-events-none */}
+                        {/* Borde animado */}
                         <div className="absolute inset-0 rounded-2xl border-2 border-transparent hover:border-blue-500/30 dark:hover:border-blue-400/30 transition-all duration-500 pointer-events-none"></div>
                     </div>
 
-                    {/* El resto del código se mantiene exactamente igual */}
                     {/* Información de contacto y mapa */}
                     <div className="flex flex-col gap-8">
                         {/* Tarjeta de información */}
