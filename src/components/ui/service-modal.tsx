@@ -326,7 +326,7 @@ Me gustaría recibir más información y una cotización personalizada para mi p
                         {step}
                       </span>
                                             <div
-                                                ref={(el) => (pulseRefs.current[index] = el)}
+                                                ref={(el) => { pulseRefs.current[index] = el }}
                                                 className="absolute -left-2 top-2 w-12 h-12 rounded-full bg-blue-500/20 opacity-0"
                                             ></div>
                                         </div>

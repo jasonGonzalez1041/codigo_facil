@@ -23,7 +23,7 @@ const nextConfig = {
   
   // Optimizaciones para Vercel
   experimental: {
-    optimizeCss: true,
+    // optimizeCss: true, // Deshabilitado - requiere critters module
     scrollRestoration: true,
   },
   
