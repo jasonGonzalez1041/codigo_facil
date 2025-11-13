@@ -11,7 +11,7 @@ export function BlogPageClient() {
 
 ¿Podrían ayudarme a convertir este conocimiento en resultados reales?`;
     
-    const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
