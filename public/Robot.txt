@@ -1,0 +1,222 @@
+# robots.txt para CodigoFacil.com
+# Generado el ${new Date().toISOString().split('T')[0]}
+
+User-agent: *
+Allow: /
+
+# === DIRECTORIOS BLOQUEADOS ===
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /dashboard/
+Disallow: /_next/
+Disallow: /_astro/
+Disallow: /node_modules/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /search/
+Disallow: /?s=
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /my-account/
+
+# === ARCHIVOS BLOQUEADOS ===
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /*.php$
+Disallow: /*.env$
+Disallow: /*.sql$
+Disallow: /*.log$
+Disallow: /*.git$
+Disallow: /package.json
+Disallow: /composer.json
+Disallow: /yarn.lock
+Disallow: /package-lock.json
+
+# === PARÁMETROS DE URL BLOQUEADOS ===
+Disallow: /*?utm_
+Disallow: /*?gclid=
+Disallow: /*?fbclid=
+Disallow: /*?ref=
+Disallow: /*?source=
+Disallow: /*?redirect=
+Disallow: /*?session=
+Disallow: /*?token=
+Disallow: /*?auth=
+
+# === CRAWLERS ESPECÍFICOS - CONFIGURACIONES OPTIMIZADAS ===
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+Allow: /*.css$
+Allow: /*.js$
+
+# Googlebot-Image
+User-agent: Googlebot-Image
+Allow: /
+Crawl-delay: 2
+Allow: /images/
+Allow: /assets/
+
+# Googlebot-News
+User-agent: Googlebot-News
+Allow: /
+Crawl-delay: 1
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# DuckDuckBot
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 3
+
+# YandexBot
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 5
+Clean-param: ref&utm_source&utm_medium&utm_campaign /
+
+# Baiduspider
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 10
+
+# Slackbot-LinkExpanding
+User-agent: Slackbot-LinkExpanding
+Allow: /
+Crawl-delay: 2
+
+# Twitterbot
+User-agent: Twitterbot
+Allow: /
+Crawl-delay: 2
+
+# FacebookExternalHit
+User-agent: FacebookExternalHit
+Allow: /
+Crawl-delay: 2
+
+# LinkedInBot
+User-agent: LinkedInBot
+Allow: /
+Crawl-delay: 2
+
+# === CRAWLERS NO DESEADOS - BLOQUEADOS ===
+
+# Herramientas de SEO (pueden consumir mucho ancho de banda)
+User-agent: AhrefsBot
+Disallow: /
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Disallow: /
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Disallow: /
+Crawl-delay: 10
+
+User-agent: DotBot
+Disallow: /
+Crawl-delay: 10
+
+User-agent: MegaIndex
+Disallow: /
+Crawl-delay: 10
+
+User-agent: BLEXBot
+Disallow: /
+Crawl-delay: 10
+
+User-agent: CCBot
+Disallow: /
+Crawl-delay: 10
+
+User-agent: GPTBot
+Disallow: /
+Crawl-delay: 10
+
+# Crawlers agresivos o no deseados
+User-agent: ZoominfoBot
+Disallow: /
+
+User-agent: PiplBot
+Disallow: /
+
+User-agent: Exabot
+Disallow: /
+
+User-agent: SurveyBot
+Disallow: /
+
+User-agent: Mail.RU_Bot
+Disallow: /
+
+User-agent: Sogou
+Disallow: /
+
+User-agent: YandexImages
+Disallow: /
+
+# === SITEMAPS - ACTUALIZA CON TUS URLS REALES ===
+Sitemap: https://codigofacil.com/sitemap.xml
+Sitemap: https://codigofacil.com/sitemap-0.xml
+Sitemap: https://codigofacil.com/sitemap-pages.xml
+Sitemap: https://codigacil.com/sitemap-posts.xml
+Sitemap: https://codigofacil.com/sitemap-categories.xml
+Sitemap: https://codigofacil.com/sitemap-tags.xml
+Sitemap: https://codigofacil.com/sitemap-images.xml
+Sitemap: https://codigofacil.com/sitemap-videos.xml
+
+# === INSTRUCCIONES ESPECIALES ===
+
+# Permitir crawlers de redes sociales para previews
+User-agent: FacebookExternalHit
+Allow: /blog/
+Allow: /articulos/
+Allow: /noticias/
+
+User-agent: Twitterbot
+Allow: /blog/
+Allow: /articulos/
+Allow: /noticias/
+
+User-agent: LinkedInBot
+Allow: /blog/
+Allow: /articulos/
+Allow: /noticias/
+
+# Configuración para crawlers de IA (opcional)
+User-agent: ChatGPT-User
+Allow: /blog/
+Allow: /articulos/
+Allow: /guias/
+Crawl-delay: 5
+
+User-agent: Claude-Web
+Allow: /blog/
+Allow: /articulos/
+Allow: /guias/
+Crawl-delay: 5
+
+# === COMENTARIOS ADICIONALES ===
+# Este archivo robots.txt está optimizado para:
+# - Mejor rendimiento del sitio
+# - Indexación eficiente por motores de búsqueda
+# - Protección de contenido sensible
+# - Optimización para crawlers de redes sociales
+# - Control de crawlers de herramientas de SEO
+
+# Actualiza regularmente este archivo cuando:
+# 1. Añadas nuevas secciones al sitio
+# 2. Cambies la estructura de URLs
+# 3. Añadas nuevos sitemaps
+# 4. Identifiques nuevos crawlers no deseados
+
+# Última actualización: ${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}

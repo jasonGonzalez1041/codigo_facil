@@ -79,18 +79,49 @@ export default function ServicesSection() {
     const handleMouseEnter = (index: number) => {
         const card = cardsRef.current[index];
         if (card) {
-            gsap.to(card, { scale: 1.05, y: -10, duration: 0.3, ease: "power2.out" });
+            // Escala completa de la card
+            gsap.to(card, {
+                scale: 1.05,
+                y: -10,
+                duration: 0.3,
+                ease: "power2.out",
+            });
+
+            // Icono: rotar y agrandar un 20%
             const icon = card.querySelector(".service-icon");
-            gsap.to(icon, { rotation: 360, scale: 1.2, duration: 0.5, ease: "back.out(1.7)" });
+            if (icon) {
+                gsap.to(icon, {
+                    rotation: 360,
+                    scale: 1.2, // 20% más grande
+                    duration: 0.5,
+                    ease: "back.out(1.7)",
+                    transformOrigin: "center center",
+                });
+            }
         }
     };
 
     const handleMouseLeave = (index: number) => {
         const card = cardsRef.current[index];
         if (card) {
-            gsap.to(card, { scale: 1, y: 0, duration: 0.3, ease: "power2.inOut" });
+            gsap.to(card, {
+                scale: 1,
+                y: 0,
+                duration: 0.3,
+                ease: "power2.inOut",
+            });
+
+            // Icono vuelve a su tamaño original
             const icon = card.querySelector(".service-icon");
-            gsap.to(icon, { rotation: 0, scale: 1, duration: 0.3, ease: "power2.inOut" });
+            if (icon) {
+                gsap.to(icon, {
+                    rotation: 0,
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "power2.inOut",
+                    transformOrigin: "center center",
+                });
+            }
         }
     };
 
