@@ -12,10 +12,12 @@ const eslintConfig = [...nextCoreWebVitals, ...nextTypescript, {
     ".next/**",
     "out/**",
     "build/**",
+    "coverage/**",
     "next-env.d.ts",
     "*.config.js",
     "*.config.mjs", 
-    "*.config.ts"
+    "*.config.ts",
+    "jest.config.cjs"
   ],
 }];
 
