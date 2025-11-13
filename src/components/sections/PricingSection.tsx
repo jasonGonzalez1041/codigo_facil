@@ -20,9 +20,9 @@ const pricingPlans = [
         name: "Estático Simple",
         description: "Sitio web básico con hasta 3 páginas y diseño sencillo",
         prices: {
-            monthly: 25,
-            annual: 250,
-            oneTime: 350
+            monthly: 15,
+            annual: 150,
+            oneTime: 180
         },
         setupFee: 25,
         features: {
@@ -35,15 +35,18 @@ const pricingPlans = [
             ],
             recurring: [
                 "Hosting y SSL incluido",
+                "Dominio .com/.cl por 1 año",
                 "Backups automáticos",
                 "2 horas de soporte mensual",
                 "Actualizaciones de seguridad"
             ],
             oneTime: [
-                "Código fuente completo",
-                "Sin hosting (tú lo gestionas)",
-                "Soporte limitado (30 días)",
-                "Documentación técnica"
+                "Código fuente completo entregado",
+                "🎯 Cliente gestiona su propio hosting",
+                "🎯 Cliente gestiona su propio dominio",
+                "Soporte técnico por 30 días",
+                "Documentación técnica incluida",
+                "Instalación y configuración inicial"
             ]
         },
         color: "from-blue-500 to-cyan-500",
@@ -69,15 +72,18 @@ const pricingPlans = [
             ],
             recurring: [
                 "Hosting optimizado para e-commerce",
+                "Dominio .com/.cl por 1 año",
                 "SSL y seguridad avanzada",
                 "5 horas de soporte mensual",
                 "Backups diarios automáticos"
             ],
             oneTime: [
-                "Código fuente completo",
-                "Sin hosting (tú lo gestionas)",
-                "Soporte limitado (60 días)",
-                "Manual de administración"
+                "Código fuente completo entregado",
+                "🎯 Cliente gestiona su propio hosting",
+                "🎯 Cliente gestiona su propio dominio",
+                "Soporte técnico por 60 días",
+                "Manual de administración completo",
+                "Configuración de pasarelas de pago"
             ]
         },
         color: "from-green-500 to-emerald-500",
@@ -103,15 +109,18 @@ const pricingPlans = [
             ],
             recurring: [
                 "Hosting premium incluido",
+                "Dominio .com/.cl por 1 año",
                 "CDN global para velocidad",
                 "4 horas de soporte mensual",
                 "Análisis de rendimiento mensual"
             ],
             oneTime: [
-                "Código fuente completo",
-                "Sin hosting (tú lo gestionas)",
-                "Soporte limitado (45 días)",
-                "Documentación completa"
+                "Código fuente completo entregado",
+                "🎯 Cliente gestiona su propio hosting",
+                "🎯 Cliente gestiona su propio dominio",
+                "Soporte técnico por 45 días",
+                "Documentación completa",
+                "Capacitación de administración"
             ]
         },
         color: "from-purple-500 to-pink-500",
@@ -136,16 +145,19 @@ const pricingPlans = [
                 "Autenticación de usuarios"
             ],
             recurring: [
-                "Infraestructura escalable",
+                "Infraestructura escalable incluida",
+                "Dominio .com/.cl por 1 año",
                 "Monitoreo 24/7",
                 "10 horas de soporte mensual",
                 "Actualizaciones de funcionalidades"
             ],
             oneTime: [
-                "Código fuente completo",
-                "Sin hosting (tú lo gestionas)",
-                "Soporte limitado (90 días)",
-                "Documentación técnica detallada"
+                "Código fuente completo entregado",
+                "🎯 Cliente gestiona su propio hosting",
+                "🎯 Cliente gestiona su propio dominio",
+                "Soporte técnico por 90 días",
+                "Documentación técnica detallada",
+                "Configuración de servidores"
             ]
         },
         color: "from-orange-500 to-red-500",
@@ -244,6 +256,16 @@ export default function PricingSection() {
         }
     };
 
+    const getFeaturesToShow = (plan: any) => {
+        if (billingCycle === "oneTime") {
+            return plan.features.oneTime;
+        } else if (billingCycle === "annual") {
+            return [...plan.features.base, ...plan.features.recurring];
+        } else {
+            return [...plan.features.base, ...plan.features.recurring];
+        }
+    };
+
     return (
         <section
             id="precios"
@@ -264,7 +286,10 @@ export default function PricingSection() {
                         para LATAM
                     </h2>
                     <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-                        Soluciones web profesionales con precios justos. Hosting incluido, soporte en español y desarrollo de calidad.
+                        {billingCycle === "oneTime"
+                            ? "Sitios web profesionales de pago único. Tú gestionas hosting y dominio, nosotros el desarrollo."
+                            : "Soluciones web todo incluido: hosting, dominio, soporte en español y desarrollo de calidad."
+                        }
                     </p>
 
                     {/* Billing Cycle Toggle */}
@@ -281,13 +306,27 @@ export default function PricingSection() {
                                     className={`px-6 py-2 rounded-lg transition-all duration-300 ${billingCycle === option.key
                                         ? "bg-blue-600 text-white shadow-md"
                                         : "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
-                                        }`}
+                                    }`}
                                 >
                                     {option.label}
                                 </button>
                             ))}
                         </div>
                     </div>
+
+                    {/* Nota importante para pago único */}
+                    {billingCycle === "oneTime" && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 max-w-2xl mx-auto"
+                        >
+                            <p className="text-yellow-800 dark:text-yellow-200 text-sm text-center">
+                                💡 <strong>Plan Pago Único:</strong> Incluye código fuente completo.
+                                El cliente gestiona su propio hosting y dominio. Soporte técnico incluido por tiempo limitado.
+                            </p>
+                        </motion.div>
+                    )}
                 </motion.div>
 
                 {/* Pricing Cards */}
@@ -301,7 +340,7 @@ export default function PricingSection() {
                             className={`bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 ${plan.recommended
                                 ? "ring-2 ring-blue-500 ring-opacity-50"
                                 : ""
-                                }`}
+                            }`}
                         >
                             {plan.recommended && (
                                 <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-2 text-sm font-semibold">
@@ -336,14 +375,26 @@ export default function PricingSection() {
                                             Setup único: ${plan.setupFee}
                                         </p>
                                     )}
+                                    {billingCycle === "oneTime" && (
+                                        <p className="text-xs text-green-600 dark:text-green-400 mt-1 font-semibold">
+                                            ✓ Código fuente incluido
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Features */}
                                 <ul className="space-y-3 mb-6">
-                                    {plan.features.base.map((feature, featureIndex) => (
-                                        <li key={`base-${featureIndex}`} className="flex items-start text-sm text-gray-700 dark:text-gray-300">
-                                            <Check className="w-5 h-5 mr-2 flex-shrink-0 text-green-500" />
-                                            <span>{feature}</span>
+                                    {getFeaturesToShow(plan).map((feature: string, featureIndex: number) => (
+                                        <li
+                                            key={`${billingCycle}-${featureIndex}`}
+                                            className="flex items-start text-sm text-gray-700 dark:text-gray-300"
+                                        >
+                                            <Check className={`w-5 h-5 mr-2 flex-shrink-0 ${
+                                                feature.includes('🎯') ? 'text-yellow-500' : 'text-green-500'
+                                            }`} />
+                                            <span className={feature.includes('🎯') ? 'font-semibold text-yellow-700 dark:text-yellow-300' : ''}>
+                                                {feature}
+                                            </span>
                                         </li>
                                     ))}
                                 </ul>
@@ -354,24 +405,33 @@ export default function PricingSection() {
                                         const price = getPrice(plan.prices);
                                         const cycle = getCycleLabel();
                                         const setupFee = billingCycle === "monthly" ? ` (Setup: $${plan.setupFee})` : '';
-                                        const message = `¡Hola! Me interesa el plan *${plan.name}* de CodigoFacil.com
 
-🏷️ *Precio:* $${price}${cycle}${setupFee}
+                                        let message = `¡Hola! Me interesa el plan *${plan.name}* de CodigoFacil.com
 
-📝 *Incluye:*
-${plan.features.base.slice(0, 3).map(f => `• ${f}`).join('\n')}
+                         🏷️ *Precio:* $${price}${cycle}${setupFee}
 
-¿Podrían brindarme más información sobre este plan?`;
-                                        
+                         📝 *Incluye:*
+                       ${getFeaturesToShow(plan).slice(0, 5).map((f :string) => `• ${f}`).join('\n')}`;
+
+                                        if (billingCycle === "oneTime") {
+                                            message += `
+
+                                🚀 *Importante:* Este plan incluye el código fuente completo. Tú gestionas tu propio hosting y dominio.`;
+                                        }
+
+                                        message += `
+
+                                 ¿Podrían brindarme más información sobre este plan?`;
+
                                         const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(message)}`;
                                         window.open(whatsappUrl, '_blank');
                                     }}
                                     className={`w-full py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${plan.recommended
                                         ? `bg-gradient-to-r ${plan.color} text-white shadow-lg hover:shadow-xl transform hover:scale-105`
                                         : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
-                                        }`}
+                                    }`}
                                 >
-                                    💬 Consultar por WhatsApp
+                                    {billingCycle === "oneTime" ? "🚀 Solicitar Código Fuente" : "💬 Consultar por WhatsApp"}
                                 </button>
                             </div>
                         </div>
@@ -392,8 +452,9 @@ ${plan.features.base.slice(0, 3).map(f => `• ${f}`).join('\n')}
                         </h3>
                         <p className="text-gray-600 dark:text-gray-300 mb-6">
                             ¿Necesitas algo específico? Desarrollamos tu sistema web personalizado por horas.
+                            {billingCycle === "oneTime" && " Ideal si prefieres gestionar tu propio hosting y dominio."}
                         </p>
-                        <button 
+                        <button
                             onClick={() => {
                                 const message = `¡Hola! Necesito una cotización personalizada de CodigoFacil.com
 
@@ -401,9 +462,10 @@ ${plan.features.base.slice(0, 3).map(f => `• ${f}`).join('\n')}
 
 📋 *Mi proyecto requiere:*
 • [Describir brevemente tu proyecto]
+${billingCycle === "oneTime" ? "• Prefiero gestionar mi propio hosting y dominio" : ""}
 
 ¿Podrían ayudarme con una cotización detallada?`;
-                                
+
                                 const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(message)}`;
                                 window.open(whatsappUrl, '_blank');
                             }}
@@ -427,10 +489,10 @@ ${plan.features.base.slice(0, 3).map(f => `• ${f}`).join('\n')}
                             💡 ¿No estás seguro del costo?
                         </h3>
                         <p className="text-xl text-gray-600 dark:text-gray-300">
-                            Usa nuestra calculadora para estimar tu proyecto
+                            Usa nuestra calculadora para estimar tu proyecto {billingCycle === "oneTime" && "de pago único"}
                         </p>
                     </div>
-                    
+
                     <CostCalculator />
                 </motion.div>
             </div>

@@ -294,7 +294,7 @@ Esta guía te da las bases sólidas, pero si quieres acelerar tu proyecto o nece
 }
 
 interface PageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -303,9 +303,10 @@ export async function generateStaticParams() {
   ]
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const post = blogPosts[params.slug]
-  
+
   if (!post) {
     return {
       title: 'Post no encontrado | CodigoFacil.com'
@@ -333,9 +334,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export default function BlogPostPage({ params }: PageProps) {
+export default async function BlogPostPage(props: PageProps) {
+  const params = await props.params;
   const post = blogPosts[params.slug]
-  
+
   if (!post) {
     notFound()
   }

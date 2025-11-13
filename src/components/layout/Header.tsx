@@ -3,8 +3,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowUpRight, Code, Zap } from "lucide-react";
-import { ModeToggle } from "@/components/ui/mode-toggle";
+import { ArrowUpRight, Code, Zap, Moon, Sun, X } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useModalStore } from "@/store/modalStore";
@@ -19,18 +18,61 @@ export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isDark, setIsDark] = useState(false);
 
     const pathname = usePathname();
     const router = useRouter();
 
     const headerRef = useRef<HTMLElement>(null);
     const logoRef = useRef<HTMLDivElement>(null);
-    const navRef = useRef<HTMLElement>(null);
+    const navRef = useRef<HTMLDivElement>(null);
     const ctaRef = useRef<HTMLDivElement>(null);
     const mobileMenuRef = useRef<HTMLDivElement>(null);
+    const mobileBackdropRef = useRef<HTMLDivElement>(null);
 
     // Determinar si estamos en la página de inicio
     const isHomePage = pathname === '/';
+
+    // Efecto para el tema
+    useEffect(() => {
+        // Verificar el tema guardado o la preferencia del sistema
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            setIsDark(true);
+            document.documentElement.classList.add('dark');
+        } else {
+            setIsDark(false);
+            document.documentElement.classList.remove('dark');
+        }
+    }, []);
+
+    // Efecto para bloquear el scroll cuando el menú móvil está abierto
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMenuOpen]);
+
+    // Función para alternar el tema
+    const toggleTheme = () => {
+        if (isDark) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+            setIsDark(false);
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+            setIsDark(true);
+        }
+    };
 
     useEffect(() => {
         // Usar GSAP Context para manejar correctamente las animaciones
@@ -95,66 +137,102 @@ export default function Header() {
 
     const handleNavigation = (e: any, target: string) => {
         e.preventDefault();
+        e.stopPropagation(); // Prevenir propagación
 
-        // Si el target es una ruta absoluta (como /blog)
-        if (target.startsWith('/')) {
-            router.push(target);
-            setIsMenuOpen(false);
-            return;
-        }
-
-        // Si estamos en la página de inicio, hacer scroll
-        if (isHomePage) {
-            const element = document.getElementById(target);
-            if (element) {
-                const offset = 100;
-                const elementPosition = element.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: "smooth"
-                });
-            }
-        } else {
-            // Si no estamos en la página de inicio, navegar a la home con hash
-            router.push(`/#${target}`);
-        }
-
+        // Cerrar menú móvil primero
         setIsMenuOpen(false);
+
+        // Pequeño delay para permitir la animación de cierre
+        setTimeout(() => {
+            // Si el target es una ruta absoluta (como /blog)
+            if (target.startsWith('/')) {
+                router.push(target);
+                return;
+            }
+
+            // Si estamos en la página de inicio, hacer scroll
+            if (isHomePage) {
+                const element = document.getElementById(target);
+                if (element) {
+                    const offset = 100;
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            } else {
+                // Si no estamos en la página de inicio, navegar a la home con hash
+                router.push(`/#${target}`);
+            }
+        }, 300);
     };
 
     const toggleMobileMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
+        const newState = !isMenuOpen;
+        setIsMenuOpen(newState);
 
-        if (!isMenuOpen && mobileMenuRef.current) {
-            // Abrir menú - VERIFICAR que el elemento existe
-            gsap.set(mobileMenuRef.current, { display: "flex" });
-            gsap.fromTo(mobileMenuRef.current,
-                {
-                    opacity: 0,
-                    y: -20,
-                    scale: 0.95
-                },
-                {
+        if (newState) {
+            // Abrir menú
+            if (mobileMenuRef.current && mobileBackdropRef.current) {
+                gsap.set([mobileMenuRef.current, mobileBackdropRef.current], {
+                    display: "flex",
+                    opacity: 0
+                });
+
+                gsap.to([mobileMenuRef.current, mobileBackdropRef.current], {
                     opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    duration: 0.4,
-                    ease: "back.out(1.7)"
-                }
-            );
-        } else if (mobileMenuRef.current) {
-            // Cerrar menú - VERIFICAR que el elemento existe
-            gsap.to(mobileMenuRef.current, {
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+
+                // Animación específica del panel del menú
+                gsap.fromTo(mobileMenuRef.current,
+                    {
+                        y: -20,
+                        scale: 0.95
+                    },
+                    {
+                        y: 0,
+                        scale: 1,
+                        duration: 0.4,
+                        ease: "back.out(1.7)"
+                    }
+                );
+            }
+        } else {
+            // Cerrar menú
+            if (mobileMenuRef.current && mobileBackdropRef.current) {
+                gsap.to([mobileMenuRef.current, mobileBackdropRef.current], {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        if (mobileMenuRef.current && mobileBackdropRef.current) {
+                            gsap.set([mobileMenuRef.current, mobileBackdropRef.current], {
+                                display: "none"
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    };
+
+    const closeMobileMenu = () => {
+        setIsMenuOpen(false);
+        if (mobileMenuRef.current && mobileBackdropRef.current) {
+            gsap.to([mobileMenuRef.current, mobileBackdropRef.current], {
                 opacity: 0,
-                y: -20,
-                scale: 0.95,
                 duration: 0.3,
                 ease: "power2.in",
                 onComplete: () => {
-                    if (mobileMenuRef.current) {
-                        gsap.set(mobileMenuRef.current, { display: "none" });
+                    if (mobileMenuRef.current && mobileBackdropRef.current) {
+                        gsap.set([mobileMenuRef.current, mobileBackdropRef.current], {
+                            display: "none"
+                        });
                     }
                 }
             });
@@ -263,12 +341,43 @@ export default function Header() {
 
                         <div className={`w-px h-6 ${scrolled ? "bg-gray-300 dark:bg-gray-600" : "bg-white/20"}`}></div>
 
-                        <ModeToggle />
+                        {/* Botón de tema simplificado */}
+                        <button
+                            onClick={toggleTheme}
+                            className={`relative p-2 rounded-lg transition-all duration-300 group ${
+                                scrolled
+                                    ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800"
+                                    : "text-white hover:bg-white/10"
+                            }`}
+                            aria-label={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+                        >
+                            {isDark ? (
+                                <Sun className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                            ) : (
+                                <Moon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                            )}
+                        </button>
                     </div>
 
                     {/* Botón de Menú Móvil */}
                     <div className="flex lg:hidden items-center space-x-3">
-                        <ModeToggle />
+                        {/* Botón de tema móvil */}
+                        <button
+                            onClick={toggleTheme}
+                            className={`relative p-2 rounded-lg transition-all duration-300 group ${
+                                scrolled
+                                    ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800"
+                                    : "text-white hover:bg-white/10"
+                            }`}
+                            aria-label={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+                        >
+                            {isDark ? (
+                                <Sun className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                            ) : (
+                                <Moon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                            )}
+                        </button>
+
                         <button
                             onClick={toggleMobileMenu}
                             className={`relative p-2 rounded-lg transition-all duration-300 group ${
@@ -300,51 +409,66 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* Navegación Móvil */}
+            {/* Navegación Móvil - Versión Compacta */}
             <div
-                ref={mobileMenuRef}
-                className="lg:hidden fixed inset-0 z-40 hidden"
+                ref={mobileBackdropRef}
+                className="lg:hidden fixed inset-0 z-40 hidden flex-col"
                 style={{ display: "none" }}
             >
                 {/* Backdrop */}
                 <div
                     className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-                    onClick={toggleMobileMenu}
+                    onClick={closeMobileMenu}
                 />
 
-                {/* Panel del menú */}
-                <div className="absolute top-20 right-6 left-6 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-                    <div className="p-6">
-                        <nav className="space-y-1">
+
+                <div
+                    ref={mobileMenuRef}
+                    className="absolute top-16 right-4 left-4 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 max-h-[75vh]"
+                    style={{ display: "none" }}
+                >
+                    {/* Header del menú móvil compacto */}
+                    <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700">
+
+                        <button
+                            onClick={closeMobileMenu}
+                            className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                        >
+                            <X className="w-4 h-4" />
+                        </button>
+                    </div>
+
+                    <div className="p-3 max-h-[60vh] overflow-y-auto">
+                        <nav className="space-y-0.5">
                             {navigationItems.map((item, index) => (
                                 <button
                                     key={index}
                                     onClick={(e) => handleNavigation(e, item.id)}
-                                    className="w-full flex items-center space-x-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-300 group"
+                                    className="w-full flex items-center space-x-3 p-2.5 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200 group"
                                 >
-                                    <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
+                                    <span className="text-lg group-hover:scale-105 transition-transform duration-200">
                                         {item.icon}
                                     </span>
-                                    <span className="text-lg font-medium text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
                                         {item.label}
                                     </span>
-                                    <ArrowUpRight className="w-4 h-4 ml-auto text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                                    <ArrowUpRight className="w-3 h-3 ml-auto text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
                                 </button>
                             ))}
                         </nav>
 
-                        {/* CTA Móvil */}
-                        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                        {/* CTA Móvil compacto */}
+                        <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
                             <button
                                 onClick={() => {
                                     window.open('https://wa.me/56995022549?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20desde%20el%20móvil', '_blank');
-                                    toggleMobileMenu();
+                                    closeMobileMenu();
                                 }}
-                                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl font-medium text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center space-x-3"
+                                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2.5 px-4 rounded-lg font-medium text-sm shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2"
                             >
-                                <Zap className="w-5 h-5" />
+                                <Zap className="w-4 h-4" />
                                 <span>Consulta Gratuita</span>
-                                <ArrowUpRight className="w-5 h-5" />
+                                <ArrowUpRight className="w-4 h-4" />
                             </button>
                         </div>
                     </div>
