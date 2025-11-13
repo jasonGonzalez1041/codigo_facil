@@ -4,20 +4,18 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MapPin, Mail, Phone, Send, CheckCircle2 } from "lucide-react";
+import { Mail, Send, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser";
 
 export default function ContactSection() {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
     const formCardRef = useRef<HTMLDivElement>(null);
     const infoCardRef = useRef<HTMLDivElement>(null);
-    const mapCardRef = useRef<HTMLDivElement>(null);
-    const infoItemsRef = useRef<(HTMLDivElement | null)[]>([]);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
@@ -26,7 +24,7 @@ export default function ContactSection() {
         name: "",
         email: "",
         phone: "",
-        message: ""
+        message: "",
     });
 
     useEffect(() => {
@@ -36,11 +34,7 @@ export default function ContactSection() {
             // Animación del título
             gsap.fromTo(
                 titleRef.current,
-                {
-                    y: -50,
-                    opacity: 0,
-                    scale: 0.8
-                },
+                { y: -50, opacity: 0, scale: 0.8 },
                 {
                     y: 0,
                     opacity: 1,
@@ -51,19 +45,15 @@ export default function ContactSection() {
                         trigger: sectionRef.current,
                         start: "top 70%",
                         end: "top 30%",
-                        toggleActions: "play none none reverse"
-                    }
+                        toggleActions: "play none none reverse",
+                    },
                 }
             );
 
             // Animación del formulario
             gsap.fromTo(
                 formCardRef.current,
-                {
-                    x: -100,
-                    opacity: 0,
-                    rotateY: -15
-                },
+                { x: -100, opacity: 0, rotateY: -15 },
                 {
                     x: 0,
                     opacity: 1,
@@ -74,19 +64,15 @@ export default function ContactSection() {
                         trigger: formCardRef.current,
                         start: "top 80%",
                         end: "top 40%",
-                        toggleActions: "play none none reverse"
-                    }
+                        toggleActions: "play none none reverse",
+                    },
                 }
             );
 
             // Animación de la tarjeta de información
             gsap.fromTo(
                 infoCardRef.current,
-                {
-                    x: 100,
-                    opacity: 0,
-                    rotateY: 15
-                },
+                { x: 100, opacity: 0, rotateY: 15 },
                 {
                     x: 0,
                     opacity: 1,
@@ -97,58 +83,18 @@ export default function ContactSection() {
                         trigger: infoCardRef.current,
                         start: "top 80%",
                         end: "top 40%",
-                        toggleActions: "play none none reverse"
-                    }
+                        toggleActions: "play none none reverse",
+                    },
                 }
             );
 
-            // Animación del mapa
-            gsap.fromTo(
-                mapCardRef.current,
-                {
-                    y: 100,
-                    opacity: 0,
-                    scale: 0.9
-                },
-                {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    duration: 0.8,
-                    delay: 0.2,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: mapCardRef.current,
-                        start: "top 85%",
-                        end: "top 50%",
-                        toggleActions: "play none none reverse"
-                    }
-                }
-            );
-
-            // Animación de items de información
-            infoItemsRef.current.forEach((item, index) => {
-                if (item) {
-                    gsap.fromTo(
-                        item,
-                        {
-                            x: -30,
-                            opacity: 0
-                        },
-                        {
-                            x: 0,
-                            opacity: 1,
-                            duration: 0.6,
-                            delay: 0.4 + index * 0.15,
-                            ease: "power2.out",
-                            scrollTrigger: {
-                                trigger: infoCardRef.current,
-                                start: "top 75%",
-                                toggleActions: "play none none reverse"
-                            }
-                        }
-                    );
-                }
+            // Animación del primer botón (latido)
+            gsap.to(".whatsapp-btn", {
+                scale: 1.05,
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut",
+                duration: 1.6,
             });
         }, sectionRef);
 
@@ -163,74 +109,54 @@ export default function ContactSection() {
             return;
         }
 
-        // Animación del botón
-        const submitButton = document.querySelector('#submit-button');
+        const submitButton = document.querySelector("#submit-button");
         if (submitButton) {
             gsap.to(submitButton, {
                 scale: 0.95,
                 duration: 0.1,
                 yoyo: true,
                 repeat: 1,
-                ease: "power2.inOut"
+                ease: "power2.inOut",
             });
         }
 
-        // ⭐⭐ CONFIGURACIÓN EMAILJS - REEMPLAZA CON TUS DATOS ⭐⭐
-        const serviceID = 'service_veiqier'; // Reemplaza con tu Service ID del dashboard
-        const templateID = 'template_1tbb98q'; // Reemplaza con tu Template ID del dashboard
-        const publicKey = 'raQI5NTeYw5TTPZET'; // Tu public key
+        const serviceID = "service_veiqier";
+        const templateID = "template_1tbb98q";
+        const publicKey = "raQI5NTeYw5TTPZET";
 
         try {
             setIsLoading(true);
 
-            // Preparar los datos para EmailJS
             const templateParams = {
                 name: formData.name,
                 email: formData.email,
                 phone: formData.phone,
                 message: formData.message,
-                time: new Date().toLocaleString('es-ES') // Fecha y hora actual
+                time: new Date().toLocaleString("es-ES"),
             };
 
-            // Enviar el email usando EmailJS
             await emailjs.send(serviceID, templateID, templateParams, publicKey);
 
-            // Éxito
             setIsSubmitted(true);
-            setFormData({
-                name: "",
-                email: "",
-                phone: "",
-                message: ""
-            });
+            setFormData({ name: "", email: "", phone: "", message: "" });
 
-            // Reset después de 3 segundos
             setTimeout(() => {
                 setIsSubmitted(false);
             }, 3000);
-
         } catch (error) {
-            console.error('Error enviando el formulario:', error);
-            alert('Error al enviar el mensaje. Por favor intenta nuevamente.');
+            console.error("Error enviando el formulario:", error);
+            alert("Error al enviar el mensaje. Por favor intenta nuevamente.");
         } finally {
             setIsLoading(false);
         }
     };
 
     const handleInputFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        gsap.to(e.target, {
-            scale: 1.02,
-            duration: 0.2,
-            ease: "power2.out"
-        });
+        gsap.to(e.target, { scale: 1.02, duration: 0.2, ease: "power2.out" });
     };
 
     const handleInputBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        gsap.to(e.target, {
-            scale: 1,
-            duration: 0.2,
-            ease: "power2.inOut"
-        });
+        gsap.to(e.target, { scale: 1, duration: 0.2, ease: "power2.inOut" });
     };
 
     return (
@@ -246,11 +172,8 @@ export default function ContactSection() {
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
-                {/* Título de la sección */}
-                <motion.div
-                    ref={titleRef}
-                    className="text-center mb-16"
-                >
+                {/* Título */}
+                <motion.div ref={titleRef} className="text-center mb-16">
           <span className="text-blue-600 dark:text-blue-400 text-sm font-semibold uppercase tracking-wider mb-3 block">
             Contacto
           </span>
@@ -267,14 +190,13 @@ export default function ContactSection() {
                 </motion.div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-                    {/* Formulario de contacto */}
+                    {/* Formulario */}
                     <div
                         ref={formCardRef}
                         className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden"
                         style={{ perspective: "1000px" }}
                     >
-                        {/* Gradiente decorativo */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 dark:from-blue-500/10 dark:to-purple-500/10"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 dark:from-blue-500/10 dark:to-purple-500/10 pointer-events-none"></div>
 
                         <div className="relative p-8 md:p-10">
                             <div className="flex items-center mb-6">
@@ -304,72 +226,56 @@ export default function ContactSection() {
                                 <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <Label htmlFor="name" className="text-gray-700 dark:text-gray-300 font-medium">
-                                                Nombre completo *
-                                            </Label>
+                                            <Label htmlFor="name">Nombre completo *</Label>
                                             <Input
                                                 id="name"
-                                                name="name"
                                                 value={formData.name}
                                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                                placeholder="Juan Pérez"
                                                 onFocus={handleInputFocus}
                                                 onBlur={handleInputBlur}
-                                                className="bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-all"
+                                                placeholder="Juan Pérez"
                                                 disabled={isLoading}
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="email" className="text-gray-700 dark:text-gray-300 font-medium">
-                                                Correo electrónico *
-                                            </Label>
+                                            <Label htmlFor="email">Correo electrónico *</Label>
                                             <Input
                                                 id="email"
-                                                name="email"
                                                 type="email"
                                                 value={formData.email}
                                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                placeholder="juan@ejemplo.com"
                                                 onFocus={handleInputFocus}
                                                 onBlur={handleInputBlur}
-                                                className="bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-all"
+                                                placeholder="juan@ejemplo.com"
                                                 disabled={isLoading}
                                             />
                                         </div>
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="phone" className="text-gray-700 dark:text-gray-300 font-medium">
-                                            Teléfono
-                                        </Label>
+                                        <Label htmlFor="phone">Teléfono</Label>
                                         <Input
                                             id="phone"
-                                            name="phone"
                                             type="tel"
                                             value={formData.phone}
                                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                            placeholder="+506 8888-8888"
                                             onFocus={handleInputFocus}
                                             onBlur={handleInputBlur}
-                                            className="bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-all"
+                                            placeholder="+506 8888-8888"
                                             disabled={isLoading}
                                         />
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="message" className="text-gray-700 dark:text-gray-300 font-medium">
-                                            Mensaje *
-                                        </Label>
+                                        <Label htmlFor="message">Mensaje *</Label>
                                         <Textarea
                                             id="message"
-                                            name="message"
+                                            rows={5}
                                             value={formData.message}
                                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                            placeholder="Cuéntanos sobre tu proyecto..."
-                                            rows={5}
                                             onFocus={handleInputFocus}
                                             onBlur={handleInputBlur}
-                                            className="bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-all resize-none"
+                                            placeholder="Cuéntanos sobre tu proyecto..."
                                             disabled={isLoading}
                                         />
                                     </div>
@@ -380,191 +286,75 @@ export default function ContactSection() {
                                         disabled={isLoading}
                                         className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
-                                        {isLoading ? (
-                                            "Enviando..."
-                                        ) : (
-                                            <>
-                                                <Send className="w-5 h-5 mr-2" />
-                                                Enviar mensaje
-                                            </>
-                                        )}
+                                        {isLoading ? "Enviando..." : <> <Send className="w-5 h-5 mr-2" /> Enviar mensaje </>}
                                     </Button>
-
-                                    <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                                        Los campos marcados con * son obligatorios.
-                                    </p>
                                 </form>
                             )}
                         </div>
 
-                        {/* Borde animado */}
                         <div className="absolute inset-0 rounded-2xl border-2 border-transparent hover:border-blue-500/30 dark:hover:border-blue-400/30 transition-all duration-500 pointer-events-none"></div>
                     </div>
 
-                    {/* Información de contacto y mapa */}
-                    <div className="flex flex-col gap-8">
-                        {/* Tarjeta de información */}
-                        <div
-                            ref={infoCardRef}
-                            className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden"
-                            style={{ perspective: "1000px" }}
-                        >
-                            {/* Gradiente decorativo */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 dark:from-purple-500/10 dark:to-blue-500/10"></div>
+                    {/* Tarjeta de información */}
+                    <div
+                        ref={infoCardRef}
+                        className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden h-fit"
+                        style={{ perspective: "1000px" }}
+                    >
+                        <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-blue-500/5 dark:from-green-500/10 dark:to-blue-500/10 pointer-events-none"></div>
 
-                            <div className="relative p-8 md:p-10">
-                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                                    Información de contacto
+                        <div className="relative p-8 md:p-10 z-10">
+                            <div className="text-center mb-8">
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                                    💬 ¿Listo para empezar tu proyecto?
                                 </h3>
-
-                                <div className="space-y-6">
-                                    <div
-                                        ref={(el) => { infoItemsRef.current[0] = el; }}
-                                        className="flex items-start group cursor-pointer"
-                                    >
-                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 p-2.5 shadow-lg mr-4 group-hover:scale-110 transition-transform duration-300">
-                                            <MapPin className="w-full h-full text-white" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
-                                                Dirección
-                                            </h4>
-                                            <p className="text-gray-600 dark:text-gray-300">
-                                                Guápiles, Limón, Costa Rica
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        ref={(el) => { infoItemsRef.current[1] = el; }}
-                                        className="flex items-start group cursor-pointer"
-                                    >
-                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 p-2.5 shadow-lg mr-4 group-hover:scale-110 transition-transform duration-300">
-                                            <Phone className="w-full h-full text-white" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
-                                                Teléfonos
-                                            </h4>
-                                            <div className="space-y-1">
-                                                <p className="text-gray-600 dark:text-gray-300">
-                                                    Kevin: +569 95022549
-                                                </p>
-                                                <p className="text-gray-600 dark:text-gray-300">
-                                                    Soporte: +506 86462423
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        ref={(el) => { infoItemsRef.current[2] = el; }}
-                                        className="flex items-start group cursor-pointer"
-                                    >
-                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 p-2.5 shadow-lg mr-4 group-hover:scale-110 transition-transform duration-300">
-                                            <Mail className="w-full h-full text-white" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
-                                                Correo Electrónico
-                                            </h4>
-                                            <p className="text-gray-600 dark:text-gray-300">
-                                                info@codigofacil.com
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+                                <p className="text-gray-600 dark:text-gray-300">
+                                    Contáctanos por WhatsApp y recibe atención inmediata
+                                </p>
                             </div>
 
-                            {/* Borde animado */}
-                            <div className="absolute inset-0 rounded-2xl border-2 border-transparent hover:border-purple-500/30 dark:hover:border-purple-400/30 transition-all duration-500"></div>
-                        </div>
+                            {/* Botones de contacto */}
+                            <div className="space-y-4 mb-8 relative z-20">
+                                {/* Botón principal */}
+                                <button
+                                    className="whatsapp-btn w-full px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-300 flex items-center justify-center gap-3"
+                                    onClick={() => {
+                                        const msg = `¡Hola! Me interesa conocer más sobre los servicios de CodigoFacil.com 🚀`;
+                                        window.open(`https://wa.me/5695022549?text=${encodeURIComponent(msg)}`, "_blank");
+                                    }}
+                                >
+                                    <span className="text-xl">💼💬</span>
+                                    <span className="font-semibold">WhatsApp</span>
+                                </button>
 
-                        {/* Mapa */}
-                        <div
-                            ref={mapCardRef}
-                            className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden h-[300px] group"
-                        >
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125759.38028798043!2d-83.85536065759033!3d10.21744576533222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0adf056d48371%3A0xf0ae9e97dc5e651a!2zR3XDoXBpbGVz!5e0!3m2!1ses-419!2scr!4v1695742800782!5m2!1ses-419!2scr"
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0 }}
-                                allowFullScreen
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                title="Ubicación de Ezdev CR"
-                                className="rounded-2xl grayscale group-hover:grayscale-0 transition-all duration-500"
-                            />
-
-                            {/* Overlay con info */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                                <div className="absolute bottom-0 left-0 right-0 p-6">
-                                    <p className="text-white font-semibold text-lg">
-                                        📍 Guápiles, Limón
-                                    </p>
-                                </div>
+                                {/* Botón soporte */}
+                                <button
+                                    className="w-full px-6 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3"
+                                    onClick={() => {
+                                        const msg = `¡Hola! Necesito soporte técnico de CodigoFacil.com 🔧`;
+                                        window.open(`https://wa.me/50686462423?text=${encodeURIComponent(msg)}`, "_blank");
+                                    }}
+                                >
+                                    <span className="text-xl">🤖💬</span>
+                                    <span className="font-semibold">Soporte Técnico</span>
+                                </button>
                             </div>
 
-                            {/* Borde animado */}
-                            <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-500/50 dark:group-hover:border-blue-400/50 transition-all duration-500"></div>
+                            {/* Email */}
+                            <div className="text-center border-t border-gray-200 dark:border-gray-700 pt-6">
+                                <a
+                                    href="mailto:Vecipremiun@gmail.com"
+                                    className="inline-flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group"
+                                >
+                                    <Mail className="w-5 h-5 text-blue-500 group-hover:scale-110 transition-transform duration-300" />
+                                    <span className="font-medium">Vecipremiun@gmail.com</span>
+                                </a>
+                            </div>
                         </div>
+
+                        <div className="absolute inset-0 rounded-2xl border-2 border-transparent hover:border-green-500/30 dark:hover:border-green-400/30 transition-all duration-500 pointer-events-none"></div>
                     </div>
                 </div>
-
-                {/* CTA adicional con WhatsApp */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                    viewport={{ once: true }}
-                    className="text-center mt-16"
-                >
-                    <div className="inline-block bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-2xl px-8 py-6 shadow-lg">
-                        <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
-              <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">
-                💬 ¿Listo para empezar tu proyecto?
-              </span>
-                        </p>
-                        <p className="text-gray-600 dark:text-gray-400 mb-6">
-                            Contáctanos por WhatsApp y recibe atención inmediata
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button
-                                onClick={() => {
-                                    const message = `¡Hola! Me interesa conocer más sobre los servicios de CodigoFacil.com
-
-🚀 Quiero iniciar mi proyecto web
-
-¿Podrían orientarme sobre cuál plan se adapta mejor a mis necesidades?`;
-
-                                    const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(message)}`;
-                                    window.open(whatsappUrl, '_blank');
-                                }}
-                                className="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
-                            >
-                                💬 WhatsApp Kevin
-                                <span className="text-sm opacity-90">+569 95022549</span>
-                            </button>
-                            <button
-                                onClick={() => {
-                                    const message = `¡Hola! Necesito soporte técnico de CodigoFacil.com
-
-🔧 Tengo una consulta sobre mi proyecto
-
-¿Podrían ayudarme?`;
-
-                                    const whatsappUrl = `https://wa.me/50686462423?text=${encodeURIComponent(message)}`;
-                                    window.open(whatsappUrl, '_blank');
-                                }}
-                                className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
-                            >
-                                🛠️ Soporte Técnico
-                                <span className="text-sm opacity-90">+506 86462423</span>
-                            </button>
-                        </div>
-                    </div>
-                </motion.div>
             </div>
         </section>
     );
