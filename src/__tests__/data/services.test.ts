@@ -19,7 +19,7 @@ describe('Services Data', () => {
       'timeline'
     ]
 
-    servicesData.forEach((service, index) => {
+    servicesData.forEach((service) => {
       requiredProperties.forEach(property => {
         expect(service).toHaveProperty(property)
         expect(service[property as keyof Service]).toBeDefined()

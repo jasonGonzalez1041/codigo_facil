@@ -87,19 +87,23 @@ describe('HomePage', () => {
     ])
   })
 
-  it('should be a client component', () => {
+  it('should be a client component', async () => {
     // This test verifies the component is marked as client-side
-    const componentCode = require('fs').readFileSync(
-      require('path').join(process.cwd(), 'src/app/page.tsx'),
+    const fs = await import('fs')
+    const path = await import('path')
+    const componentCode = fs.readFileSync(
+      path.join(process.cwd(), 'src/app/page.tsx'),
       'utf8'
     )
     
     expect(componentCode).toContain('"use client"')
   })
 
-  it('should import GSAP and ScrollTrigger', () => {
-    const componentCode = require('fs').readFileSync(
-      require('path').join(process.cwd(), 'src/app/page.tsx'),
+  it('should import GSAP and ScrollTrigger', async () => {
+    const fs = await import('fs')
+    const path = await import('path')
+    const componentCode = fs.readFileSync(
+      path.join(process.cwd(), 'src/app/page.tsx'),
       'utf8'
     )
     
@@ -107,9 +111,11 @@ describe('HomePage', () => {
     expect(componentCode).toContain('import { ScrollTrigger } from "gsap/ScrollTrigger"')
   })
 
-  it('should use React hooks for animations', () => {
-    const componentCode = require('fs').readFileSync(
-      require('path').join(process.cwd(), 'src/app/page.tsx'),
+  it('should use React hooks for animations', async () => {
+    const fs = await import('fs')
+    const path = await import('path')
+    const componentCode = fs.readFileSync(
+      path.join(process.cwd(), 'src/app/page.tsx'),
       'utf8'
     )
     

@@ -62,7 +62,7 @@ const ServicesSection = MockServicesSection
 
 // Mock the service modal
 jest.mock('@/components/ui/service-modal', () => {
-  return function ServiceModal({ isOpen, onClose, service }: any) {
+  return function ServiceModal({ isOpen, onClose, service }: { isOpen: boolean; onClose: () => void; service?: { title: string } }) {
     if (!isOpen) return null
     return (
       <div data-testid="service-modal">
