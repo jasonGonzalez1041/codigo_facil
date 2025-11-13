@@ -310,13 +310,17 @@ Me gustaría recibir más información y una cotización personalizada para mi p
                                     {service.process.map((step, index) => (
                                         <div key={index} className="flex items-start gap-3 relative">
                                             <div
-                                                ref={(el) => (processRefs.current[index] = el)}
+                                                ref={(el) => {
+                                                    processRefs.current[index] = el;
+                                                }}
                                                 className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm font-bold shadow-lg"
                                             >
                                                 {index + 1}
                                             </div>
                                             <span
-                                                ref={(el) => (textRefs.current[index] = el)}
+                                                ref={(el) => {
+                                                    textRefs.current[index] = el;
+                                                }}
                                                 className="text-sm text-gray-400 leading-relaxed pt-1.5"
                                             >
                         {step}

@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:vercel": "cp next.config.vercel.js next.config.js && next build",
+    "build:cloudflare": "cp next.config.js next.config.cloudflare.js && next build && npx @cloudflare/next-on-pages",
     "start": "next start",
     "lint": "eslint",
     "pages:build": "next build && npx @cloudflare/next-on-pages",
@@ -15,7 +17,9 @@
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage --watchAll=false",
     "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy"
+    "deploy": "npm run pages:build && wrangler pages deploy",
+    "vercel:deploy": "vercel --prod",
+    "vercel:preview": "vercel"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
