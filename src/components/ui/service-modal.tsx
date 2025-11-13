@@ -302,46 +302,54 @@ Me gustaría recibir más información y una cotización personalizada para mi p
                             </div>
 
                             {/* === Columna 3: Proceso === */}
-                            <div className="xl:col-span-1 space-y-4">
-                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                            <div className="xl:col-span-1 space-y-6"> {/* Aumenté el espacio general */}
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                                     Nuestro proceso
                                 </h3>
-                                <div className="space-y-3 relative">
+
+                                {/* Lista de procesos */}
+                                <div className="space-y-4 relative">
                                     {service.process.map((step, index) => (
                                         <div key={index} className="flex items-start gap-3 relative">
                                             <div
-                                                ref={(el) => (processRefs.current[index] = el)}
-                                                className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm font-bold shadow-lg"
+                                                ref={el => {processRefs.current[index] = el}}
+                                                className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm font-bold shadow-lg flex-shrink-0"
                                             >
                                                 {index + 1}
                                             </div>
                                             <span
-                                                ref={(el) => (textRefs.current[index] = el)}
-                                                className="text-sm text-gray-400 leading-relaxed pt-1.5"
+                                                ref={el => {textRefs.current[index] = el}}
+                                                className="text-sm text-gray-400 leading-relaxed pt-1.5 flex-1"
                                             >
-                        {step}
-                      </span>
+                    {step}
+                </span>
                                             <div
-                                                ref={(el) => (pulseRefs.current[index] = el)}
+                                                ref={el => {pulseRefs.current[index] = el}}
                                                 className="absolute -left-2 top-2 w-12 h-12 rounded-full bg-blue-500/20 opacity-0"
                                             ></div>
                                         </div>
                                     ))}
                                 </div>
 
-                                <div className="relative mt-6 mb-4">
-                                    <div className="absolute top-4 left-4 right-4 h-1 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-                                    <div
-                                        ref={progressBarRef}
-                                        className="absolute top-4 left-4 h-1 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full shadow-lg"
-                                        style={{
-                                            width: "2rem",
-                                            boxShadow: "0 0 10px rgba(147, 51, 234, 0.5)",
-                                        }}
-                                    ></div>
+                                {/* Contenedor separado para la barra de progreso */}
+                                <div className="pt-6 pb-4"> {/* Padding adicional arriba y abajo */}
+                                    <div className="relative h-4"> {/* Altura fija para el contenedor de la barra */}
+                                        {/* Barra de fondo */}
+                                        <div className="absolute top-1/2 left-0 right-0 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full transform -translate-y-1/2"></div>
+                                        {/* Barra de progreso animada */}
+                                        <div
+                                            ref={progressBarRef}
+                                            className="absolute top-1/2 left-0 h-1.5 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full shadow-lg transform -translate-y-1/2"
+                                            style={{
+                                                width: "2rem",
+                                                boxShadow: "0 0 10px rgba(147, 51, 234, 0.5)",
+                                            }}
+                                        ></div>
+                                    </div>
                                 </div>
 
-                                <div className="text-center mt-6">
+                                {/* Texto "Proceso en ejecución" con separación clara */}
+                                <div className="text-center pt-2"> {/* Padding top adicional */}
                                     <div
                                         ref={restartIndicatorRef}
                                         className="inline-flex items-center gap-2 text-xs text-blue-600 dark:text-blue-400 font-medium opacity-70"

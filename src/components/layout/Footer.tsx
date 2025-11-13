@@ -95,8 +95,8 @@ export default function Footer() {
                     <div className="text-center sm:text-left">
                         <h3 className="text-lg font-bold mb-6 text-white">Servicios</h3>
                         <ul className="space-y-3">
-                            {servicios.map((item) => (
-                                <li key={item.href}>
+                            {servicios.map((item, index) => (
+                                <li key={`${item.href}-${index}`}>
                                     <Link
                                         href={item.href}
                                         className="hover:text-blue-400 transition-colors duration-300 inline-block py-1 text-sm sm:text-base"
@@ -106,6 +106,7 @@ export default function Footer() {
                                 </li>
                             ))}
                         </ul>
+
                     </div>
 
                     {/* Columna 4 - Contacto (nueva fila en móvil, al lado derecho en desktop) */}

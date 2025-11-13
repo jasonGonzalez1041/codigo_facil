@@ -1,6 +1,7 @@
+// components/sections/BlogSection.tsx
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,6 +11,8 @@ import {
     ArrowRight,
     Tag
 } from "lucide-react";
+import Link from "next/link";
+import GuideModal from "@/components/ui/guide-modal";
 
 const blogPosts = [
     {
@@ -44,18 +47,17 @@ const blogPosts = [
     }
 ];
 
-// Guarda este componente en: @/components/sections/BlogSection.tsx
-
 export default function BlogSection() {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
     const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+    const [selectedGuide, setSelectedGuide] = useState<any>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
         const ctx = gsap.context(() => {
-            // Animación del título
             gsap.fromTo(
                 titleRef.current,
                 {
@@ -71,14 +73,13 @@ export default function BlogSection() {
                     ease: "back.out(1.7)",
                     scrollTrigger: {
                         trigger: sectionRef.current,
-                        start: "top 70%",
-                        end: "top 30%",
+                        start: "top 80%",
+                        end: "top 40%",
                         toggleActions: "play none none reverse"
                     }
                 }
             );
 
-            // Animación de las tarjetas
             cardsRef.current.forEach((card, index) => {
                 if (card) {
                     gsap.fromTo(
@@ -99,8 +100,8 @@ export default function BlogSection() {
                             ease: "power3.out",
                             scrollTrigger: {
                                 trigger: card,
-                                start: "top 85%",
-                                end: "top 50%",
+                                start: "top 90%",
+                                end: "top 60%",
                                 toggleActions: "play none none reverse"
                             }
                         }
@@ -121,7 +122,6 @@ export default function BlogSection() {
                 ease: "power2.out"
             });
 
-            // Animar la imagen
             const image = card.querySelector('.blog-image');
             gsap.to(image, {
                 scale: 1.1,
@@ -129,7 +129,6 @@ export default function BlogSection() {
                 ease: "power2.out"
             });
 
-            // Animar el overlay
             const overlay = card.querySelector('.blog-overlay');
             gsap.to(overlay, {
                 opacity: 0.8,
@@ -137,7 +136,6 @@ export default function BlogSection() {
                 ease: "power2.out"
             });
 
-            // Animar la flecha
             const arrow = card.querySelector('.blog-arrow');
             gsap.to(arrow, {
                 x: 5,
@@ -179,10 +177,21 @@ export default function BlogSection() {
         }
     };
 
+    const handleGuideClick = (guide: any) => {
+        setSelectedGuide(guide);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedGuide(null);
+    };
+
     return (
         <section
             ref={sectionRef}
-            className="py-24 md:py-32 bg-white dark:bg-gray-900 relative overflow-hidden"
+            className="py-24 md:py-32 bg-white dark:bg-gray-900 relative overflow-hidden pt-32"
+            id="blog"
         >
             {/* Elementos decorativos de fondo */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -219,7 +228,8 @@ export default function BlogSection() {
                             ref={(el) => { cardsRef.current[index] = el; }}
                             onMouseEnter={() => handleMouseEnter(index)}
                             onMouseLeave={() => handleMouseLeave(index)}
-                            className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden cursor-pointer"
+                            onClick={() => handleGuideClick(post)}
+                            className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden cursor-pointer border border-gray-100 dark:border-gray-700"
                         >
                             {/* Imagen */}
                             <div className="relative h-56 overflow-hidden">
@@ -283,12 +293,22 @@ export default function BlogSection() {
                     viewport={{ once: true }}
                     className="text-center"
                 >
-                    <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2 mx-auto">
+                    <Link
+                        href='/blog'
+                        className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2 mx-auto w-fit"
+                    >
                         Ver Todos los Artículos
                         <ArrowRight className="w-5 h-5" />
-                    </button>
+                    </Link>
                 </motion.div>
             </div>
+
+            {/* Modal para mostrar las guías */}
+            <GuideModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                guide={selectedGuide}
+            />
         </section>
     );
 }
