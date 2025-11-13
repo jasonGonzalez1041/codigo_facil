@@ -53,7 +53,10 @@ export default function HeroSection() {
 
   // Configuración inicial y efecto de visibilidad
   useEffect(() => {
-    setIsVisible(true);
+    // Usar timeout para evitar setState directo en useEffect
+    const visibilityTimeout = setTimeout(() => {
+      setIsVisible(true);
+    }, 0);
 
     // Efecto de parpadeo para el cursor del título
     const cursorInterval = setInterval(() => {
@@ -66,6 +69,7 @@ export default function HeroSection() {
     }, 500);
 
     return () => {
+      clearTimeout(visibilityTimeout);
       clearInterval(cursorInterval);
       clearInterval(techCursorInterval);
     };

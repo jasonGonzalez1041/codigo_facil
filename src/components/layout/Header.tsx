@@ -17,7 +17,7 @@ export default function Header() {
     const { isAnyModalOpen } = useModalStore();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [, setIsLoaded] = useState(false);
     const [isDark, setIsDark] = useState(false);
 
     const pathname = usePathname();
@@ -39,13 +39,18 @@ export default function Header() {
         const savedTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-            setIsDark(true);
+        const shouldBeDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+        
+        if (shouldBeDark) {
             document.documentElement.classList.add('dark');
         } else {
-            setIsDark(false);
             document.documentElement.classList.remove('dark');
         }
+        
+        // Use timeout to avoid setState directly in effect
+        setTimeout(() => {
+            setIsDark(shouldBeDark);
+        }, 0);
     }, []);
 
     // Efecto para bloquear el scroll cuando el menú móvil está abierto
