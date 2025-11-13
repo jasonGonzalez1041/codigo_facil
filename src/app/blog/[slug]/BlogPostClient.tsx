@@ -69,6 +69,7 @@ export function BlogPostClient({ post, slug }: BlogPostClientProps) {
       <article className="py-12">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src={post.image}
               alt={post.title}

@@ -51,7 +51,16 @@ export default function BlogSection() {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
     const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-    const [selectedGuide, setSelectedGuide] = useState<any>(null);
+    const [selectedGuide, setSelectedGuide] = useState<{
+        id: number;
+        title: string;
+        excerpt: string;
+        image: string;
+        category: string;
+        date: string;
+        readTime: string;
+        color: string;
+    } | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -177,7 +186,16 @@ export default function BlogSection() {
         }
     };
 
-    const handleGuideClick = (guide: any) => {
+    const handleGuideClick = (guide: {
+        id: number;
+        title: string;
+        excerpt: string;
+        image: string;
+        category: string;
+        date: string;
+        readTime: string;
+        color: string;
+    }) => {
         setSelectedGuide(guide);
         setIsModalOpen(true);
     };

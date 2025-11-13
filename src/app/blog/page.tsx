@@ -5,6 +5,22 @@ import { useState } from 'react';
 import { BlogPageClient } from './BlogPageClient';
 import GuideModal from '@/components/ui/guide-modal';
 
+interface BlogPost {
+    id: number;
+    title: string;
+    slug: string;
+    excerpt: string;
+    readTime: string;
+    category: string;
+    publishedAt: string;
+    lastUpdated: string;
+    date: string; // Add this for compatibility with GuideModal
+    image: string;
+    evergreen: boolean;
+    featured?: boolean;
+    color: string;
+}
+
 const evergreenPosts = [
     {
         id: 1,
@@ -15,6 +31,7 @@ const evergreenPosts = [
         category: "Desarrollo Web",
         publishedAt: "2025-01-01",
         lastUpdated: "2025-01-01",
+        date: "2025-01-01",
         image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
         evergreen: true,
         featured: true,
@@ -29,6 +46,7 @@ const evergreenPosts = [
         category: "E-commerce",
         publishedAt: "2025-01-08",
         lastUpdated: "2025-01-08",
+        date: "2025-01-08",
         image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
         evergreen: true,
         color: "from-green-500 to-emerald-500"
@@ -42,6 +60,7 @@ const evergreenPosts = [
         category: "SEO",
         publishedAt: "2025-01-15",
         lastUpdated: "2025-01-15",
+        date: "2025-01-15",
         image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=80",
         evergreen: true,
         color: "from-purple-500 to-pink-500"
@@ -49,10 +68,10 @@ const evergreenPosts = [
 ];
 
 export default function BlogPage() {
-    const [selectedGuide, setSelectedGuide] = useState<any>(null);
+    const [selectedGuide, setSelectedGuide] = useState<BlogPost | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleGuideClick = (guide: any) => {
+    const handleGuideClick = (guide: BlogPost) => {
         setSelectedGuide(guide);
         setIsModalOpen(true);
     };
@@ -105,6 +124,7 @@ export default function BlogPage() {
                         >
                             <div className="md:flex">
                                 <div className="md:w-1/2">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={post.image}
                                         alt={post.title}
@@ -154,6 +174,7 @@ export default function BlogPage() {
                                 className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer"
                                 onClick={() => handleGuideClick(post)}
                             >
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={post.image}
                                     alt={post.title}
