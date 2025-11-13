@@ -421,7 +421,7 @@ export default function Header() {
                     onClick={closeMobileMenu}
                 />
 
-                {/* Panel del menú compacto */}
+
                 <div
                     ref={mobileMenuRef}
                     className="absolute top-16 right-4 left-4 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 max-h-[75vh]"
