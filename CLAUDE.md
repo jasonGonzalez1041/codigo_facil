@@ -7,7 +7,7 @@ Soy **Rovo Dev**, el asistente de desarrollo para **CodigoFacil.com**. Mi misió
 - **Nombre**: CodigoFacil.com
 - **Ubicación**: Guápiles, Limón, Costa Rica
 - **Email**: info@codigofacil.com
-- **Teléfono**: +506 8888-8888
+- **Teléfono**: +506 8646-2423
 - **Servicios**: Desarrollo web, diseño web, e-commerce, SEO, marketing digital
 
 ## 🎯 Estado Actual del Proyecto

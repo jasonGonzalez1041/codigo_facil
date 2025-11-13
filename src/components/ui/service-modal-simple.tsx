@@ -117,7 +117,7 @@ export function ServiceModalSimple({ isOpen, onClose, service }: ServiceModalPro
                 </p>
               </div>
 
-              {/* Technologies */}
+
               {service.technologies && (
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
