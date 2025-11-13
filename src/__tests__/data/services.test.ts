@@ -87,9 +87,9 @@ describe('Services Data', () => {
 
   it('should have specific expected services', () => {
     const expectedServiceIds = [
-      'web-development',
-      'ecommerce',
       'web-app',
+      'ecommerce',
+      'mobile-app',
       'maintenance',
       'consulting',
       'optimization'
@@ -117,13 +117,13 @@ describe('Services Data', () => {
     })
   })
 
-  describe('Web Development Service', () => {
-    const webDevService = servicesData.find(s => s.id === 'web-development')!
+  describe('Web App Service', () => {
+    const webAppService = servicesData.find(s => s.id === 'web-app')!
 
-    it('should have correct web development service properties', () => {
-      expect(webDevService.title).toBe('Desarrollo Web Personalizado')
-      expect(webDevService.icon).toBe('🚀')
-      expect(webDevService.technologies).toContain('Next.js ⚛️')
+    it('should have correct web app service properties', () => {
+      expect(webAppService.title).toBe('Aplicación Web')
+      expect(webAppService.icon).toBe('⚡')
+      expect(webAppService.technologies).toContain('Next.js ⚛️')
     })
   })
 
