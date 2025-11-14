@@ -13,6 +13,11 @@ if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 }
 
+// Configuración de caché estática para Next.js 15+
+export const dynamic = 'force-static';
+export const revalidate = 3600; // 1 hora
+export const runtime = 'nodejs';
+
 export default function Header() {
     const { isAnyModalOpen } = useModalStore();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,6 +37,15 @@ export default function Header() {
 
     // Determinar si estamos en la página de inicio
     const isHomePage = pathname === '/';
+
+    // Rutas estáticas optimizadas
+    const staticRoutes = {
+        home: '/',
+        blog: '/#blog',
+        services: '/#servicios',
+        pricing: '/#precios',
+        contact: '/#contacto'
+    };
 
     // Efecto para el tema
     useEffect(() => {
@@ -71,6 +85,67 @@ export default function Header() {
             document.documentElement.classList.add('dark');
             localStorage.setItem('theme', 'dark');
             setIsDark(true);
+        }
+    };
+
+    // Navegación optimizada con caché
+    const handleNavigation = (target: string) => {
+        // Cerrar menú móvil primero
+        setIsMenuOpen(false);
+
+        // Pequeño delay para permitir la animación de cierre
+        setTimeout(() => {
+            // Navegación estática sin hash para rutas principales
+            switch(target) {
+                case 'inicio':
+                    router.push(staticRoutes.home);
+                    break;
+                case 'servicios':
+                    if (isHomePage) {
+                        scrollToSection('servicios');
+                    } else {
+                        router.push(staticRoutes.services);
+                    }
+                    break;
+                case 'blog':
+                    if (isHomePage) {
+                        scrollToSection('blog');
+                    } else {
+                        router.push(staticRoutes.pricing);
+                    }
+                    break;
+                case 'precios':
+                    if (isHomePage) {
+                        scrollToSection('precios');
+                    } else {
+                        router.push(staticRoutes.pricing);
+                    }
+                    break;
+                case 'contacto':
+                    if (isHomePage) {
+                        scrollToSection('contacto');
+                    } else {
+                        router.push(staticRoutes.contact);
+                    }
+                    break;
+                default:
+                    router.push(staticRoutes.home);
+            }
+        }, 300);
+    };
+
+    // Función auxiliar para scroll suave
+    const scrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            const offset = 100;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
         }
     };
 
@@ -134,41 +209,6 @@ export default function Header() {
             window.removeEventListener("scroll", handleScroll);
         };
     }, [scrolled]);
-
-    const handleNavigation = (e: any, target: string) => {
-        e.preventDefault();
-        e.stopPropagation(); // Prevenir propagación
-
-        // Cerrar menú móvil primero
-        setIsMenuOpen(false);
-
-        // Pequeño delay para permitir la animación de cierre
-        setTimeout(() => {
-            // Si el target es una ruta absoluta (como /blog)
-            if (target.startsWith('/')) {
-                router.push(target);
-                return;
-            }
-
-            // Si estamos en la página de inicio, hacer scroll
-            if (isHomePage) {
-                const element = document.getElementById(target);
-                if (element) {
-                    const offset = 100;
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
-                }
-            } else {
-                // Si no estamos en la página de inicio, navegar a la home con hash
-                router.push(`/#${target}`);
-            }
-        }, 300);
-    };
 
     const toggleMobileMenu = () => {
         const newState = !isMenuOpen;
@@ -242,8 +282,8 @@ export default function Header() {
     const navigationItems = [
         { id: "inicio", label: "Inicio", icon: "🏠" },
         { id: "servicios", label: "Servicios", icon: "⚡" },
-        { id: "/blog", label: "Blog", icon: "📝" },
         { id: "precios", label: "Precios", icon: "💰" },
+        { id: "blog", label: "Blog", icon: "📝" },
         { id: "contacto", label: "Contacto", icon: "📱" }
     ];
 
@@ -264,7 +304,7 @@ export default function Header() {
                 <div className="flex items-center justify-between h-20">
                     {/* Logo */}
                     <button
-                        onClick={(e) => handleNavigation(e, isHomePage ? "inicio" : "/")}
+                        onClick={() => handleNavigation("inicio")}
                         className="flex items-center group cursor-pointer"
                     >
                         <div className="relative">
@@ -304,7 +344,7 @@ export default function Header() {
                         {navigationItems.map((item, index) => (
                             <button
                                 key={index}
-                                onClick={(e) => handleNavigation(e, item.id)}
+                                onClick={() => handleNavigation(item.id)}
                                 className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 group ${
                                     scrolled
                                         ? "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -324,7 +364,7 @@ export default function Header() {
                         className="hidden lg:flex items-center space-x-4"
                     >
                         <button
-                            onClick={() => window.open('https://wa.me/56995022549?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20para%20mi%20proyecto%20web', '_blank')}
+                            onClick={() => window.open('https://wa.me/56950225491?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20para%20mi%20proyecto%20web', '_blank')}
                             className={`group relative px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 overflow-hidden ${
                                 scrolled
                                     ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg hover:shadow-blue-500/25"
@@ -443,7 +483,7 @@ export default function Header() {
                             {navigationItems.map((item, index) => (
                                 <button
                                     key={index}
-                                    onClick={(e) => handleNavigation(e, item.id)}
+                                    onClick={() => handleNavigation(item.id)}
                                     className="w-full flex items-center space-x-3 p-2.5 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200 group"
                                 >
                                     <span className="text-lg group-hover:scale-105 transition-transform duration-200">
@@ -461,7 +501,7 @@ export default function Header() {
                         <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
                             <button
                                 onClick={() => {
-                                    window.open('https://wa.me/56995022549?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20desde%20el%20móvil', '_blank');
+                                    window.open('https://wa.me/56950225491?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20desde%20el%20móvil', '_blank');
                                     closeMobileMenu();
                                 }}
                                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2.5 px-4 rounded-lg font-medium text-sm shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2"

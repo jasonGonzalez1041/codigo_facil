@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import BlogPage from '@/app/blog/page'
 
-// Mock the BlogPageClient component
-jest.mock('@/app/blog/BlogPageClient', () => ({
+// Mock the BlogSection component
+jest.mock('@/components/sections/BlogSection', () => ({
   BlogPageClient: function MockBlogPageClient() {
     return <div data-testid="blog-page-client">Blog Page Client Component</div>
   }
@@ -93,7 +93,7 @@ describe('BlogPage', () => {
     expect(screen.getByText(/Convierte este conocimiento evergreen/)).toBeInTheDocument()
   })
 
-  it('should render BlogPageClient component', () => {
+  it('should render BlogSection component', () => {
     render(<BlogPage />)
     
     expect(screen.getByTestId('blog-page-client')).toBeInTheDocument()
