@@ -12,6 +12,7 @@ const MockBlogSection = () => (
       <p>Aprende a crear aplicaciones web modernas</p>
       <time>15 Enero 2024</time>
       <button>Leer más</button>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/test.jpg" alt="Next.js Guide" />
     </article>
     <article>
@@ -21,6 +22,7 @@ const MockBlogSection = () => (
       <p>Estrategias probadas para aumentar ventas</p>
       <time>12 Enero 2024</time>
       <button>Leer más</button>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/test2.jpg" alt="E-commerce Guide" />
     </article>
     <article>
@@ -30,8 +32,10 @@ const MockBlogSection = () => (
       <p>Técnicas avanzadas para mejorar</p>
       <time>10 Enero 2024</time>
       <button>Leer más</button>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/test3.jpg" alt="SEO Guide" />
     </article>
+    {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
     <a href="/blog">📚 Ver Todo el Blog</a>
     <div>
       <span>CodigoFacil Team</span>
@@ -54,7 +58,7 @@ const BlogSection = MockBlogSection
 
 // Mock next/link
 jest.mock('next/link', () => {
-  return function MockLink({ children, href }: any) {
+  return function MockLink({ children, href }: { children: React.ReactNode; href: string }) {
     return <a href={href}>{children}</a>
   }
 })

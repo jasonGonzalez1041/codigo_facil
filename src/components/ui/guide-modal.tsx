@@ -76,6 +76,7 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
                         >
                             {/* Header con imagen - Altura fija */}
                             <div className="relative h-64 md:h-80 flex-shrink-0 overflow-hidden">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={guide.image}
                                     alt={guide.title}

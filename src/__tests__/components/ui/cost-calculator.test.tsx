@@ -34,8 +34,8 @@ describe('CostCalculator Component', () => {
     render(<CostCalculator />)
     
     // Default: 5 pages, 3 features, basic complexity
-    // (500 + 5*100 + 3*150) * 1 = (500 + 500 + 450) * 1 = 1,450
-    expect(screen.getByText('$1,450 USD')).toBeInTheDocument()
+    // Nueva lógica: $350 base + (5-3)*$50 páginas extra + 3*$75 features = $350 + $100 + $225 = $675
+    expect(screen.getByText('$675 USD')).toBeInTheDocument()
   })
 
   it('should update pages count when slider changes', () => {
@@ -68,19 +68,19 @@ describe('CostCalculator Component', () => {
   it('should calculate cost correctly with advanced complexity', () => {
     render(<CostCalculator />)
     
-    // Change to advanced complexity (multiplier 2.2)
+    // Change to advanced complexity
     const complexitySelect = screen.getByRole('combobox')
     fireEvent.change(complexitySelect, { target: { value: 'advanced' } })
     
-    // (500 + 5*100 + 3*150) * 2.2 = 1,450 * 2.2 = 3,190
-    expect(screen.getByText('$3,190 USD')).toBeInTheDocument()
+    // Nueva lógica: $1200 base + (5-15)*$60 páginas extra + 3*$150 features = $1200 + $0 + $450 = $1650
+    expect(screen.getByText('$1,650 USD')).toBeInTheDocument()
   })
 
   it('should calculate time estimate correctly', () => {
     render(<CostCalculator />)
     
-    // Default cost is 1,450, time = ceil(1,450 / 400) = 4 days
-    expect(screen.getByText('Tiempo estimado: 4 días laborales')).toBeInTheDocument()
+    // Default cost is $675, time = ceil(675 / 20) = 34 horas
+    expect(screen.getByText('Tiempo estimado: 34 horas de desarrollo')).toBeInTheDocument()
   })
 
   it('should format price with commas for large numbers', () => {
@@ -95,8 +95,8 @@ describe('CostCalculator Component', () => {
     fireEvent.change(featuresSlider, { target: { value: '10' } })
     fireEvent.change(complexitySelect, { target: { value: 'advanced' } })
     
-    // (500 + 20*100 + 10*150) * 2.2 = (500 + 2000 + 1500) * 2.2 = 8,800
-    expect(screen.getByText('$8,800 USD')).toBeInTheDocument()
+    // Nueva lógica advanced: $1200 base + (20-15)*$60 páginas extra + 10*$150 features = $1200 + $300 + $1500 = $3000
+    expect(screen.getByText('$3,000 USD')).toBeInTheDocument()
   })
 
   it('should open WhatsApp when quote button is clicked', () => {
@@ -129,7 +129,7 @@ describe('CostCalculator Component', () => {
   it('should show disclaimer text', () => {
     render(<CostCalculator />)
     
-    expect(screen.getByText('* Precios referenciales. Cotización final incluye análisis detallado')).toBeInTheDocument()
+    expect(screen.getByText('* Precios referenciales basados en planes estándar. Cotización final incluye análisis detallado')).toBeInTheDocument()
   })
 
   it('should animate when cost changes', async () => {
@@ -141,8 +141,9 @@ describe('CostCalculator Component', () => {
     fireEvent.change(pagesSlider, { target: { value: '8' } })
     
     // Wait for animation to complete
+    // Nueva lógica: $350 base + (8-3)*$50 páginas extra + 3*$75 features = $350 + $250 + $225 = $825
     await waitFor(() => {
-      expect(screen.getByText('$1,750 USD')).toBeInTheDocument()
+      expect(screen.getByText('$825 USD')).toBeInTheDocument()
     })
   })
 })

@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react'
-import RootLayout from '@/app/layout'
 import HomePage from '@/app/page'
 
 // Mock all components for integration test
@@ -16,7 +15,7 @@ jest.mock('@/components/layout/Footer', () => {
 })
 
 jest.mock('@/components/theme-provider', () => ({
-  ThemeProvider: ({ children }: any) => <div data-testid="theme-provider">{children}</div>
+  ThemeProvider: ({ children }: { children: React.ReactNode }) => <div data-testid="theme-provider">{children}</div>
 }))
 
 // Mock Vercel Analytics
@@ -92,10 +91,12 @@ describe('Full Site Integration', () => {
     expect(screen.getByTestId('hero-section')).toBeInTheDocument()
   })
 
-  it('should include all required meta tags in head', () => {
+  it('should include all required meta tags in head', async () => {
     // This test checks that the layout includes proper meta configuration
-    const layoutContent = require('fs').readFileSync(
-      require('path').join(process.cwd(), 'src/app/layout.tsx'),
+    const fs = await import('fs')
+    const path = await import('path')
+    const layoutContent = fs.readFileSync(
+      path.join(process.cwd(), 'src/app/layout.tsx'),
       'utf8'
     )
     
@@ -105,9 +106,11 @@ describe('Full Site Integration', () => {
     expect(layoutContent).toContain('twitter:')
   })
 
-  it('should have proper font loading', () => {
-    const layoutContent = require('fs').readFileSync(
-      require('path').join(process.cwd(), 'src/app/layout.tsx'),
+  it('should have proper font loading', async () => {
+    const fs = await import('fs')
+    const path = await import('path')
+    const layoutContent = fs.readFileSync(
+      path.join(process.cwd(), 'src/app/layout.tsx'),
       'utf8'
     )
     
@@ -145,9 +148,11 @@ describe('Full Site Integration', () => {
     expect(screen.getByTestId('hero-section')).toBeInTheDocument()
   })
 
-  it('should load all critical CSS', () => {
-    const globalCss = require('fs').readFileSync(
-      require('path').join(process.cwd(), 'src/app/globals.css'),
+  it('should load all critical CSS', async () => {
+    const fs = await import('fs')
+    const path = await import('path')
+    const globalCss = fs.readFileSync(
+      path.join(process.cwd(), 'src/app/globals.css'),
       'utf8'
     )
     
@@ -155,9 +160,11 @@ describe('Full Site Integration', () => {
     expect(globalCss).toMatch(/@import.*tailwind|@tailwind/)
   })
 
-  it('should have proper performance optimizations', () => {
-    const layoutContent = require('fs').readFileSync(
-      require('path').join(process.cwd(), 'src/app/layout.tsx'),
+  it('should have proper performance optimizations', async () => {
+    const fs = await import('fs')
+    const path = await import('path')
+    const layoutContent = fs.readFileSync(
+      path.join(process.cwd(), 'src/app/layout.tsx'),
       'utf8'
     )
     

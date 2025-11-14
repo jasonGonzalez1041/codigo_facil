@@ -320,7 +320,7 @@ export default function ContactSection() {
                                     className="whatsapp-btn w-full px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform transition-all duration-300 flex items-center justify-center gap-3"
                                     onClick={() => {
                                         const msg = `¡Hola! Me interesa conocer más sobre los servicios de CodigoFacil.com 🚀`;
-                                        window.open(`https://wa.me/5695022549?text=${encodeURIComponent(msg)}`, "_blank");
+                                        window.open(`https://wa.me/56950225491?text=${encodeURIComponent(msg)}`, "_blank");
                                     }}
                                 >
                                     <span className="text-xl">💼💬</span>
