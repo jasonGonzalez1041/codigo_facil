@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ArrowUpRight, Code, Zap, Moon, Sun, X } from "lucide-react";
 import { gsap } from "gsap";
@@ -24,7 +24,7 @@ export default function Header() {
     const [scrolled, setScrolled] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [isDark, setIsDark] = useState(false);
-
+    const [isThemeInitialized, setIsThemeInitialized] = useState(false)
     const pathname = usePathname();
     const router = useRouter();
 
@@ -48,20 +48,29 @@ export default function Header() {
     };
 
     // Efecto para el tema
-    useEffect(() => {
-        // Verificar el tema guardado o la preferencia del sistema
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const firstRender = useRef(true);
 
-        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-            setIsDark(true);
-            document.documentElement.classList.add('dark');
-        } else {
-            setIsDark(false);
-            document.documentElement.classList.remove('dark');
+    useEffect(() => {
+        if (firstRender.current) {
+            firstRender.current = false;
+
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            const isDarkTheme = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+
+            document.documentElement.classList.toggle('dark', isDarkTheme);
+
+            // un solo setState si tienes varios
+            setIsDark(isDarkTheme);
+            setIsThemeInitialized(true);
+
+            return;
         }
     }, []);
 
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     // Efecto para bloquear el scroll cuando el menú móvil está abierto
     useEffect(() => {
         if (isMenuOpen) {
