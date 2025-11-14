@@ -458,7 +458,7 @@ const whatsappMessage = `Hola! Quiero una cotización para:
 - Tiempo estimado: ${estimatedTime}
 - Características adicionales: ${features}`;
 
-const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(whatsappMessage)}`;
+const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(whatsappMessage)}`;
 ```
 
 ### SEO y Metadatos (Optimización LATAM)

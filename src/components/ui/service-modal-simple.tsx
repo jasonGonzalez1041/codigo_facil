@@ -39,7 +39,7 @@ export function ServiceModalSimple({ isOpen, onClose, service }: ServiceModalPro
 
   const handleWhatsApp = () => {
     const message = `Hola, estoy interesado en el servicio "${service.title}". ¿Podrían darme más información?`;
-    const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 

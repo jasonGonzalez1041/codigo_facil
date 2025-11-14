@@ -423,7 +423,7 @@ export default function PricingSection() {
 
                                  ¿Podrían brindarme más información sobre este plan?`;
 
-                                        const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(message)}`;
+                                        const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(message)}`;
                                         window.open(whatsappUrl, '_blank');
                                     }}
                                     className={`w-full py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${plan.recommended
@@ -466,7 +466,7 @@ ${billingCycle === "oneTime" ? "• Prefiero gestionar mi propio hosting y domin
 
 ¿Podrían ayudarme con una cotización detallada?`;
 
-                                const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(message)}`;
+                                const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(message)}`;
                                 window.open(whatsappUrl, '_blank');
                             }}
                             className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"

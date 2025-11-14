@@ -94,7 +94,7 @@ export default function RootLayout({
     "logo": "https://codigofacil.com/icon.svg",
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+56995022549",
+      "telephone": "+56950225491",
       "contactType": "customer service",
       "areaServed": ["MX", "AR", "CO", "CL", "PE", "EC", "UY", "BO", "PY"],
       "availableLanguage": "Spanish"

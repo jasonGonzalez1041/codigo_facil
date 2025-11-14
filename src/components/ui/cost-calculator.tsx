@@ -172,7 +172,7 @@ export function CostCalculator() {
 
 🎯 Me interesa una cotización oficial basada en estos parámetros. ¿Podrían ayudarme?`;
 
-                            const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(message)}`;
+                            const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(message)}`;
                             window.open(whatsappUrl, '_blank');
                         }}
                         className="w-full px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"

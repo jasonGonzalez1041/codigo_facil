@@ -197,7 +197,7 @@ Me gustaría recibir más información y una cotización personalizada para mi p
 
 ¿Podríamos agendar una llamada para discutir los detalles?`;
 
-        const whatsappUrl = `https://wa.me/56995022549?text=${encodeURIComponent(
+        const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(
             message
         )}`;
         window.open(whatsappUrl, "_blank");
