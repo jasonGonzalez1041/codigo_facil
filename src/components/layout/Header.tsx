@@ -121,7 +121,7 @@ export default function Header() {
                     if (isHomePage) {
                         scrollToSection('blog');
                     } else {
-                        router.push(staticRoutes.pricing);
+                        router.push(staticRoutes.blog);
                     }
                     break;
                 case 'precios':
