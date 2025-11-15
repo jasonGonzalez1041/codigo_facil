@@ -48,19 +48,19 @@ function GuideModal({ isOpen, onClose, guide }: { isOpen: boolean; onClose: () =
     if (!isOpen || !guide) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4 bg-black/50 backdrop-blur-sm">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-7xl w-full h-[95vh] overflow-hidden flex flex-col">
                 
-                {/* 🎯 Header del Modal */}
+                {/* 🎯 Header del Modal - Más compacto */}
                 <div className="relative flex-shrink-0">
                     <img
                         src={guide.image}
                         alt={guide.title}
-                        className="w-full h-48 object-cover"
+                        className="w-full h-32 md:h-40 object-cover"
                     />
                     <button
                         onClick={onClose}
-                        className="absolute top-4 right-4 p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-colors"
+                        className="absolute top-3 right-3 p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-colors"
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -68,71 +68,77 @@ function GuideModal({ isOpen, onClose, guide }: { isOpen: boolean; onClose: () =
                     </button>
                     
                     {/* Info básica en el header */}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                        <div className="flex items-center gap-4 mb-2">
-                            <span className="px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-full">
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                        <div className="flex items-center gap-3 mb-1">
+                            <span className="px-2 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-medium rounded-full">
                                 {guide.category}
                             </span>
-                            <span className="text-white/80 text-sm flex items-center gap-1">
-                                <Clock className="w-4 h-4" />
+                            <span className="text-white/80 text-xs flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
                                 {guide.readTime}
                             </span>
                         </div>
-                        <h2 className="text-2xl font-bold text-white mb-1">
+                        <h2 className="text-lg md:text-xl font-bold text-white truncate">
                             {guide.title}
                         </h2>
                     </div>
                 </div>
 
 
-                {/* 📖 CONTENIDO COMPLETO - Scrollable */}
+                {/* 📖 CONTENIDO COMPLETO - Scrollable optimizado */}
                 <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
-                    <div className="p-6 md:p-8">
+                    <div className="p-4 md:p-6">
                         
                         {/* 📖 CONTENIDO REAL DEL BLOG */}
-                        <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg">
+                        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg">
                             
-                            {/* Encabezado principal */}
-                            <div className="mb-8 pb-6 border-b border-gray-200 dark:border-gray-700">
-                                <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
+                            {/* Encabezado principal - más compacto */}
+                            <div className="p-6 md:p-8 pb-4 border-b border-gray-200 dark:border-gray-700">
+                                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">
                                     {guide.title}
                                 </h1>
-                                <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                                     {guide.excerpt}
                                 </p>
                             </div>
 
-                            {/* Contenido markdown renderizado */}
-                            <div 
-                                className="prose prose-lg max-w-none dark:prose-invert prose-blue"
-                                dangerouslySetInnerHTML={{ 
-                                    __html: formatMarkdownContent(
-                                        getBlogContent(guide.slug)?.content || 
-                                        `# ${guide.title}\n\n${guide.excerpt}\n\nEste contenido está siendo cargado...`
-                                    ) 
-                                }}
-                            />
+                            {/* Contenido markdown renderizado - mejor spacing */}
+                            <div className="p-6 md:p-8 pt-6">
+                                <div 
+                                    className="prose prose-base md:prose-lg max-w-none dark:prose-invert prose-blue prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed prose-li:text-gray-700 dark:prose-li:text-gray-300"
+                                    dangerouslySetInnerHTML={{ 
+                                        __html: formatMarkdownContent(
+                                            getBlogContent(guide.slug)?.content || 
+                                            `# ${guide.title}\n\n${guide.excerpt}\n\nEste contenido está siendo cargado...`
+                                        ) 
+                                    }}
+                                />
+                            </div>
                         </div>
 
-                        {/* 📋 CTA al final del contenido */}
-                        <div className="mt-8 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
-                            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                                ¿Te ha resultado útil esta guía completa?
-                            </h4>
-                            <p className="text-gray-600 dark:text-gray-300 mb-4">
-                                Nuestros expertos pueden ayudarte a implementar estas estrategias en tu proyecto específico.
-                            </p>
-                            <button
-                                onClick={() => {
-                                    const message = `¡Hola! Acabo de leer la guía completa "${guide.title}" y me interesa implementar estas estrategias. ¿Podrían ayudarme?`;
-                                    const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(message)}`;
-                                    window.open(whatsappUrl, '_blank');
-                                }}
-                                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
-                            >
-                                <Zap className="w-4 h-4" />
-                                Implementar con Expertos
-                            </button>
+                        {/* 📋 CTA al final del contenido - más compacto */}
+                        <div className="mt-6 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div className="flex-1">
+                                    <h4 className="text-base font-semibold text-gray-900 dark:text-white mb-1">
+                                        ¿Te resultó útil esta guía?
+                                    </h4>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                                        Implementa estas estrategias con ayuda de expertos
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        const message = `¡Hola! Acabo de leer la guía completa "${guide.title}" y me interesa implementar estas estrategias. ¿Podrían ayudarme?`;
+                                        const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(message)}`;
+                                        window.open(whatsappUrl, '_blank');
+                                    }}
+                                    className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center gap-2 whitespace-nowrap"
+                                >
+                                    <Zap className="w-4 h-4" />
+                                    Contactar Expertos
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
