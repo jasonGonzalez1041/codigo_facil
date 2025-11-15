@@ -232,8 +232,8 @@ function ProductCard({ product }) {
       {/* Info esencial */}
       <h3>{product.name}</h3>
       <div class="price">
-        <span class="current">${product.price}</span>
-        <span class="original">${product.originalPrice}</span>
+        <span class="current">\${product.price}</span>
+        <span class="original">\${product.originalPrice}</span>
       </div>
       
       {/* Social proof */}
@@ -358,7 +358,7 @@ function updateStock(productId, quantity) {
   const remaining = getStock(productId) - quantity
   
   if (remaining < 5) {
-    showLowStockWarning(`¡Solo quedan ${remaining}!`)
+    showLowStockWarning("Quedan solo " + remaining + " unidades en stock!")
   }
 }
 \`\`\`

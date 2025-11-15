@@ -1,7 +1,7 @@
 // app/blog/page.tsx
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BlogPageClient } from './BlogPageClient';
 import GuideModal from '@/components/ui/blog-modal-new';
 
@@ -14,7 +14,7 @@ interface BlogPost {
     category: string;
     publishedAt: string;
     lastUpdated: string;
-    date: string; // Add this for compatibility with GuideModal
+    date: string;
     image: string;
     evergreen: boolean;
     featured?: boolean;
@@ -67,13 +67,68 @@ const evergreenPosts = [
     }
 ];
 
+// Hook personalizado para el localStorage
+function useReadPosts() {
+    const [readPosts, setReadPosts] = useState<Set<string>>(new Set());
+
+    // Cargar posts leídos al inicializar
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('readPosts');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    setReadPosts(new Set(parsed));
+                } catch (error) {
+                    console.error('Error loading read posts:', error);
+                }
+            }
+        }
+    }, []);
+
+    // Marcar post como leído
+    const markAsRead = (slug: string) => {
+        setReadPosts(prev => {
+            const newSet = new Set(prev);
+            newSet.add(slug);
+
+            // Guardar en localStorage
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('readPosts', JSON.stringify([...newSet]));
+            }
+
+            return newSet;
+        });
+    };
+
+    // Verificar si un post está leído
+    const isRead = (slug: string) => {
+        return readPosts.has(slug);
+    };
+
+    // Obtener estadísticas
+    const getStats = () => {
+        return {
+            read: readPosts.size,
+            total: evergreenPosts.length,
+            percentage: Math.round((readPosts.size / evergreenPosts.length) * 100)
+        };
+    };
+
+    return { readPosts, markAsRead, isRead, getStats };
+}
+
 export default function BlogPage() {
     const [selectedGuide, setSelectedGuide] = useState<BlogPost | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { markAsRead, isRead, getStats } = useReadPosts();
+    const stats = getStats();
 
     const handleGuideClick = (guide: BlogPost) => {
         setSelectedGuide(guide);
         setIsModalOpen(true);
+        // Marcar como leído cuando se abre el modal
+        markAsRead(guide.slug);
     };
 
     const handleCloseModal = () => {
@@ -90,24 +145,48 @@ export default function BlogPage() {
                         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
                             Contenido{" "}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                Guías Prácticas
-              </span>{" "}
+                                Guías Prácticas
+                            </span>{" "}
                             para LATAM
                         </h1>
                         <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
                             Guías atemporales que generan valor perpetuo. Aprende desarrollo web, e-commerce y estrategias digitales
                             con contenido que nunca caduca y te convierte en referente.
                         </p>
+
+                        {/* Progress Bar */}
+                        <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg max-w-md mx-auto mb-8">
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                                    Tu progreso de lectura
+                                </span>
+                                <span className="text-sm font-bold text-blue-600 dark:text-blue-400">
+                                    {stats.read}/{stats.total} ({stats.percentage}%)
+                                </span>
+                            </div>
+                            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div
+                                    className="bg-gradient-to-r from-green-500 to-blue-500 h-3 rounded-full transition-all duration-500"
+                                    style={{ width: `${stats.percentage}%` }}
+                                />
+                            </div>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                                {stats.read === stats.total
+                                    ? "🎉 ¡Has leído todas las guías!"
+                                    : `Sigue leyendo para completar tu aprendizaje`}
+                            </p>
+                        </div>
+
                         <div className="flex flex-wrap gap-4 justify-center">
-              <span className="px-4 py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm font-medium">
-                📚 Guías Completas
-              </span>
+                            <span className="px-4 py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm font-medium">
+                                📚 Guías Completas
+                            </span>
                             <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium">
-                ⏰ Contenido Atemporal
-              </span>
+                                ⏰ Contenido Atemporal
+                            </span>
                             <span className="px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm font-medium">
-                🚀 Resultados Garantizados
-              </span>
+                                🚀 Resultados Garantizados
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -119,26 +198,43 @@ export default function BlogPage() {
                     {evergreenPosts.filter(post => post.featured).map(post => (
                         <div
                             key={post.id}
-                            className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden max-w-6xl mx-auto cursor-pointer hover:shadow-2xl transition-all duration-300"
+                            className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden max-w-6xl mx-auto cursor-pointer hover:shadow-2xl transition-all duration-300 relative"
                             onClick={() => handleGuideClick(post)}
                         >
+                            {/* Indicador de leído */}
+                            {isRead(post.slug) && (
+                                <div className="absolute top-4 right-4 z-10">
+                                    <span className="px-3 py-1 bg-green-500 text-white text-xs font-bold rounded-full flex items-center gap-1">
+                                        ✅ Leído
+                                    </span>
+                                </div>
+                            )}
+
                             <div className="md:flex">
-                                <div className="md:w-1/2">
+                                <div className="md:w-1/2 relative">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                         src={post.image}
                                         alt={post.title}
                                         className="w-full h-64 md:h-full object-cover"
                                     />
+                                    {isRead(post.slug) && (
+                                        <div className="absolute inset-0 bg-green-500/10 border-4 border-green-500/30 rounded-lg" />
+                                    )}
                                 </div>
                                 <div className="md:w-1/2 p-8 md:p-12">
                                     <div className="flex items-center gap-4 mb-4">
-                    <span className="px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-full">
-                      ⭐ Featured
-                    </span>
+                                        <span className="px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-full">
+                                            ⭐ Featured
+                                        </span>
                                         <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {post.readTime} de lectura
-                    </span>
+                                            {post.readTime} de lectura
+                                        </span>
+                                        {isRead(post.slug) && (
+                                            <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium rounded-full">
+                                                ✅ Completado
+                                            </span>
+                                        )}
                                     </div>
                                     <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
                                         {post.title}
@@ -147,11 +243,11 @@ export default function BlogPage() {
                                         {post.excerpt}
                                     </p>
                                     <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">
-                      Actualizado: {post.lastUpdated}
-                    </span>
+                                        <span className="text-sm text-gray-500">
+                                            Actualizado: {post.lastUpdated}
+                                        </span>
                                         <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-300">
-                                            Leer Guía Completa →
+                                            {isRead(post.slug) ? 'Releer Guía' : 'Leer Guía Completa'} →
                                         </button>
                                     </div>
                                 </div>
@@ -164,31 +260,54 @@ export default function BlogPage() {
             {/* All Posts Grid */}
             <section className="pb-20">
                 <div className="container mx-auto px-6">
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">
-                        Todas las Guías
-                    </h2>
+                    <div className="flex justify-between items-center mb-12">
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                            Todas las Guías
+                        </h2>
+                        <div className="text-sm text-gray-600 dark:text-gray-300">
+                            <span className="font-semibold text-green-600 dark:text-green-400">
+                                {stats.read} leídas
+                            </span>
+                            {' '}de{' '}
+                            <span className="font-semibold">{stats.total}</span> guías
+                        </div>
+                    </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                         {evergreenPosts.map(post => (
                             <div
                                 key={post.id}
-                                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer"
+                                className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer relative ${
+                                    isRead(post.slug) ? 'ring-2 ring-green-500' : ''
+                                }`}
                                 onClick={() => handleGuideClick(post)}
                             >
+                                {/* Indicador de leído */}
+                                {isRead(post.slug) && (
+                                    <div className="absolute top-3 right-3 z-10">
+                                        <span className="px-2 py-1 bg-green-500 text-white text-xs font-bold rounded-full">
+                                            ✅
+                                        </span>
+                                    </div>
+                                )}
+
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={post.image}
                                     alt={post.title}
-                                    className="w-full h-48 object-cover"
+                                    className={`w-full h-48 object-cover ${
+                                        isRead(post.slug) ? 'opacity-90' : ''
+                                    }`}
                                 />
                                 <div className="p-6">
                                     <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm text-blue-600 dark:text-blue-400 font-medium">
-                      {post.category}
-                    </span>
+                                        <span className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+                                            {post.category}
+                                        </span>
                                         {post.evergreen && (
                                             <span className="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full">
-                        📚 Guía Práctica
-                      </span>
+                                                📚 Guía Práctica
+                                            </span>
                                         )}
                                     </div>
                                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
@@ -198,11 +317,18 @@ export default function BlogPage() {
                                         {post.excerpt}
                                     </p>
                                     <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-500">
-                      {post.readTime}
-                    </span>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xs text-gray-500">
+                                                {post.readTime}
+                                            </span>
+                                            {isRead(post.slug) && (
+                                                <span className="text-xs text-green-600 font-medium">
+                                                    ✓ Completado
+                                                </span>
+                                            )}
+                                        </div>
                                         <button className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
-                                            Leer más →
+                                            {isRead(post.slug) ? 'Releer' : 'Leer más'} →
                                         </button>
                                     </div>
                                 </div>
@@ -225,7 +351,7 @@ export default function BlogPage() {
                 </div>
             </section>
 
-            {/* Modal reutilizado */}
+            {/* Modal */}
             <GuideModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
