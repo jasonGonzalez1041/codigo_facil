@@ -305,7 +305,7 @@ export default function Header() {
                     ? "-translate-y-full opacity-0 pointer-events-none"
                     : "translate-y-0 opacity-100"
             } ${
-                scrolled
+                scrolled || !isHomePage
                     ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg z-50"
                     : "bg-transparent backdrop-blur-none border-b border-transparent z-50"
             }`}
@@ -322,14 +322,14 @@ export default function Header() {
                                 <div className="relative">
                                     <Code
                                         className={`w-8 h-8 transition-all duration-300 group-hover:rotate-12 ${
-                                            scrolled ? "text-blue-600 dark:text-blue-400" : "text-white"
+                                            scrolled || !isHomePage ? "text-blue-600 dark:text-blue-400" : "text-white"
                                         }`}
                                     />
                                     <div className="absolute -inset-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                                 </div>
                                 <div className="font-bold text-xl">
                                     <span className={`transition-colors duration-300 ${
-                                        scrolled ? "text-gray-900 dark:text-white" : "text-white"
+                                        scrolled || !isHomePage ? "text-gray-900 dark:text-white" : "text-white"
                                     }`}>
                                         Codigo
                                     </span>
@@ -337,7 +337,7 @@ export default function Header() {
                                         Facil
                                     </span>
                                     <span className={`transition-colors duration-300 ${
-                                        scrolled ? "text-gray-500 dark:text-gray-400" : "text-blue-200"
+                                        scrolled || !isHomePage ? "text-gray-500 dark:text-gray-400" : "text-blue-200"
                                     }`}>
                                         .com
                                     </span>
@@ -356,7 +356,7 @@ export default function Header() {
                                 key={index}
                                 onClick={() => handleNavigation(item.id)}
                                 className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 group ${
-                                    scrolled
+                                    scrolled || !isHomePage
                                         ? "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
                                         : "text-white/90 hover:text-white hover:bg-white/10"
                                 }`}
@@ -376,7 +376,7 @@ export default function Header() {
                         <button
                             onClick={() => window.open('https://wa.me/56950225491?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20para%20mi%20proyecto%20web', '_blank')}
                             className={`group relative px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 overflow-hidden ${
-                                scrolled
+                                scrolled || !isHomePage
                                     ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg hover:shadow-blue-500/25"
                                     : "bg-white/10 text-white border border-white/20 backdrop-blur-sm hover:bg-white hover:text-gray-900"
                             }`}
@@ -389,13 +389,13 @@ export default function Header() {
                             <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </button>
 
-                        <div className={`w-px h-6 ${scrolled ? "bg-gray-300 dark:bg-gray-600" : "bg-white/20"}`}></div>
+                        <div className={`w-px h-6 ${scrolled || !isHomePage ? "bg-gray-300 dark:bg-gray-600" : "bg-white/20"}`}></div>
 
                         {/* Botón de tema simplificado */}
                         <button
                             onClick={toggleTheme}
                             className={`relative p-2 rounded-lg transition-all duration-300 group ${
-                                scrolled
+                                scrolled || !isHomePage
                                     ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800"
                                     : "text-white hover:bg-white/10"
                             }`}
@@ -415,7 +415,7 @@ export default function Header() {
                         <button
                             onClick={toggleTheme}
                             className={`relative p-2 rounded-lg transition-all duration-300 group ${
-                                scrolled
+                                scrolled || !isHomePage
                                     ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800"
                                     : "text-white hover:bg-white/10"
                             }`}
@@ -431,7 +431,7 @@ export default function Header() {
                         <button
                             onClick={toggleMobileMenu}
                             className={`relative p-2 rounded-lg transition-all duration-300 group ${
-                                scrolled
+                                scrolled || !isHomePage
                                     ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800"
                                     : "text-white hover:bg-white/10"
                             }`}
