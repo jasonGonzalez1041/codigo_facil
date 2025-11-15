@@ -477,13 +477,14 @@ export default function Header() {
                     style={{ display: "none" }}
                 >
                     {/* Header del menú móvil compacto */}
-                    <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700">
-
+                    <div className="flex items-center justify-end p-4 border-b border-gray-200 dark:border-gray-700">
                         <button
                             onClick={closeMobileMenu}
-                            className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                            className="group relative p-2 text-gray-400 hover:text-white transition-all duration-300 rounded-full bg-gray-100 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-500 dark:bg-gray-700 dark:hover:from-red-600 dark:hover:to-pink-600 shadow-sm hover:shadow-lg transform hover:scale-110"
+                            aria-label="Cerrar menú"
                         >
-                            <X className="w-4 h-4" />
+                            <X className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" />
+                            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                         </button>
                     </div>
 
