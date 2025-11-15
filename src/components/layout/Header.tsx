@@ -486,12 +486,7 @@ export default function Header() {
                         <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                     </button>
                     
-                    {/* Header del menú móvil - sin botón X */}
-                    <div className="pt-12 pb-4 px-4 border-b border-gray-200 dark:border-gray-700">
-                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Menú</h3>
-                    </div>
-
-                    <div className="p-3 max-h-[60vh] overflow-y-auto">
+                    <div className="pt-4 pb-3 px-4 max-h-[60vh] overflow-y-auto">
                         <nav className="space-y-0.5">
                             {navigationItems.map((item, index) => (
                                 <button
