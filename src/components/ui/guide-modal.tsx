@@ -158,24 +158,30 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
                                 </div>
                             </div>
 
-                            {/* Contenido Completo - Scrollable */}
-                            <div className="flex-1 overflow-y-auto">
+                            {/* 🚨 MODAL ACTUALIZADO - CONTENIDO MARKDOWN COMPLETO */}
+                            <div className="flex-1 overflow-y-auto bg-yellow-50 dark:bg-yellow-900">
                                 <div className="p-6 md:p-8">
-                                    {/* Debug info MUY VISIBLE */}
+                                    
+                                    {/* 🚨 BANNER DE ACTUALIZACIÓN */}
+                                    <div className="mb-8 p-6 bg-green-500 text-white text-xl font-bold border-4 border-green-800 text-center">
+                                        🎉 ¡MODAL ACTUALIZADO! - Ahora muestra contenido markdown completo
+                                    </div>
+                                    
+                                    {/* 🔍 Debug info SÚPER VISIBLE */}
                                     <div className="mb-8 p-6 bg-red-500 text-white text-lg font-bold border-4 border-red-800">
                                         🔍 DEBUG: slug="{guide.slug}" | content={getBlogContent(guide.slug) ? '✅ FOUND' : '❌ NOT FOUND'}
                                     </div>
                                     
-                                    {/* Contenido markdown completo */}
+                                    {/* 📖 CONTENIDO MARKDOWN COMPLETO */}
                                     <div 
-                                        className="prose prose-lg dark:prose-invert max-w-none text-gray-800 dark:text-gray-200
+                                        className="prose prose-lg dark:prose-invert max-w-none text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg
                                         prose-headings:text-gray-900 dark:prose-headings:text-white
-                                        prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-8 prose-h1:mt-12
+                                        prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-8 prose-h1:mt-0
                                         prose-h2:text-2xl prose-h2:font-bold prose-h2:mb-6 prose-h2:mt-10
                                         prose-h3:text-xl prose-h3:font-bold prose-h3:mb-4 prose-h3:mt-8
                                         prose-p:mb-4 prose-p:leading-relaxed
                                         prose-strong:text-gray-900 dark:prose-strong:text-white prose-strong:font-bold
-                                        prose-code:bg-gray-100 dark:prose-code:bg-gray-800 
+                                        prose-code:bg-gray-100 dark:prose-code:bg-gray-700 
                                         prose-code:text-blue-600 dark:prose-code:text-blue-400
                                         prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
                                         prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:p-4 prose-pre:rounded-lg prose-pre:my-6 prose-pre:overflow-x-auto
@@ -184,9 +190,15 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
                                         prose-li:mb-2 prose-li:text-gray-700 dark:prose-li:text-gray-300
                                         prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:my-6"
                                         dangerouslySetInnerHTML={{ 
-                                            __html: formatMarkdownContent(getBlogContent(guide.slug) || guide.excerpt || 'Contenido no disponible.')
+                                            __html: formatMarkdownContent(getBlogContent(guide.slug) || '❌ ERROR: No se encontró contenido para el slug: ' + guide.slug)
                                         }}
                                     />
+                                    
+                                    {/* 📝 FALLBACK: Contenido raw para debug */}
+                                    <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-700 rounded">
+                                        <h4 className="font-bold mb-2">RAW Content (primeros 200 chars):</h4>
+                                        <pre className="text-xs">{(getBlogContent(guide.slug) || 'CONTENIDO NO ENCONTRADO').substring(0, 200)}...</pre>
+                                    </div>
                                 </div>
                             </div>
 
