@@ -161,9 +161,9 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
                             {/* Contenido Completo - Scrollable */}
                             <div className="flex-1 overflow-y-auto">
                                 <div className="p-6 md:p-8">
-                                    {/* Debug info */}
-                                    <div className="mb-4 p-2 bg-red-100 text-red-800 text-xs">
-                                        Debug: slug={guide.slug}, content={getBlogContent(guide.slug) ? 'FOUND' : 'NOT FOUND'}
+                                    {/* Debug info MUY VISIBLE */}
+                                    <div className="mb-8 p-6 bg-red-500 text-white text-lg font-bold border-4 border-red-800">
+                                        🔍 DEBUG: slug="{guide.slug}" | content={getBlogContent(guide.slug) ? '✅ FOUND' : '❌ NOT FOUND'}
                                     </div>
                                     
                                     {/* Contenido markdown completo */}
