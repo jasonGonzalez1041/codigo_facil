@@ -161,6 +161,11 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
                             {/* Contenido Completo - Scrollable */}
                             <div className="flex-1 overflow-y-auto">
                                 <div className="p-6 md:p-8">
+                                    {/* Debug info */}
+                                    <div className="mb-4 p-2 bg-red-100 text-red-800 text-xs">
+                                        Debug: slug={guide.slug}, content={getBlogContent(guide.slug) ? 'FOUND' : 'NOT FOUND'}
+                                    </div>
+                                    
                                     {/* Contenido markdown completo */}
                                     <div 
                                         className="prose prose-lg dark:prose-invert max-w-none text-gray-800 dark:text-gray-200
@@ -179,7 +184,7 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
                                         prose-li:mb-2 prose-li:text-gray-700 dark:prose-li:text-gray-300
                                         prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:my-6"
                                         dangerouslySetInnerHTML={{ 
-                                            __html: formatMarkdownContent(getBlogContent(guide.slug) || 'Contenido no disponible.')
+                                            __html: formatMarkdownContent(getBlogContent(guide.slug) || guide.excerpt || 'Contenido no disponible.')
                                         }}
                                     />
                                 </div>
