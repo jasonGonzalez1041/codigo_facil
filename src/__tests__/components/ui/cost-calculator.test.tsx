@@ -107,7 +107,7 @@ describe('CostCalculator Component', () => {
     
     expect(mockOpen).toHaveBeenCalledTimes(1)
     expect(mockOpen).toHaveBeenCalledWith(
-      expect.stringContaining('https://wa.me/56995022549?text='),
+      expect.stringContaining('https://wa.me/56950225491?text='),
       '_blank'
     )
   })

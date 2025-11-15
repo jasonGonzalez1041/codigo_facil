@@ -3,6 +3,45 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Calendar, Clock, Tag, ExternalLink } from "lucide-react";
 import { useEffect } from "react";
+import { getBlogContent } from "@/lib/blog-content";
+
+// Función para formatear markdown a HTML básico
+function formatMarkdownContent(markdown: string): string {
+  if (!markdown) return '';
+  
+  return markdown
+    // Headers
+    .replace(/^### (.*$)/gm, '<h3 class="text-xl font-bold mt-8 mb-4">$1</h3>')
+    .replace(/^## (.*$)/gm, '<h2 class="text-2xl font-bold mt-10 mb-6">$1</h2>')
+    .replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold mt-12 mb-8">$1</h1>')
+    
+    // Bold and italic
+    .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    
+    // Code blocks
+    .replace(/```(\w+)?\n([\s\S]*?)\n```/g, '<pre class="bg-gray-900 text-gray-100 p-4 rounded-lg my-6 overflow-x-auto"><code>$2</code></pre>')
+    .replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-2 py-1 rounded text-sm">$1</code>')
+    
+    // Links
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">$1</a>')
+    
+    // Lists
+    .replace(/^- (.*$)/gm, '<li class="mb-2">$1</li>')
+    .replace(/(<li.*<\/li>)/s, '<ul class="list-disc pl-6 mb-6">$1</ul>')
+    
+    // Blockquotes
+    .replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-blue-500 pl-4 italic my-6">$1</blockquote>')
+    
+    // Line breaks
+    .replace(/\n\n/g, '</p><p class="mb-4">')
+    .replace(/^\s*(?!<[h1-6]|<ul|<ol|<pre|<blockquote)/gm, '<p class="mb-4">')
+    .replace(/(?<!>)$/gm, '</p>')
+    
+    // Clean up
+    .replace(/<p class="mb-4"><\/p>/g, '')
+    .replace(/(<\/[^>]+>)<p class="mb-4">/g, '$1');
 
 interface GuideModalProps {
     isOpen: boolean;
@@ -10,6 +49,7 @@ interface GuideModalProps {
     guide: {
         id: number;
         title: string;
+        slug: string;
         excerpt: string;
         image: string;
         category: string;
@@ -118,69 +158,46 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
                                 </div>
                             </div>
 
-                            {/* Contenido - Scrollable */}
-                            <div className="flex-1 overflow-y-auto">
+                            {/* 🚨 MODAL ACTUALIZADO - CONTENIDO MARKDOWN COMPLETO */}
+                            <div className="flex-1 overflow-y-auto bg-yellow-50 dark:bg-yellow-900">
                                 <div className="p-6 md:p-8">
-                                    {/* Excerpt */}
-                                    <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                                        {guide.excerpt}
-                                    </p>
-
-                                    {/* Contenido extendido */}
-                                    <div className="prose dark:prose-invert max-w-none">
-                                        <p className="text-gray-600 dark:text-gray-400 mb-4">
-                                            Este artículo explora en profundidad los temas mencionados y ofrece insights valiosos
-                                            para profesionales del desarrollo web y diseño.
-                                        </p>
-
-                                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                                            Puntos Clave
-                                        </h3>
-                                        <ul className="space-y-3 text-gray-600 dark:text-gray-400 mb-6">
-                                            <li className="flex items-start gap-3">
-                                                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                                                <span>Análisis detallado de las tendencias actuales</span>
-                                            </li>
-                                            <li className="flex items-start gap-3">
-                                                <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                                                <span>Casos de estudio y ejemplos prácticos</span>
-                                            </li>
-                                            <li className="flex items-start gap-3">
-                                                <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                                                <span>Mejores prácticas y recomendaciones</span>
-                                            </li>
-                                            <li className="flex items-start gap-3">
-                                                <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
-                                                <span>Recursos adicionales para profundizar</span>
-                                            </li>
-                                        </ul>
-
-                                        {/* Más contenido de ejemplo */}
-                                        <div className="space-y-4">
-                                            <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                                ¿Por qué esta guía es importante?
-                                            </h4>
-                                            <p className="text-gray-600 dark:text-gray-400">
-                                                En el mundo actual del desarrollo web, mantenerse actualizado con las mejores prácticas
-                                                es crucial para el éxito de cualquier proyecto. Esta guía te proporciona los fundamentos
-                                                necesarios para tomar decisiones informadas.
-                                            </p>
-
-                                            <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                                Aplicación práctica
-                                            </h4>
-                                            <p className="text-gray-600 dark:text-gray-400">
-                                                Todos los conceptos presentados incluyen ejemplos prácticos que puedes implementar
-                                                inmediatamente en tus proyectos actuales.
-                                            </p>
-                                        </div>
-
-                                        <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                                            <p className="text-blue-800 dark:text-blue-200 text-sm">
-                                                💡 <strong>Tip profesional:</strong> Este contenido está disponible en nuestro blog
-                                                con información más detallada y ejemplos de código.
-                                            </p>
-                                        </div>
+                                    
+                                    {/* 🚨 BANNER DE ACTUALIZACIÓN */}
+                                    <div className="mb-8 p-6 bg-green-500 text-white text-xl font-bold border-4 border-green-800 text-center">
+                                        🎉 ¡MODAL ACTUALIZADO! - Ahora muestra contenido markdown completo
+                                    </div>
+                                    
+                                    {/* 🔍 Debug info SÚPER VISIBLE */}
+                                    <div className="mb-8 p-6 bg-red-500 text-white text-lg font-bold border-4 border-red-800">
+                                        🔍 DEBUG: slug="{guide.slug}" | content={getBlogContent(guide.slug) ? '✅ FOUND' : '❌ NOT FOUND'}
+                                    </div>
+                                    
+                                    {/* 📖 CONTENIDO MARKDOWN COMPLETO */}
+                                    <div 
+                                        className="prose prose-lg dark:prose-invert max-w-none text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg
+                                        prose-headings:text-gray-900 dark:prose-headings:text-white
+                                        prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-8 prose-h1:mt-0
+                                        prose-h2:text-2xl prose-h2:font-bold prose-h2:mb-6 prose-h2:mt-10
+                                        prose-h3:text-xl prose-h3:font-bold prose-h3:mb-4 prose-h3:mt-8
+                                        prose-p:mb-4 prose-p:leading-relaxed
+                                        prose-strong:text-gray-900 dark:prose-strong:text-white prose-strong:font-bold
+                                        prose-code:bg-gray-100 dark:prose-code:bg-gray-700 
+                                        prose-code:text-blue-600 dark:prose-code:text-blue-400
+                                        prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
+                                        prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:p-4 prose-pre:rounded-lg prose-pre:my-6 prose-pre:overflow-x-auto
+                                        prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+                                        prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-6
+                                        prose-li:mb-2 prose-li:text-gray-700 dark:prose-li:text-gray-300
+                                        prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:my-6"
+                                        dangerouslySetInnerHTML={{ 
+                                            __html: formatMarkdownContent(getBlogContent(guide.slug) || '❌ ERROR: No se encontró contenido para el slug: ' + guide.slug)
+                                        }}
+                                    />
+                                    
+                                    {/* 📝 FALLBACK: Contenido raw para debug */}
+                                    <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-700 rounded">
+                                        <h4 className="font-bold mb-2">RAW Content (primeros 200 chars):</h4>
+                                        <pre className="text-xs">{(getBlogContent(guide.slug) || 'CONTENIDO NO ENCONTRADO').substring(0, 200)}...</pre>
                                     </div>
                                 </div>
                             </div>
