@@ -441,9 +441,9 @@ export default function Header() {
                                     <Menu className="w-6 h-6" />
                                 </button>
                             </DialogTrigger>
-                            <DialogContent className="sm:max-w-md lg:hidden">
-                                <div className="space-y-4">
-                                    <nav className="space-y-1">
+                            <DialogContent className="sm:max-w-md lg:hidden max-h-[80vh] overflow-y-auto">
+                                <div className="space-y-4 min-h-[400px]">
+                                    <nav className="space-y-2">
                                         {navigationItems.map((item, index) => (
                                             <button
                                                 key={index}
