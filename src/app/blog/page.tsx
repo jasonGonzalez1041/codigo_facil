@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { BlogPageClient } from './BlogPageClient';
-import GuideModal from '@/components/ui/guide-modal';
+import GuideModal from '@/components/ui/blog-modal-new';
 
 interface BlogPost {
     id: number;
