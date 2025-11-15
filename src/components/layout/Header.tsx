@@ -3,7 +3,8 @@
 
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowUpRight, Code, Zap, Moon, Sun, X } from "lucide-react";
+import { ArrowUpRight, Code, Zap, Moon, Sun, Menu } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useModalStore } from "@/store/modalStore";
@@ -427,101 +428,59 @@ export default function Header() {
                             )}
                         </button>
 
-                        <button
-                            onClick={toggleMobileMenu}
-                            className={`relative p-2 rounded-lg transition-all duration-300 group ${
-                                scrolled
-                                    ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800"
-                                    : "text-white hover:bg-white/10"
-                            }`}
-                            aria-label="Toggle menu"
-                        >
-                            <div className="relative w-6 h-6">
-                                <span
-                                    className={`absolute block h-0.5 w-6 bg-current transform transition-all duration-300 ${
-                                        isMenuOpen ? 'rotate-45 top-3' : 'top-1'
-                                    }`}
-                                />
-                                <span
-                                    className={`absolute block h-0.5 w-6 bg-current transform transition-all duration-300 top-3 ${
-                                        isMenuOpen ? 'opacity-0' : 'opacity-100'
-                                    }`}
-                                />
-                                <span
-                                    className={`absolute block h-0.5 w-6 bg-current transform transition-all duration-300 ${
-                                        isMenuOpen ? '-rotate-45 top-3' : 'top-5'
-                                    }`}
-                                />
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            {/* Navegación Móvil - Versión Compacta */}
-            <div
-                ref={mobileBackdropRef}
-                className="lg:hidden fixed inset-0 z-40 hidden flex-col"
-                style={{ display: "none" }}
-            >
-                {/* Backdrop */}
-                <div
-                    className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-                    onClick={closeMobileMenu}
-                />
-
-
-                <div
-                    ref={mobileMenuRef}
-                    className="absolute top-16 right-4 left-4 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 max-h-[75vh] relative"
-                    style={{ display: "none" }}
-                >
-                    {/* Botón X en esquina superior derecha absoluta */}
-                    <button
-                        onClick={closeMobileMenu}
-                        className="group absolute top-3 right-3 z-10 p-2 text-gray-400 hover:text-white transition-all duration-300 rounded-full bg-gray-100 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-500 dark:bg-gray-700 dark:hover:from-red-600 dark:hover:to-pink-600 shadow-sm hover:shadow-lg transform hover:scale-110"
-                        aria-label="Cerrar menú"
-                    >
-                        <X className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" />
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                    </button>
-                    
-                    <div className="pt-4 pb-3 px-4 max-h-[60vh] overflow-y-auto">
-                        <nav className="space-y-0.5">
-                            {navigationItems.map((item, index) => (
+                        <Dialog>
+                            <DialogTrigger asChild>
                                 <button
-                                    key={index}
-                                    onClick={() => handleNavigation(item.id)}
-                                    className="w-full flex items-center space-x-3 p-2.5 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200 group"
+                                    className={`relative p-2 rounded-lg transition-all duration-300 group ${
+                                        scrolled
+                                            ? "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800"
+                                            : "text-white hover:bg-white/10"
+                                    }`}
+                                    aria-label="Abrir menú"
                                 >
-                                    <span className="text-lg group-hover:scale-105 transition-transform duration-200">
-                                        {item.icon}
-                                    </span>
-                                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
-                                        {item.label}
-                                    </span>
-                                    <ArrowUpRight className="w-3 h-3 ml-auto text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
+                                    <Menu className="w-6 h-6" />
                                 </button>
-                            ))}
-                        </nav>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-md lg:hidden">
+                                <div className="space-y-4">
+                                    <nav className="space-y-1">
+                                        {navigationItems.map((item, index) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => handleNavigation(item.id)}
+                                                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200 group"
+                                            >
+                                                <span className="text-xl group-hover:scale-105 transition-transform duration-200">
+                                                    {item.icon}
+                                                </span>
+                                                <span className="text-base font-medium text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                                                    {item.label}
+                                                </span>
+                                                <ArrowUpRight className="w-4 h-4 ml-auto text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
+                                            </button>
+                                        ))}
+                                    </nav>
 
-                        {/* CTA Móvil compacto */}
-                        <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
-                            <button
-                                onClick={() => {
-                                    window.open('https://wa.me/56950225491?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20desde%20el%20móvil', '_blank');
-                                    closeMobileMenu();
-                                }}
-                                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2.5 px-4 rounded-lg font-medium text-sm shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2"
-                            >
-                                <Zap className="w-4 h-4" />
-                                <span>Consulta Gratuita</span>
-                                <ArrowUpRight className="w-4 h-4" />
-                            </button>
-                        </div>
+                                    {/* CTA Button */}
+                                    <div className="pt-3 border-t border-gray-200 dark:border-gray-700">
+                                        <button
+                                            onClick={() => {
+                                                window.open('https://wa.me/56950225491?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20desde%20el%20móvil', '_blank');
+                                            }}
+                                            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg font-medium text-base shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2"
+                                        >
+                                            <Zap className="w-5 h-5" />
+                                            <span>Consulta Gratuita</span>
+                                            <ArrowUpRight className="w-5 h-5" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                 </div>
             </div>
+
         </header>
     );
 }
