@@ -443,61 +443,57 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* Modal de menú móvil simplificado */}
+            {/* Navegación Móvil - Versión Original Mejorada */}
             {isMenuOpen && (
-                <div className="lg:hidden fixed inset-0 z-50">
+                <div className="lg:hidden fixed inset-0 z-40">
                     {/* Backdrop */}
                     <div 
                         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
                         onClick={() => setIsMenuOpen(false)}
                     />
-                    
-                    {/* Modal */}
-                    <div className="absolute top-20 left-4 right-4 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-                        {/* Header con X */}
-                        <div className="relative p-4 border-b border-gray-200 dark:border-gray-700">
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white text-center">Menú de Navegación</h3>
+
+                    <div className="absolute top-16 right-4 left-4 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 max-h-[75vh]">
+                        {/* Header del menú móvil compacto */}
+                        <div className="flex items-center justify-end p-4 border-b border-gray-200 dark:border-gray-700">
                             <button
                                 onClick={() => setIsMenuOpen(false)}
-                                className="absolute top-4 right-4 p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-                                aria-label="Cerrar menú"
+                                className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
                             >
-                                <Menu className="w-5 h-5" />
+                                ✕
                             </button>
                         </div>
-                        
-                        {/* Contenido */}
-                        <div className="p-4 max-h-[70vh] overflow-y-auto">
-                            <nav className="space-y-2">
+
+                        <div className="p-3 max-h-[60vh] overflow-y-auto">
+                            <nav className="space-y-0.5">
                                 {navigationItems.map((item, index) => (
                                     <button
                                         key={index}
                                         onClick={() => handleNavigation(item.id)}
-                                        className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200 group"
+                                        className="w-full flex items-center space-x-3 p-2.5 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200 group"
                                     >
-                                        <span className="text-xl group-hover:scale-105 transition-transform duration-200">
+                                        <span className="text-lg group-hover:scale-105 transition-transform duration-200">
                                             {item.icon}
                                         </span>
-                                        <span className="text-base font-medium text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                                        <span className="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
                                             {item.label}
                                         </span>
-                                        <ArrowUpRight className="w-4 h-4 ml-auto text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
+                                        <ArrowUpRight className="w-3 h-3 ml-auto text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
                                     </button>
                                 ))}
                             </nav>
 
-                            {/* CTA Button */}
-                            <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                            {/* CTA Móvil compacto */}
+                            <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
                                 <button
                                     onClick={() => {
                                         window.open('https://wa.me/56950225491?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20desde%20el%20móvil', '_blank');
                                         setIsMenuOpen(false);
                                     }}
-                                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg font-medium text-base shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2"
+                                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2.5 px-4 rounded-lg font-medium text-sm shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2"
                                 >
-                                    <Zap className="w-5 h-5" />
+                                    <Zap className="w-4 h-4" />
                                     <span>Consulta Gratuita</span>
-                                    <ArrowUpRight className="w-5 h-5" />
+                                    <ArrowUpRight className="w-4 h-4" />
                                 </button>
                             </div>
                         </div>
