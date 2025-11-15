@@ -473,19 +473,22 @@ export default function Header() {
 
                 <div
                     ref={mobileMenuRef}
-                    className="absolute top-16 right-4 left-4 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 max-h-[75vh]"
+                    className="absolute top-16 right-4 left-4 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 max-h-[75vh] relative"
                     style={{ display: "none" }}
                 >
-                    {/* Header del menú móvil compacto */}
-                    <div className="flex items-center justify-end p-4 border-b border-gray-200 dark:border-gray-700">
-                        <button
-                            onClick={closeMobileMenu}
-                            className="group relative p-2 text-gray-400 hover:text-white transition-all duration-300 rounded-full bg-gray-100 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-500 dark:bg-gray-700 dark:hover:from-red-600 dark:hover:to-pink-600 shadow-sm hover:shadow-lg transform hover:scale-110"
-                            aria-label="Cerrar menú"
-                        >
-                            <X className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" />
-                            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                        </button>
+                    {/* Botón X en esquina superior derecha absoluta */}
+                    <button
+                        onClick={closeMobileMenu}
+                        className="group absolute top-3 right-3 z-10 p-2 text-gray-400 hover:text-white transition-all duration-300 rounded-full bg-gray-100 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-500 dark:bg-gray-700 dark:hover:from-red-600 dark:hover:to-pink-600 shadow-sm hover:shadow-lg transform hover:scale-110"
+                        aria-label="Cerrar menú"
+                    >
+                        <X className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" />
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    </button>
+                    
+                    {/* Header del menú móvil - sin botón X */}
+                    <div className="pt-12 pb-4 px-4 border-b border-gray-200 dark:border-gray-700">
+                        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Menú</h3>
                     </div>
 
                     <div className="p-3 max-h-[60vh] overflow-y-auto">
