@@ -170,22 +170,31 @@ export default function BlogSection() {
                 {/* Header de la sección */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                        Guías <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Evergreen</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Blog</span>
                     </h2>
                     <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-                        Contenido atemporal que genera valor perpetuo. Aprende desarrollo web, e-commerce
-                        y estrategias digitales con guías que nunca caducan y te convierten en referente.
+                        Artículos sobre desarrollo web, e-commerce, SEO, marketing digital y estrategias 
+                        que te ayudarán a convertirte en un referente en tu área.
                     </p>
-                    <div className="flex flex-wrap gap-3 justify-center">
+                    <div className="flex flex-wrap gap-3 justify-center mb-8">
             <span className="px-4 py-2 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm font-medium">
-              📚 Guías Completas
+              📝 Contenido de Calidad
             </span>
                         <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium">
-              ⏰ Contenido Atemporal
+              🚀 Estrategias Efectivas
             </span>
                         <span className="px-4 py-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm font-medium">
-              🚀 Resultados Garantizados
+              💡 Tips Profesionales
             </span>
+                    </div>
+                    <div className="text-center">
+                        <a 
+                            href="/blog" 
+                            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                        >
+                            📚 Ver Todos los Artículos
+                            <ArrowUpRight className="w-5 h-5" />
+                        </a>
                     </div>
                 </div>
 
