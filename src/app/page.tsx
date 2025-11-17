@@ -3,12 +3,13 @@
 import { useEffect, useRef } from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import ServicesSection from "@/components/sections/ServicesSection";
-// import ProjectsSection from "@/components/sections/ProjectsSection"; // Temporalmente comentado
+ import ProjectsSection from "@/components/sections/ProjectsSection"; // Temporalmente comentado
 import BlogSection from "@/components/sections/BlogSection";
 import ContactSection from "@/components/sections/ContactSection";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PricingSection from "@/components/sections/PricingSection";
+import LeadCaptureSection from "@/components/layout/LeadCaptureSection";
 
 export default function HomePage() {
   const heroRef = useRef(null);
@@ -71,12 +72,15 @@ export default function HomePage() {
         <PricingSection />
       </div>
       {/* Proyectos - Temporalmente comentado */}
-      {/* <div id="proyectos">
+       <div id="proyectos">
         <ProjectsSection />
-      </div> */}
+      </div>
       <div id="blog">
         <BlogSection />
       </div>
+        <div id="">
+            <LeadCaptureSection />
+        </div>
       <div id="contacto">
         <ContactSection />
       </div>
