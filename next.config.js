@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Optimizado para Vercel (modo estándar Next.js)
-  // output: 'export', // Comentado - Vercel prefiere el modo estándar
-  // trailingSlash: true, // Comentado - permite URLs sin barra final
-  
   // Optimización de imágenes para Vercel
   images: {
     // unoptimized: true, // Comentado - Vercel tiene optimización nativa

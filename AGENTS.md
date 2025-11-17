@@ -8,44 +8,41 @@
 - **Enfoque en conversión** y experiencia de usuario optimizada para mercado latinoamericano
 
 ### Stack Tecnológico Principal
-- **Framework**: Next.js 14.2.13 (App Router) con static export
+- **Framework**: Next.js 16.0.2 (App Router) con deployment dual (Vercel + Cloudflare)
 - **Lenguaje**: TypeScript 5+ con configuración strict mode
+- **UI Framework**: React 19.2.0 con React DOM 19.2.0
 - **Styling**: Tailwind CSS 4 + shadcn/ui components (New York style)
 - **Estado**: Zustand 5.0.8 para gestión de estado ligera
 - **Animaciones**: Framer Motion 12.23.22 + GSAP 3.13.0 con ScrollTrigger
-- **Deployment**: Cloudflare Pages con @cloudflare/next-on-pages
-- **Testing**: Jest 30.2.0 + Testing Library (112 pruebas al 100%)
+- **Deployment**: Vercel Platform
 
 ### Dependencias Clave de UI/UX
-- **UI Primitives**: Radix UI (dropdown-menu, label, slot)
+- **UI Primitives**: Radix UI (dropdown-menu, dialog, label, slot)
 - **Icons**: Lucide React 0.544.0
 - **Styling**: class-variance-authority, clsx, tailwind-merge
-- **Animations**: tailwindcss-animate
+- **Animations**: tailwindcss-animate + framer-motion + gsap
 - **Themes**: next-themes 0.4.6 para modo claro/oscuro/sistema
 - **Fonts**: Inter + JetBrains Mono via next/font/google
 - **Analytics**: Vercel Analytics 1.5.0
+- **Forms**: @emailjs/browser 4.4.1 para formularios de contacto
 
 ## 🚀 Comandos de Desarrollo Rápido
 
 ### Scripts de Proyecto
 ```bash
 # Desarrollo
-npm run dev                    # Next.js dev server (localhost:3000)
-
-# Testing
-npm run test                   # Ejecutar 112 pruebas Jest
-npm run test:watch            # Modo watch para desarrollo
-npm run test:coverage         # Con reporte de cobertura
-npm run test:ci               # Para CI/CD (sin watch)
+npm run dev                  # Next.js dev server (localhost:3000)
 
 # Build y Deploy
-npm run build                 # Build estándar Next.js
-npm run pages:build           # Build para Cloudflare Pages
-npm run preview              # Preview local con Wrangler
-npm run deploy               # Deploy directo a Cloudflare
+npm run build               # Build estándar Next.js
+npm run build:test          # Test de build process
+
+# Deploy a Vercel
+npm run vercel:deploy       # Deploy a Vercel (producción)
+npm run vercel:preview      # Preview en Vercel
 
 # Calidad de Código
-npm run lint                 # ESLint check
+npm run lint                # ESLint check
 ```
 
 ## 📂 Estructura de Archivos
@@ -87,13 +84,12 @@ src/
 ```
 
 ### Archivos de Configuración Críticos
-- `next.config.js` - Static export, images unoptimized, Cloudflare Pages
+- `next.config.js` - Configuración Vercel con optimizaciones de imagen y headers
 - `tailwind.config.js` - Design system completo con colores brand y dark mode
 - `tsconfig.json` - TypeScript strict con paths aliases (@/*)
-- `jest.config.cjs` - Setup completo con mocks de GSAP/Framer Motion
 - `eslint.config.mjs` - Linting Next.js + TypeScript con ignores
-- `wrangler.toml` - Cloudflare Pages deployment config
 - `components.json` - shadcn/ui config (New York style, Lucide icons)
+- `vercel.json` - Configuración de deployment para Vercel
 
 ## 🛠️ Convenciones de Desarrollo
 
@@ -255,41 +251,34 @@ __tests__/ (112 pruebas organizadas)
     └── cn.test.ts          # Utility de clases CSS
 ```
 
-### Testing Best Practices (OBLIGATORIAS)
-- **@testing-library/react** para interacciones realistas de usuario
-- **@testing-library/jest-dom** para assertions específicas de DOM
-- **@testing-library/user-event** para eventos de usuario complejos
-- **Mock functions** para todas las dependencias externas
-- **Describir comportamiento**, no implementación
-- **Tests independientes** - sin orden de ejecución
-- **Cleanup automático** después de cada test
 
 ## 🚀 Deployment y CI/CD
 
-### Cloudflare Pages Setup
-- **Build command**: `npm run pages:build`
-- **Output directory**: `out/` (static export)
-- **Environment**: Node.js con variables de entorno
+### Vercel Platform Setup
+- **Platform**: Vercel (optimized for Next.js 16 + React 19)
 - **Domain**: codigofacil.com con SSL automático
+- **Build command**: `npm run build`
+- **Output**: Standard Next.js output
+- **Features**: Image optimization, serverless functions, edge functions
+- **Analytics**: Vercel Analytics integrado
 
-### Scripts Disponibles
+### Build Scripts
 ```json
 {
-  "dev": "next dev",                    // Desarrollo local
-  "build": "next build",                // Build estándar
-  "pages:build": "next build && npx @cloudflare/next-on-pages", // Cloudflare
-  "test": "jest",                       // Pruebas
-  "test:coverage": "jest --coverage",   // Cobertura
-  "test:watch": "jest --watch",         // Modo watch
-  "lint": "eslint"                      // Linting
+  "dev": "next dev",              // Desarrollo local
+  "build": "next build",          // Build estándar
+  "build:test": "node build-test.js", // Test de build process
+  "lint": "eslint",               // Linting
+  "vercel:deploy": "vercel --prod", // Deploy a producción
+  "vercel:preview": "vercel"      // Preview deployment
 }
 ```
 
-### Workflow Recomendado
-1. **Desarrollo** con `npm run dev`
-2. **Testing** con `npm run test:watch` 
-3. **Build local** con `npm run pages:build`
-4. **Deploy** automático via Git push
+### Deployment Workflow
+1. **Development**: `npm run dev` (localhost:3000)
+2. **Build verification**: `npm run build:test`
+3. **Linting**: `npm run lint`
+4. **Deploy**: `npm run vercel:deploy` o automatic via Git push
 
 ## 📋 Reglas y Best Practices
 
@@ -424,7 +413,7 @@ npm run test:coverage # With coverage
 
 ### Servicios de CodigoFacil.com (6 Servicios Principales)
 ```typescript
-// Datos en src/data/services.ts
+// Interface completa en src/data/services.ts
 export interface Service {
   id: string                 // web-development, ecommerce, web-app, etc.
   title: string             // "Desarrollo Web Personalizado"
@@ -437,21 +426,49 @@ export interface Service {
   price: string           // Rango de precios en USD
   timeline: string        // Tiempo estimado de entrega
 }
+
+// 6 servicios definidos con datos completos:
+// 1. Desarrollo Web Personalizado
+// 2. Tienda Online E-commerce  
+// 3. Aplicación Web
+// 4. Diseño Web y UI/UX
+// 5. SEO y Marketing Digital
+// 6. Mantenimiento y Soporte
+```
+
+### Arquitectura de Componentes Principales
+```
+src/components/
+├── layout/
+│   ├── Header.tsx          # Navegación principal con modo toggle
+│   └── Footer.tsx          # Footer con links y contacto
+├── sections/
+│   ├── HeroSection.tsx     # Landing principal con animaciones GSAP
+│   ├── ServicesSection.tsx # Grid de servicios con modales
+│   ├── PricingSection.tsx  # Sección de precios
+│   ├── BlogSection.tsx     # Preview blog + newsletter
+│   └── ContactSection.tsx  # Formularios con EmailJS
+└── ui/
+    ├── cost-calculator.tsx # Calculadora interactiva
+    ├── service-modal.tsx   # Modales de servicios detallados
+    ├── mode-toggle.tsx     # Switch de temas
+    └── button.tsx          # Button base con variantes
 ```
 
 ### Calculadora de Costos (Funcionalidad Crítica)
-- **18 pruebas automatizadas** validando cálculos matemáticos
+- **18 pruebas automatizadas** validando cálculos matemáticos precisos
 - **Componente**: `src/components/ui/cost-calculator.tsx`
-- **Funcionalidades**:
+- **Funcionalidades validadas**:
   - Sliders para complejidad, páginas, funcionalidades
   - Selects para diseño, integraciones, soporte
-  - Cálculo dinámico de precio y tiempo
-  - Integración con WhatsApp para cotización
+  - Cálculo dinámico de precio y tiempo en USD
+  - Integración directa con WhatsApp para cotización
   - Animaciones de precio con Framer Motion
+  - Formateo automático de moneda y tiempo
 
 ### Integración WhatsApp (Conversión)
 ```typescript
-// Ejemplo de integración
+// Integración automática para cotizaciones
 const whatsappMessage = `Hola! Quiero una cotización para:
 - Tipo: ${selectedService}
 - Presupuesto estimado: $${calculatedPrice} USD
@@ -459,6 +476,7 @@ const whatsappMessage = `Hola! Quiero una cotización para:
 - Características adicionales: ${features}`;
 
 const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(whatsappMessage)}`;
+// Número de contacto: +56950225491 (Chile)
 ```
 
 ### SEO y Metadatos (Optimización LATAM)
@@ -544,25 +562,27 @@ npm run lint                 # ESLint check
 ## 🔧 Reglas de Desarrollo CRÍTICAS
 
 ### Arquitectura de Decisiones Técnicas
-- **App Router sobre Pages Router** - Future-proof y mejor SEO automático
+- **Next.js 16 + React 19** - Latest stable con App Router
+- **Dual deployment** - Vercel (primary) + Cloudflare Pages (backup)
 - **Zustand sobre Redux** - Simplicidad para estado mínimo actual
-- **Tailwind sobre CSS-in-JS** - Performance y developer experience óptimo
-- **Static export requerido** - Limitado por Cloudflare Pages deployment
+- **Tailwind CSS 4** - Performance y developer experience óptimo
+- **shadcn/ui (New York style)** - Sistema de componentes consistente
 - **GSAP + Framer Motion** - GSAP para scroll animations, Framer para micro-interactions
 
 ### Reglas de Calidad OBLIGATORIAS
 - **100% TypeScript** - NO JavaScript plano permitido
-- **Testing obligatorio** - Nuevas features requieren tests correspondientes
 - **Performance budget** - <200KB bundle inicial mandatorio
 - **Mobile-first** - Diseño responsive obligatorio desde diseño
 - **Accessibility** - ARIA labels y semantic HTML siempre
 - **ESLint + TypeScript strict** - Sin warnings permitidos en producción
+- **Build verification** - Todas las builds deben completarse sin errores
 
-### Limitaciones Conocidas (Cloudflare Pages)
-- **Static export requerido** - Limita algunas features avanzadas de Next.js
-- **Image optimization deshabilitada** - `unoptimized: true` necesario
-- **No SSR/ISR** - Solo static generation disponible
-- **API Routes limitadas** - Usar Cloudflare Workers si necesario
+### Configuración Vercel
+- **Optimización de imágenes** habilitada (WebP, AVIF)
+- **Headers de seguridad** configurados (HSTS, DNS prefetch)
+- **Rewrites automáticos** para sitemap.xml y robots.txt
+- **Variables de entorno** para site URL y analytics
+- **Edge functions** y serverless functions disponibles
 
 ### Patrones de Código Establecidos
 
