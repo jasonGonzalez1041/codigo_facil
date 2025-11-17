@@ -39,10 +39,11 @@ export default function Header() {
     // Determinar si estamos en la página de inicio
     const isHomePage = pathname === '/';
 
-    // Rutas estáticas optimizadas
+    // Rutas estáticas optimizadas - CORREGIDO: 'proyect' → 'project'
     const staticRoutes = {
         home: '/',
         blog: '/#blog',
+        proyectos: '/#proyectos', // ← Corregido aquí
         services: '/#servicios',
         pricing: '/#precios',
         contact: '/#contacto'
@@ -115,6 +116,14 @@ export default function Header() {
                         scrollToSection('servicios');
                     } else {
                         router.push(staticRoutes.services);
+                    }
+                    break;
+
+                case 'proyectos':
+                    if (isHomePage) {
+                        scrollToSection('proyectos');
+                    } else {
+                        router.push(staticRoutes.proyectos); // ← Corregido aquí
                     }
                     break;
                 case 'blog':
@@ -289,9 +298,11 @@ export default function Header() {
         }
     };
 
+    // Navigation items con ícono para Proyectos - AGREGADO ÍCONO
     const navigationItems = [
         { id: "inicio", label: "Inicio", icon: "🏠" },
         { id: "servicios", label: "Servicios", icon: "⚡" },
+        { id: "proyectos", label: "Proyectos", icon: "💼" }, // ← Agregado ícono aquí
         { id: "precios", label: "Precios", icon: "💰" },
         { id: "blog", label: "Blog", icon: "📝" },
         { id: "contacto", label: "Contacto", icon: "📱" }
@@ -447,7 +458,7 @@ export default function Header() {
             {isMenuOpen && (
                 <div className="lg:hidden fixed inset-0 z-40">
                     {/* Backdrop */}
-                    <div 
+                    <div
                         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
                         onClick={() => setIsMenuOpen(false)}
                     />
