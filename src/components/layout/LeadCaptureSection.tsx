@@ -1,51 +1,44 @@
 'use client';
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
+import { useRouter } from 'next/navigation';
 import { Download, CheckCircle, Star, Calculator } from 'lucide-react';
 
 export default function LeadCaptureSection() {
     const [formData, setFormData] = useState({
         nombre: '',
-        email: ''
+        email: '',
+        telefono: ''
     });
     const [enviando, setEnviando] = useState(false);
-    const [enviado, setEnviado] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
-    const manejarEnvio = async (e) => {
+    const manejarEnvio = async (e: React.FormEvent) => {
         e.preventDefault();
         setEnviando(true);
+        setError(null);
 
         try {
-            // 1. Enviar notificación a TI
-            await emailjs.send(
-                'service_veiqier', // Tu Service ID
-                'template_eop9zxo', // Tu Template ID
-                {
-                    es_notificacion: true,
-                    nombre: formData.nombre,
-                    email: formData.email,
-                    fecha: new Date().toLocaleDateString('es-ES'),
-                    producto: 'Checklist 25 Puntos + Calculadora ROI',
-                    tipo_consulta: 'Lead Magnet PDF',
+            // 1. Enviar datos a nuestra API self-hosted
+            const response = await fetch('/api/send-pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY // Solo necesitas la Public Key en variables de entorno
-            );
-
-            // 2. Enviar auto-respuesta al USUARIO
-            await emailjs.send(
-                'service_veiqier', // Tu Service ID
-                'template_eop9zxo', // Tu Template ID
-                {
-                    es_notificacion: false,
-                    nombre: formData.nombre,
+                body: JSON.stringify({
+                    name: formData.nombre,
                     email: formData.email,
-                    producto: 'Checklist 25 Puntos + Calculadora ROI',
-                    download_link: 'https://codigofacil.com/pdf/checklist-25-puntos.pdf',
-                },
-                process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY // Solo necesitas la Public Key en variables de entorno
-            );
+                    phone: formData.telefono,
+                }),
+            });
 
-            // 3. Descarga inmediata del PDF
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || 'Error al procesar la solicitud');
+            }
+
+            // 2. Descarga inmediata del PDF (backup por si el email tarda)
             const link = document.createElement('a');
             link.href = '/pdf/checklist-25-puntos.pdf';
             link.download = 'Checklist-25-Puntos-Web-Que-Vende.pdf';
@@ -53,48 +46,17 @@ export default function LeadCaptureSection() {
             link.click();
             document.body.removeChild(link);
 
-            // 4. Mostrar estado de éxito
-            setEnviado(true);
-            setFormData({ nombre: '', email: '' });
+            // 3. Redirigir a página de agradecimiento
+            router.push('/gracias');
 
         } catch (error) {
             console.error('Error en el envío:', error);
-            alert('Error al procesar. Por favor, intenta nuevamente.');
+            setError(error instanceof Error ? error.message : 'Error al procesar. Por favor, intenta nuevamente.');
         } finally {
             setEnviando(false);
         }
     };
 
-    if (enviado) {
-        return (
-            <section className="py-16 bg-gradient-to-br from-green-50 to-emerald-100">
-                <div className="max-w-4xl mx-auto px-4 text-center">
-                    <div className="bg-white rounded-2xl shadow-lg p-8 border border-green-200">
-                        <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                        <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                            ¡Descarga Exitosa!
-                        </h2>
-                        <p className="text-lg text-gray-600 mb-6">
-                            Tu PDF <strong>"Checklist 25 Puntos + Calculadora ROI"</strong> ha sido descargado y
-                            también te lo enviamos por email.
-                        </p>
-                        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                            <p className="text-green-800">
-                                📧 <strong>Revisa tu bandeja de entrada</strong> - Te enviamos una copia por email
-                                con información adicional.
-                            </p>
-                        </div>
-                        <button
-                            onClick={() => setEnviado(false)}
-                            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-200"
-                        >
-                            Descargar Otro Recurso
-                        </button>
-                    </div>
-                </div>
-            </section>
-        );
-    }
 
     return (
         <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -153,9 +115,15 @@ export default function LeadCaptureSection() {
                         </div>
 
                         <form onSubmit={manejarEnvio} className="space-y-4">
+                            {error && (
+                                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                                    <p className="text-red-800 text-sm">{error}</p>
+                                </div>
+                            )}
+                            
                             <div>
                                 <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Tu Nombre
+                                    Tu Nombre *
                                 </label>
                                 <input
                                     type="text"
@@ -170,7 +138,7 @@ export default function LeadCaptureSection() {
 
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Tu Email
+                                    Tu Email *
                                 </label>
                                 <input
                                     type="email"
@@ -179,6 +147,20 @@ export default function LeadCaptureSection() {
                                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                                     placeholder="tu@email.com"
                                     required
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Teléfono (Opcional)
+                                </label>
+                                <input
+                                    type="tel"
+                                    id="telefono"
+                                    value={formData.telefono}
+                                    onChange={(e) => setFormData({...formData, telefono: e.target.value})}
+                                    placeholder="+56 9 1234 5678"
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
                                 />
                             </div>
