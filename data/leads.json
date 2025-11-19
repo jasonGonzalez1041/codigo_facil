@@ -57,5 +57,13 @@
     "source": "contact_form",
     "timestamp": "2025-11-19T18:00:02.331Z",
     "message": "Contacto rápido desde formulario paso 1.\nTipo de negocio: 📚 Educación"
+  },
+  {
+    "name": "Test Verificación",
+    "email": "5356789012@whatsapp.codigofacil.com",
+    "phone": "+53 56789012",
+    "source": "contact_form",
+    "timestamp": "2025-11-19T18:35:50.988Z",
+    "message": "Probando que las variables de entorno unificadas funcionen correctamente después de la refactorización."
   }
 ]
