@@ -144,7 +144,7 @@ class LocalSMTPServer {
       const { createLeadMagnetEmailTemplate } = await import('./email-templates');
       
       // Leer el PDF desde el directorio public
-      const pdfPath = join(process.cwd(), 'public/guia.pdf');
+      const pdfPath = join(process.cwd(), 'public/pdf/checklist-25-puntos.pdf');
       
       // Generar HTML usando la plantilla hermosa
       const emailHTML = createLeadMagnetEmailTemplate({

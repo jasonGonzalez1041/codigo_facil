@@ -52,7 +52,7 @@ export default function GraciasPage() {
       if (!autoDownloaded) {
         // Trigger download automático
         const link = document.createElement('a');
-        link.href = '/guia.pdf';
+        link.href = '/pdf/checklist-25-puntos.pdf';
         link.download = 'Guía-Gratuita-CodigoFacil.pdf';
         document.body.appendChild(link);
         link.click();
@@ -78,7 +78,7 @@ export default function GraciasPage() {
     
     // Descargar archivo
     const link = document.createElement('a');
-    link.href = '/guia.pdf';
+    link.href = '/pdf/checklist-25-puntos.pdf';
     link.download = 'Guía-Gratuita-CodigoFacil.pdf';
     document.body.appendChild(link);
     link.click();

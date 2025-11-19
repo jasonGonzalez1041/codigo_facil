@@ -88,13 +88,17 @@ npm run lint                # ESLint check con Next.js rules
 
 ### Estado Actual de Funcionalidades
 - ✅ **Calculadora de costos**: FUNCIONANDO en producción
-- ✅ **WhatsApp integration**: ACTIVO con número real
+- ✅ **WhatsApp integration**: ACTIVO con número real (+56950225491)
 - ✅ **SEO para LATAM**: Metadatos completos implementados
 - ✅ **Responsive design**: Mobile-first COMPLETO
 - ✅ **Sistema de modales**: Zustand store funcionando
-- 🔄 **Blog system**: MDX implementado, necesita contenido
-- ❌ **Formularios backend**: Pendiente integración EmailJS/Cloudflare
-- ❌ **Analytics**: Google Analytics pendiente configuración
+- ✅ **Lead Magnet System**: PDF de 25 puntos + auto-descarga implementado
+- ✅ **SMTP Self-Hosted**: Sistema de email 100% propio funcionando
+- ✅ **Notificaciones internas**: Automáticas a vecipremiun@gmail.com
+- ✅ **Blog system**: MDX implementado con artículos LATAM
+- ✅ **Formularios backend**: Sistema local SMTP operativo
+- 🔄 **Analytics**: Google Analytics pendiente configuración
+- 🔄 **PWA features**: Pendiente implementación
 
 ## 🚨 Prioridades Inmediatas de Desarrollo
 
@@ -124,11 +128,21 @@ npm run lint                # ESLint check con Next.js rules
 - ✅ **Image optimization**: Configurado para Vercel nativo
 - ✅ **Security headers**: Implementados en vercel.json
 
+### Sistema SMTP y Lead Magnet (RESUELTO)
+- ✅ **PDF corrupto**: Solucionado - PDF real de 26.9 KB con contenido
+- ✅ **Email delivery**: Gmail SMTP funcionando al 100%
+- ✅ **Notificaciones internas**: Automáticas a vecipremiun@gmail.com
+- ✅ **Rutas PDF**: Corregidas todas las referencias (/pdf/checklist-25-puntos.pdf)
+- ✅ **wkhtmltopdf**: Instalado para generación de PDFs desde HTML
+- ✅ **Logs de debugging**: Sistema completo de tracking funcional
+
 ### Dependencias Críticas (NO cambiar sin testing)
 - **@vercel/analytics**: Integrado y funcionando
 - **framer-motion**: Versión 12.23.22 estable con React 19
 - **zustand**: Estado global mínimo pero crítico para modales
 - **tailwind-merge + clsx**: Esencial para sistema de componentes
+- **nodemailer**: Versión 7.0.10 para SMTP self-hosted
+- **zod**: Versión 4.1.12 para validación de formularios
 
 ## 🔧 Configuración del Proyecto
 
@@ -532,23 +546,30 @@ npm run test:coverage # With coverage
 
 ## 🎯 Próximos Pasos y TODOs
 
-### Desarrollo Pendiente (ver TODO.md)
-- **Dominio personalizado** y configuración DNS
-- **Google Analytics** y tracking completo
-- **Formularios backend** con Cloudflare Workers
-- **PWA features** para experiencia mobile
+### Desarrollo Pendiente (Prioridad Alta)
+- **Google Analytics 4** - Configurar tracking y eventos de conversión
+- **Dominio personalizado** - Configurar DNS para codigofacil.com 
+- **PWA features** - Service Worker y offline fallback
+- **Testing suite** - Jest + React Testing Library expandido
 
-### Testing Expansion
-- **E2E tests** con Playwright
-- **Visual regression** tests
-- **Performance testing** automatizado
-- **Accessibility testing** con axe-core
+### Sistema de Email (COMPLETADO ✅)
+- ✅ **SMTP Self-Hosted** - Gmail funcionando perfectamente
+- ✅ **Lead Magnet** - PDF de 25 puntos implementado
+- ✅ **Notificaciones internas** - Automáticas a vecipremiun@gmail.com
+- ✅ **Templates HTML** - Diseño profesional completado
+- ✅ **Auto-descarga** - Sistema de backup funcional
 
 ### Performance Improvements
-- **Image optimization** custom implementation
-- **Bundle analysis** y optimización
-- **Core Web Vitals** monitoring
-- **CDN optimization** avanzada
+- **Image optimization** - Implementar WebP/AVIF automático
+- **Bundle analysis** - Optimizar tamaño de bundles
+- **Core Web Vitals** - Monitoreo automático
+- **CDN optimization** - Cloudflare integration
+
+### Testing Expansion
+- **E2E tests** - Playwright para flujos críticos
+- **Load testing** - Sistema SMTP bajo carga
+- **Email deliverability** - Testing de spam scores
+- **Accessibility testing** - axe-core integration
 
 ## 🔗 Links de Referencia
 
@@ -632,6 +653,37 @@ const whatsappMessage = `Hola! Quiero una cotización para:
 const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(whatsappMessage)}`;
 // Número de contacto: +56950225491 (Chile)
 ```
+
+### Sistema SMTP Self-Hosted (NUEVO - Implementado)
+- **Servidor**: Gmail SMTP + App Password (100% self-hosted)
+- **Archivo principal**: `src/lib/smtp-server.ts` + `src/lib/email-service-local.ts`
+- **Funcionalidades**:
+  ```typescript
+  // Lead Magnet con PDF automático
+  await emailService.sendLeadMagnet({
+    name: "Juan Pérez",
+    email: "juan@email.com", 
+    phone: "+52 55 1234 5678",
+    source: "lead_magnet_checklist"
+  });
+  
+  // Resultado: 
+  // 1. ✅ Email con PDF al usuario
+  // 2. ✅ Lead guardado en data/leads.json
+  // 3. ✅ Notificación a vecipremiun@gmail.com
+  // 4. ✅ Contador actualizado
+  ```
+
+### Notificaciones Internas Automáticas (NUEVO)
+- **Email destino**: `vecipremiun@gmail.com`
+- **Trigger**: Cada nuevo lead magnet
+- **Template**: HTML profesional con datos completos + botones de acción
+- **Contenido**:
+  - 📋 Información del lead (nombre, email, teléfono, timestamp)
+  - ⚡ Botones para contactar por WhatsApp/Email
+  - 🔧 Estado del sistema
+  - 💡 Recomendaciones de seguimiento
+- **Archivo**: `createInternalNotificationTemplate()` en `email-templates.ts`
 
 ### SEO y Metadatos (Optimización LATAM)
 - **Enfoque geográfico**: Latinoamérica (MX, AR, CO, CL, PE, EC, UY, BO, PY)

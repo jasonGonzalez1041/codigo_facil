@@ -89,14 +89,26 @@ class LocalEmailService {
       // 1. Guardar lead localmente
       const leadSaved = await this.saveLeadLocally(leadData);
       
-      // 2. Enviar email con PDF
+      // 2. Enviar email con PDF al usuario
       const emailResult = await smtpServer.sendLeadMagnetEmail(
         leadData.email,
         leadData.name,
         leadData.phone
       );
 
-      // 3. Log para desarrollo
+      // 3. Enviar notificación interna a vecipremiun@gmail.com (no bloquea si falla)
+      try {
+        const notificationResult = await this.sendInternalNotification(leadData);
+        if (notificationResult.success) {
+          console.log('📧 Notificación interna enviada exitosamente a vecipremiun@gmail.com');
+        } else {
+          console.warn('⚠️ Falló notificación interna:', notificationResult.error);
+        }
+      } catch (notificationError) {
+        console.warn('⚠️ Error en notificación interna (continuando):', notificationError);
+      }
+
+      // 4. Log para desarrollo
       if (process.env.NODE_ENV === 'development') {
         console.log('📊 Resumen del envío:', {
           lead: `${leadData.name} <${leadData.email}>`,
@@ -177,6 +189,39 @@ class LocalEmailService {
       leadsFileExists,
       totalLeads
     };
+  }
+
+  // Método para enviar notificaciones internas
+  async sendInternalNotification(leadData: LeadData): Promise<EmailResult> {
+    const smtpServer = getSMTPServer();
+    
+    try {
+      // Importar template de notificación interna
+      const { createInternalNotificationTemplate } = await import('./email-templates');
+      
+      // Generar HTML usando la plantilla de notificación
+      const emailHTML = createInternalNotificationTemplate({
+        name: leadData.name,
+        email: leadData.email,
+        phone: leadData.phone || 'No proporcionado'
+      });
+
+      // Enviar notificación a vecipremiun@gmail.com
+      const result = await smtpServer.sendEmail({
+        to: 'vecipremiun@gmail.com',
+        subject: `🎯 Nuevo Lead: ${leadData.name} - CodigoFacil.com`,
+        html: emailHTML
+      });
+
+      return result;
+
+    } catch (error) {
+      console.error('❌ Error enviando notificación interna:', error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Error en notificación interna'
+      };
+    }
   }
 
   // Método para testing - enviar email de prueba

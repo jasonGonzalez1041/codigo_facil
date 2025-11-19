@@ -186,7 +186,7 @@ export function createLeadMagnetEmailTemplate(data: EmailTemplateData): string {
                                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center">
                                   <tr>
                                     <td style="background: linear-gradient(135deg, #dc2626, #b91c1c); border-radius: 16px; box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4); position: relative;">
-                                      <a href="${siteUrl}/guia.pdf" 
+                                      <a href="${siteUrl}/pdf/checklist-25-puntos.pdf" 
                                          target="_blank"
                                          style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); border: none; border-radius: 16px; color: #ffffff; display: inline-block; font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 18px; font-weight: 800; line-height: 1.2; padding: 20px 40px; text-decoration: none; text-align: center; transition: all 0.3s ease; position: relative; min-width: 280px;">
                                         <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
@@ -637,26 +637,147 @@ export function createFollowUpEmailTemplate(data: EmailTemplateData): string {
 // Template para notificaciones internas
 export function createInternalNotificationTemplate(data: EmailTemplateData): string {
   const { name, email, phone } = data;
+  const timestamp = new Date();
+  const formattedDate = timestamp.toLocaleString('es-ES', {
+    timeZone: 'America/Santiago',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
+  
+  const whatsappMessage = encodeURIComponent(
+    `Hola ${name}! Vi que te interesó nuestro checklist de 25 puntos. ¿Te gustaría que revisemos tu proyecto juntos? Tengo algunos espacios esta semana para consultas gratuitas.`
+  );
   
   return `
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Nuevo Lead - CodigoFacil.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎯 Nuevo Lead - CodigoFacil.com</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f8fafc; }
+    .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .header { background: linear-gradient(135deg, #0ea5e9, #3b82f6); color: white; padding: 30px; text-align: center; }
+    .content { padding: 30px; }
+    .lead-card { background: #f8fafc; border-left: 4px solid #10b981; border-radius: 8px; padding: 20px; margin: 20px 0; }
+    .action-buttons { margin: 20px 0; text-align: center; }
+    .btn { display: inline-block; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 5px; }
+    .btn-whatsapp { background: #25d366; color: white; }
+    .btn-email { background: #3b82f6; color: white; }
+    .footer { background: #1f2937; color: #9ca3af; padding: 20px; text-align: center; font-size: 14px; }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <h2 style="color: #0ea5e9;">🎯 Nuevo Lead Magnet</h2>
-  <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #0ea5e9;">
-    <p><strong>Nombre:</strong> ${name}</p>
-    <p><strong>Email:</strong> ${email}</p>
-    <p><strong>Teléfono:</strong> ${phone || 'No proporcionado'}</p>
-    <p><strong>Fecha:</strong> ${new Date().toLocaleString()}</p>
-    <p><strong>Fuente:</strong> Checklist 25 Puntos</p>
+<body>
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="header">
+      <h1 style="margin: 0 0 10px 0; font-size: 28px; font-weight: 800;">
+        🎯 Nuevo Lead Capturado
+      </h1>
+      <p style="margin: 0; font-size: 16px; opacity: 0.9;">
+        Descarga del Checklist 25 Puntos - CodigoFacil.com
+      </p>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      
+      <!-- Alert Success -->
+      <div style="background: #d1fae5; border: 2px solid #10b981; border-radius: 8px; padding: 16px; margin-bottom: 24px; text-align: center;">
+        <div style="color: #065f46; font-weight: 700; font-size: 16px;">
+          ✅ Lead Magnet Exitoso - PDF Enviado Automáticamente
+        </div>
+      </div>
+
+      <!-- Lead Information -->
+      <h3 style="color: #1f2937; margin-bottom: 16px;">📋 Información del Lead</h3>
+      
+      <div class="lead-card">
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <td style="padding: 8px 12px; background: #e5e7eb; font-weight: 600; color: #374151; width: 120px; border-radius: 4px;">👤 Nombre</td>
+            <td style="padding: 8px 12px; color: #1f2937; font-weight: 600;">${name}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; background: #e5e7eb; font-weight: 600; color: #374151; border-radius: 4px;">📧 Email</td>
+            <td style="padding: 8px 12px; color: #1f2937;">
+              <a href="mailto:${email}" style="color: #0ea5e9; text-decoration: none;">${email}</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; background: #e5e7eb; font-weight: 600; color: #374151; border-radius: 4px;">📱 Teléfono</td>
+            <td style="padding: 8px 12px; color: #1f2937;">${phone || '❌ No proporcionado'}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; background: #e5e7eb; font-weight: 600; color: #374151; border-radius: 4px;">🕒 Fecha/Hora</td>
+            <td style="padding: 8px 12px; color: #1f2937;">${formattedDate}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; background: #e5e7eb; font-weight: 600; color: #374151; border-radius: 4px;">📍 Fuente</td>
+            <td style="padding: 8px 12px; color: #1f2937;"><strong>Lead Magnet:</strong> Checklist 25 Puntos</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Quick Actions -->
+      <h3 style="color: #1f2937; margin: 24px 0 16px 0;">⚡ Acciones Rápidas</h3>
+      
+      <div class="action-buttons">
+        <!-- WhatsApp Button -->
+        <a href="https://wa.me/${phone?.replace(/[^\d]/g, '') || ''}?text=${whatsappMessage}" 
+           target="_blank" 
+           class="btn btn-whatsapp"
+           style="background: #25d366; color: white; display: inline-block; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 5px;">
+          📱 Contactar por WhatsApp
+        </a>
+        
+        <!-- Email Button -->
+        <a href="mailto:${email}?subject=Hola%20${encodeURIComponent(name)}!%20Vi%20que%20descargaste%20nuestro%20checklist&body=Hola%20${encodeURIComponent(name)}!%0D%0A%0D%0AGracias%20por%20descargar%20nuestro%20checklist%20de%2025%20puntos.%20%C2%BFTe%20gustar%C3%ADa%20que%20revisemos%20tu%20proyecto%20juntos%3F%0D%0A%0D%0ATengo%20algunos%20espacios%20esta%20semana%20para%20consultas%20gratuitas.%0D%0A%0D%0ASaludos%2C%0D%0AEquipo%20CodigoFacil.com" 
+           class="btn btn-email"
+           style="background: #3b82f6; color: white; display: inline-block; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 5px;">
+          📧 Responder por Email
+        </a>
+      </div>
+
+      <!-- System Status -->
+      <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 8px; padding: 16px; margin: 24px 0;">
+        <h4 style="color: #1e40af; margin: 0 0 12px 0;">🔧 Estado del Sistema</h4>
+        <ul style="color: #1e40af; margin: 0; padding-left: 20px;">
+          <li>✅ Email con PDF enviado automáticamente al lead</li>
+          <li>✅ Lead guardado en base de datos local</li>
+          <li>✅ Notificación interna enviada exitosamente</li>
+          <li>✅ Contador de descargas actualizado</li>
+        </ul>
+      </div>
+
+      <!-- Recommendation -->
+      <div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 16px; margin: 24px 0;">
+        <h4 style="color: #92400e; margin: 0 0 12px 0;">💡 Recomendación</h4>
+        <p style="color: #92400e; margin: 0; line-height: 1.5;">
+          <strong>Contactar en las próximas 2 horas</strong> para maximizar la tasa de conversión. 
+          Los leads que descargan recursos gratuitos tienen 5x más probabilidad de convertir si se contactan rápidamente.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p style="margin: 0 0 8px 0;">
+        <strong>CodigoFacil.com</strong> - Sistema de Notificaciones Automáticas
+      </p>
+      <p style="margin: 0; font-size: 12px;">
+        📧 Sistema SMTP Self-Hosted • 🔒 100% Privado • ⚡ Tiempo real
+      </p>
+    </div>
+
   </div>
-  <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">
-    Email enviado automáticamente por el sistema de CodigoFacil.com
-  </p>
 </body>
 </html>
   `.trim();

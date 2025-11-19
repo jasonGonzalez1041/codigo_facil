@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "name": "cristhian",
+    "email": "cristhianmr313@gmail.com",
+    "phone": "+53 58442363",
+    "source": "lead_magnet_checklist",
+    "timestamp": "2025-11-19T04:26:19.865Z"
+  },
+  {
+    "name": "Test Usuario",
+    "email": "test@example.com",
+    "phone": "+56912345678",
+    "source": "test_lead_magnet",
+    "timestamp": "2025-11-19T04:32:39.446Z"
+  },
+  {
+    "name": "Juan Pérez",
+    "email": "juanperez@gmail.com",
+    "phone": "+52 55 1234 5678",
+    "source": "lead_magnet_checklist",
+    "timestamp": "2025-11-19T04:35:26.224Z"
+  }
+]
