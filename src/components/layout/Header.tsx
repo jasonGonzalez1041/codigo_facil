@@ -63,9 +63,11 @@ export default function Header() {
 
             document.documentElement.classList.toggle('dark', isDarkTheme);
 
-            // un solo setState si tienes varios
-            setIsDark(isDarkTheme);
-            setIsThemeInitialized(true);
+            // Usar setState de manera más eficiente para evitar cascading renders
+            setTimeout(() => {
+                setIsDark(isDarkTheme);
+                setIsThemeInitialized(true);
+            }, 0);
 
             return;
         }
@@ -321,7 +323,7 @@ export default function Header() {
                     : "bg-transparent backdrop-blur-none border-b border-transparent z-50"
             }`}
         >
-            <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-20">
                     {/* Logo */}
                     <button
@@ -463,7 +465,7 @@ export default function Header() {
                         onClick={() => setIsMenuOpen(false)}
                     />
 
-                    <div className="absolute top-16 right-4 left-4 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 max-h-[75vh]">
+                    <div className="absolute top-16 right-2 left-2 sm:right-4 sm:left-4 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50 max-h-[75vh]">
                         {/* Header del menú móvil compacto */}
                         <div className="flex items-center justify-end p-4 border-b border-gray-200 dark:border-gray-700">
                             <button

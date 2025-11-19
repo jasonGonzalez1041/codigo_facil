@@ -6,15 +6,17 @@
 - **Sitio web corporativo** para CodigoFacil.com - empresa de desarrollo web para LATAM
 - **Landing page profesional** con servicios, blog, calculadora de costos y formularios de contacto
 - **Enfoque en conversión** y experiencia de usuario optimizada para mercado latinoamericano
+- **Target**: Empresas de México, Argentina, Colombia, Chile, Perú, Ecuador, Uruguay, Bolivia, Paraguay
 
 ### Stack Tecnológico Principal
-- **Framework**: Next.js 16.0.2 (App Router) con deployment dual (Vercel + Cloudflare)
+- **Framework**: Next.js 16.0.2 (App Router) con deployment en Vercel
 - **Lenguaje**: TypeScript 5+ con configuración strict mode
 - **UI Framework**: React 19.2.0 con React DOM 19.2.0
 - **Styling**: Tailwind CSS 4 + shadcn/ui components (New York style)
 - **Estado**: Zustand 5.0.8 para gestión de estado ligera
 - **Animaciones**: Framer Motion 12.23.22 + GSAP 3.13.0 con ScrollTrigger
-- **Deployment**: Vercel Platform
+- **Deployment**: Vercel Platform (primary) con configuración optimizada
+- **Contacto**: WhatsApp Business (+56950225491) integrado
 
 ### Dependencias Clave de UI/UX
 - **UI Primitives**: Radix UI (dropdown-menu, dialog, label, slot)
@@ -35,61 +37,231 @@ npm run dev                  # Next.js dev server (localhost:3000)
 
 # Build y Deploy
 npm run build               # Build estándar Next.js
-npm run build:test          # Test de build process
+npm run build:test          # Test de build process con verificación
+npm run start               # Production server local
 
 # Deploy a Vercel
 npm run vercel:deploy       # Deploy a Vercel (producción)
 npm run vercel:preview      # Preview en Vercel
 
 # Calidad de Código
-npm run lint                # ESLint check
+npm run lint                # ESLint check con Next.js rules
 ```
+
+## 🔥 Contexto Crítico del Proyecto (LEER PRIMERO)
+
+### Estado Actual del Desarrollo
+- **Proyecto REAL en producción** - No es template ni demo
+- **Cliente real**: CodigoFacil.com operando comercialmente
+- **Revenue activo**: Servicios desde $99 USD hasta $20/hora
+- **WhatsApp Business**: +56950225491 (integración crítica para conversiones)
+- **Dominio en vivo**: https://codigofacil.com
+
+### Servicios Comerciales Implementados (6 Principales)
+1. **Desarrollo Web Personalizado** - $99-800 USD
+2. **Tienda Online E-commerce** - $800-2500 USD  
+3. **Aplicación Web** - $1500-5000 USD
+4. **Diseño Web y UI/UX** - $200-1000 USD
+5. **SEO y Marketing Digital** - $300-1500 USD
+6. **Mantenimiento y Soporte** - $20/hora
+
+### Calculadora de Costos (Funcionalidad CRÍTICA)
+- **Componente central** para conversión de leads
+- **Matemática precisa** validada en producción
+- **Integración directa** con WhatsApp para cotizaciones
+- **Variables**: páginas, complejidad, características, diseño, integraciones
+- **Output**: Precio USD + tiempo estimado + mensaje WhatsApp automático
+
+## ⚠️ REGLAS DE DESARROLLO CRÍTICAS
+
+### 🎯 REGLA DE ORO
+**NUNCA cambiar la lógica de precios de la calculadora sin verificación matemática completa**
+- Los cálculos afectan cotizaciones REALES de clientes
+- Cualquier error puede generar pérdidas económicas
+- Siempre probar con casos extremos antes de deploy
+
+### Componentes CRÍTICOS (NO tocar sin justificación)
+1. **`src/components/ui/cost-calculator.tsx`** - Lógica de precios
+2. **`src/data/services.ts`** - Información comercial y precios
+3. **`src/components/layout/FloatingWhatsApp.tsx`** - Integración de contacto
+4. **`src/app/layout.tsx`** - SEO y metadatos para LATAM
+
+### Estado Actual de Funcionalidades
+- ✅ **Calculadora de costos**: FUNCIONANDO en producción
+- ✅ **WhatsApp integration**: ACTIVO con número real
+- ✅ **SEO para LATAM**: Metadatos completos implementados
+- ✅ **Responsive design**: Mobile-first COMPLETO
+- ✅ **Sistema de modales**: Zustand store funcionando
+- 🔄 **Blog system**: MDX implementado, necesita contenido
+- ❌ **Formularios backend**: Pendiente integración EmailJS/Cloudflare
+- ❌ **Analytics**: Google Analytics pendiente configuración
+
+## 🚨 Prioridades Inmediatas de Desarrollo
+
+### 🔥 Crítico (Esta semana)
+- **Configurar dominio personalizado** `codigofacil.com` en Vercel
+- **Implementar Google Analytics 4** con eventos de conversión
+- **Activar formularios funcionales** con backend EmailJS/Cloudflare Workers
+- **Verificar calculadora de costos** en todos los dispositivos
+
+### ⚡ Alto (Este mes)
+- **Contenido real del blog** - Artículos SEO para LATAM
+- **Imágenes optimizadas** - Logo definitivo y portfolio real
+- **Páginas de servicios individuales** (`/servicios/desarrollo-web`, etc.)
+- **Core Web Vitals optimization** - LCP < 2.5s, FID < 100ms, CLS < 0.1
+
+### 🎯 Medio (1-2 meses)
+- **PWA features** - Service Worker, offline fallback
+- **Internacionalización** - Soporte multi-idioma (ES/EN)
+- **A/B Testing setup** para optimización de conversión
+- **CRM Integration** (HubSpot/Pipedrive)
+
+## ⚠️ Problemas Conocidos y Limitaciones
+
+### Vercel Deployment (RESUELTO)
+- ✅ **React 19 + Next.js 16**: Compatible y funcionando
+- ✅ **Build process**: Sin errores en producción
+- ✅ **Image optimization**: Configurado para Vercel nativo
+- ✅ **Security headers**: Implementados en vercel.json
+
+### Dependencias Críticas (NO cambiar sin testing)
+- **@vercel/analytics**: Integrado y funcionando
+- **framer-motion**: Versión 12.23.22 estable con React 19
+- **zustand**: Estado global mínimo pero crítico para modales
+- **tailwind-merge + clsx**: Esencial para sistema de componentes
+
+## 🔧 Configuración del Proyecto
+
+### Archivos de Configuración Principales
+- **`next.config.js`**: Optimización de imágenes para Vercel, headers de seguridad, rewrites para SEO
+- **`vercel.json`**: Configuración específica de Vercel con headers de seguridad y redirects
+- **`tailwind.config.js`**: Design system con colores brand y modo oscuro
+- **`components.json`**: shadcn/ui configuración (New York style)
+- **`tsconfig.json`**: TypeScript strict con path aliases (@/*)
+- **`eslint.config.mjs`**: Linting Next.js + TypeScript
+- **`build-test.js`**: Script de verificación de build personalizado
 
 ## 📂 Estructura de Archivos
 
-### Directorios Principales
+### Estructura Actual del Workspace
 ```
-src/
-├── app/                    # Next.js App Router (rutas y layouts)
-│   ├── blog/              # Páginas del blog (/blog, /blog/[slug])
-│   ├── globals.css        # Estilos globales y CSS custom properties
-│   ├── layout.tsx         # RootLayout con metadatos SEO + Schema.org
-│   ├── page.tsx           # Homepage principal
-│   ├── robots.ts          # SEO robots.txt automático
-│   └── sitemap.ts         # XML sitemap automático
-├── components/            # Componentes React reutilizables
-│   ├── layout/           # Header, Footer navegación
-│   ├── sections/         # HeroSection, ServicesSection, BlogSection, etc.
-│   ├── ui/              # shadcn/ui components + calculadora de costos
-│   └── theme-provider.tsx # Provider de temas claro/oscuro
-├── content/              # Contenido estático MDX
-│   └── blog/            # Posts de blog en formato MDX
-├── data/                # Configuración y datos estáticos
-│   └── services.ts      # 6 servicios con precios, descripciones, procesos
-├── lib/                 # Utilidades y helpers
-│   └── utils.ts         # cn() function para merge de clases CSS
-├── store/               # Estado global con Zustand
-│   └── modalStore.ts    # Estado de modales (simple boolean store)
-├── types/               # Definiciones TypeScript
-│   └── jest.d.ts        # Tipos para testing
-├── __mocks__/           # Mocks para testing
-│   └── gsap.js         # Mock de GSAP para Jest
-└── __tests__/           # Suite completa de 112 pruebas Jest
-    ├── components/      # Tests de componentes UI
-    ├── data/           # Tests de datos y servicios
-    ├── integration/    # Tests de integración full-site
-    ├── pages/          # Tests de páginas completas
-    ├── store/          # Tests de Zustand store
-    └── utils/          # Tests de utilidades
+codigofacil-site/
+├── src/app/                    # Next.js App Router
+│   ├── globals.css            # Estilos globales con CSS custom properties
+│   ├── layout.tsx             # RootLayout con SEO completo + Schema.org
+│   ├── page.tsx               # Homepage principal
+│   ├── robots.ts              # SEO robots.txt automático
+│   ├── sitemap.ts             # XML sitemap automático
+│   ├── api/                   # API routes (si se implementan)
+│   └── blog/                  # Sistema de blog con MDX
+│       ├── page.tsx           # Lista de posts
+│       ├── BlogPageClient.tsx # Componente cliente
+│       └── [slug]/            # Posts dinámicos
+├── src/components/            # Componentes React organizados
+│   ├── layout/               # Header, Footer, FloatingWhatsApp
+│   │   ├── Header.tsx        # Navegación principal
+│   │   ├── Footer.tsx        # Footer con contacto
+│   │   ├── FloatingWhatsApp.tsx # WhatsApp Business integration
+│   │   └── LeadCaptureSection.tsx # Captura de leads
+│   ├── sections/             # Secciones principales de página
+│   │   ├── HeroSection.tsx   # Landing con animaciones GSAP
+│   │   ├── ServicesSection.tsx # Grid de servicios
+│   │   ├── PricingSection.tsx # Planes y precios
+│   │   ├── ProjectsSection.tsx # Portfolio (pendiente)
+│   │   ├── BlogSection.tsx   # Preview blog
+│   │   └── ContactSection.tsx # Formularios de contacto
+│   ├── ui/                   # shadcn/ui components + custom
+│   │   ├── cost-calculator.tsx # CRÍTICO - Calculadora de precios
+│   │   ├── service-modal.tsx  # Modales de servicios
+│   │   ├── button.tsx        # Button base con variantes
+│   │   ├── dialog.tsx        # Dialog primitives
+│   │   ├── mode-toggle.tsx   # Theme switcher
+│   │   └── [otros componentes UI]
+│   └── theme-provider.tsx    # Provider de temas
+├── src/content/              # Contenido estático
+│   └── blog/                # Posts en formato MDX
+├── src/data/                # Configuración y datos
+│   └── services.ts          # CRÍTICO - 6 servicios con precios
+├── src/lib/                 # Utilidades y helpers
+│   ├── utils.ts             # cn() function + utilidades
+│   └── blog-content.ts      # Helpers para blog MDX
+├── src/store/               # Estado global Zustand
+│   └── modalStore.ts        # Estado de modales UI
+├── public/                  # Assets estáticos
+│   ├── pdf/                # Documentos PDF
+│   └── [iconos y imágenes]
+├── AGENTS.md               # ESTE archivo - Guía desarrollo
+├── CLAUDE.md               # Contexto específico Claude
+├── TODO.md                 # Lista tareas pendientes
+├── package.json            # Dependencias y scripts
+├── next.config.js          # Configuración Next.js + Vercel
+├── tailwind.config.js      # Design system + tema
+├── tsconfig.json           # TypeScript strict config
+├── vercel.json             # Headers seguridad + redirects
+└── components.json         # shadcn/ui config (New York style)
 ```
 
-### Archivos de Configuración Críticos
-- `next.config.js` - Configuración Vercel con optimizaciones de imagen y headers
-- `tailwind.config.js` - Design system completo con colores brand y dark mode
-- `tsconfig.json` - TypeScript strict con paths aliases (@/*)
-- `eslint.config.mjs` - Linting Next.js + TypeScript con ignores
-- `components.json` - shadcn/ui config (New York style, Lucide icons)
-- `vercel.json` - Configuración de deployment para Vercel
+## 🛠️ Patrones de Desarrollo Establecidos
+
+### Estructura de Componentes (OBLIGATORIO)
+```tsx
+// 1. React y Next.js imports primero
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+
+// 2. Librerías externas
+import { motion } from 'framer-motion'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+
+// 3. Componentes internos
+import Header from '@/components/layout/Header'
+
+// 4. Store, datos y tipos
+import { useModalStore } from '@/store/modalStore'
+import { servicesData } from '@/data/services'
+import type { Service } from '@/data/services'
+```
+
+### Componentes UI con shadcn/ui Pattern
+```tsx
+import React from 'react'
+import { cn } from '@/lib/utils'
+
+interface ComponentProps {
+  className?: string
+  children?: React.ReactNode
+}
+
+const Component = React.forwardRef<HTMLElement, ComponentProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <element
+        className={cn("base-classes", className)}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Component.displayName = "Component"
+```
+
+### Estado Global (Zustand Pattern)
+```tsx
+import { create } from 'zustand'
+
+interface StoreState {
+  value: boolean
+  setValue: (value: boolean) => void
+}
+
+export const useStore = create<StoreState>((set) => ({
+  value: false,
+  setValue: (value) => set({ value }),
+}))
+```
 
 ## 🛠️ Convenciones de Desarrollo
 
@@ -195,61 +367,43 @@ import type { Service } from '@/data/services'
 - **Core Web Vitals**: Optimizado para LCP, FID, CLS
 - **Images**: WebP/AVIF preferido, lazy loading
 
-## 🧪 Testing Strategy (112 Pruebas al 100%)
+## 📋 Características Clave del Proyecto
 
-### Configuración Jest Completa
-- **112 pruebas** ejecutándose al 100% de éxito
-- **Jest 30.2.0** con `jest-environment-jsdom`
-- **Setup completo** en `jest.setup.js` con todos los mocks necesarios
-- **Coverage threshold**: 70% mínimo configurado en branches/functions/lines/statements
-- **Module aliases** (@/* paths) completamente configurados
-- **Transform ignore patterns** para GSAP y librerías externas
+### Funcionalidades Principales Implementadas
+- **Sistema de Blog MDX**: Posts dinámicos con SEO optimizado
+- **Calculadora de Costos**: Componente interactivo para cotizaciones
+- **Sistema de Modales**: Gestión con Zustand para detalles de servicios
+- **WhatsApp Integration**: Botón flotante con ofertas y contacto directo
+- **Modo Oscuro/Claro**: Theme switching con next-themes
+- **SEO Completo**: Metadatos, Schema.org, sitemap/robots automáticos
+- **Responsive Design**: Mobile-first con Tailwind CSS
+- **Animaciones Avanzadas**: GSAP + Framer Motion para micro-interactions
 
-### Mocks Implementados (Críticos para Funcionamiento)
-```javascript
-// GSAP y animaciones (archivo: src/__mocks__/gsap.js)
-jest.mock('gsap')
-jest.mock('gsap/ScrollTrigger')
-
-// Next.js features críticos
-jest.mock('next/font/google')
-jest.mock('next/link')
-jest.mock('next/image')
-
-// Framer Motion (animaciones)
-jest.mock('framer-motion')
-
-// Theme provider y externos
-jest.mock('next-themes')
-jest.mock('@vercel/analytics/next')
-
-// Browser APIs
-global.IntersectionObserver = MockClass
-global.matchMedia = jest.fn()
+### Servicios Configurados (6 Principales)
+```typescript
+// Definidos en src/data/services.ts
+1. Desarrollo Web Personalizado
+2. Tienda Online E-commerce  
+3. Aplicación Web
+4. Diseño Web y UI/UX
+5. SEO y Marketing Digital
+6. Mantenimiento y Soporte
 ```
 
-### Estructura de Tests por Categoría
-```
-__tests__/ (112 pruebas organizadas)
-├── components/ui/          # 32 pruebas
-│   ├── Button.test.tsx     # 5 pruebas - variantes, eventos
-│   ├── cost-calculator.test.tsx # 18 pruebas - lógica cálculos
-│   └── mode-toggle.test.tsx # 8 pruebas - tema toggle
-├── components/sections/    # 26 pruebas  
-│   ├── ServicesSection.test.tsx # 11 pruebas - modales
-│   └── BlogSection.test.tsx # 15 pruebas - newsletter
-├── data/                   # 13 pruebas
-│   └── services.test.ts    # Validación de 6 servicios
-├── store/                  # 4 pruebas
-│   └── modalStore.test.ts  # Estado Zustand
-├── pages/                  # 20 pruebas
-│   ├── HomePage.test.tsx   # 7 pruebas - estructura
-│   └── BlogPage.test.tsx   # 13 pruebas - SEO, contenido
-├── integration/            # 10 pruebas
-│   └── full-site.test.tsx  # Tests de integración
-└── utils/                  # 7 pruebas
-    └── cn.test.ts          # Utility de clases CSS
-```
+### Integración WhatsApp Business
+- **Número**: +56950225491 (Chile)
+- **Mensaje automático** con detalles de cotización
+- **Ofertas flotantes** con prompts dinámicos
+- **Integración directa** desde calculadora de costos
+
+## 🎯 Reglas de Desarrollo Críticas
+
+### Tecnología Stack Decisions (NO CAMBIAR sin justificación)
+- **Next.js App Router**: Elegido por SEO automático y performance
+- **Vercel deployment**: Optimizado para Next.js con edge functions
+- **Tailwind + shadcn/ui**: Por consistencia y velocidad de desarrollo
+- **Zustand**: Elegido por simplicidad vs Redux complexity
+- **TypeScript strict mode**: Obligatorio para calidad de código
 
 
 ## 🚀 Deployment y CI/CD
@@ -577,12 +731,15 @@ npm run lint                 # ESLint check
 - **ESLint + TypeScript strict** - Sin warnings permitidos en producción
 - **Build verification** - Todas las builds deben completarse sin errores
 
-### Configuración Vercel
-- **Optimización de imágenes** habilitada (WebP, AVIF)
-- **Headers de seguridad** configurados (HSTS, DNS prefetch)
-- **Rewrites automáticos** para sitemap.xml y robots.txt
-- **Variables de entorno** para site URL y analytics
-- **Edge functions** y serverless functions disponibles
+### Configuración Vercel Actual
+- **Framework**: Next.js automáticamente detectado
+- **Build Command**: `npm run build`
+- **Output Directory**: `.next` (estándar Next.js)
+- **Node.js Version**: Automático basado en package.json
+- **Headers de seguridad**: X-Content-Type-Options, X-Frame-Options, X-XSS-Protection
+- **Optimización de imágenes**: WebP, AVIF con deviceSizes configurados
+- **Rewrites**: Sitemap.xml y robots.txt automáticos
+- **Analytics**: Vercel Analytics integrado
 
 ### Patrones de Código Establecidos
 
@@ -635,31 +792,38 @@ export const useStore = create<StoreState>((set) => ({
 }))
 ```
 
-### Testing Requirements (112 Pruebas al 100%)
+### Reglas de Calidad de Código OBLIGATORIAS
+- **100% TypeScript** - NO JavaScript plano permitido
+- **Mobile-first design** - Responsive obligatorio desde el diseño
+- **Accessibility compliance** - ARIA labels y semantic HTML siempre
+- **ESLint + TypeScript strict** - Sin warnings permitidos en producción
+- **Build verification** - `npm run build:test` debe pasar antes de commits
+- **Performance budget** - Lighthouse score >90 en móvil
 
-#### Obligatorio para Nuevos Componentes
+### Convenciones de Componentes Establecidas
 ```tsx
-// Estructura básica de test
-describe('ComponentName', () => {
-  it('should render without crashing', () => {
-    render(<ComponentName />)
-    expect(screen.getByRole('...')).toBeInTheDocument()
-  })
-  
-  it('should handle user interactions', async () => {
-    const user = userEvent.setup()
-    render(<ComponentName />)
-    await user.click(screen.getByRole('button'))
-    // Assertions...
-  })
-})
-```
+// Patrón obligatorio para componentes UI
+import React from 'react';
+import { cn } from '@/lib/utils';
 
-#### Mocks Configurados (NO tocar sin entender)
-- **GSAP/ScrollTrigger** - Mock en `__mocks__/gsap.js`
-- **Next.js features** - Configurado en `jest.setup.js`
-- **Framer Motion** - Mock automático
-- **IntersectionObserver** - Mock global disponible
+interface ComponentProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+const Component = React.forwardRef<HTMLElement, ComponentProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <element
+        className={cn("base-classes", className)}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
+);
+Component.displayName = "Component";
+```
 
 ### Performance Guidelines
 
@@ -674,29 +838,72 @@ describe('ComponentName', () => {
 - **FID** (First Input Delay): < 100ms
 - **CLS** (Cumulative Layout Shift): < 0.1
 
-## 🚨 REGLAS DE EMERGENCIA
+## 🚨 Workflow de Desarrollo CRÍTICO
 
-### Antes de Cualquier Commit
-1. **`npm run test`** - Todas las 112 pruebas deben pasar
-2. **`npm run lint`** - Sin warnings de ESLint
-3. **`npm run pages:build`** - Build debe completarse sin errores
+### Antes de Cualquier Commit (OBLIGATORIO)
+1. **`npm run lint`** - Sin warnings de ESLint permitidos
+2. **`npm run build`** - Build debe completarse exitosamente  
+3. **`npm run build:test`** - Script de verificación debe pasar
 4. **Verificar responsive** - Probar en móvil/tablet/desktop
+5. **Performance check** - Verificar que no hay regresiones
 
-### Si Algo se Rompe
-1. **Revertir último commit** si es necesario
-2. **Verificar mocks** en jest.setup.js si son problemas de testing
-3. **Verificar configuración** de Cloudflare Pages si es deploy
-4. **NO hacer push** hasta que todo esté funcionando
+### Proceso de Desarrollo Recomendado
+```bash
+# 1. Crear feature branch
+git checkout -b feature/nueva-funcionalidad
 
-### Debugging Checklist
-- ¿Están todos los imports correctos con aliases `@/`?
-- ¿Se están usando los tipos TypeScript apropiados?
-- ¿El componente está siguiendo el patrón shadcn/ui?
-- ¿Se está usando `cn()` para merge de clases CSS?
-- ¿Las pruebas cubren los casos principales?
+# 2. Desarrollo con hot reload
+npm run dev
+
+# 3. Verificación continua durante desarrollo
+npm run lint              # Verificar linting
+npm run build:test        # Test de build
+
+# 4. Antes de commit
+npm run build            # Build completo
+git add . && git commit -m "feat: descripción"
+
+# 5. Push y PR
+git push origin feature/nueva-funcionalidad
+```
+
+### Debugging Checklist Rápido
+- ¿Imports correctos con aliases `@/`?
+- ¿Tipos TypeScript apropiados?
+- ¿Patrón shadcn/ui correcto?
+- ¿Usando `cn()` para merge de clases?
+- ¿Build pasa sin errores?
+
+## 📊 Métricas de Calidad Objetivo
+
+### Performance Targets
+- **Lighthouse Score**: >90 mobile, >95 desktop
+- **Core Web Vitals**: LCP <2.5s, FID <100ms, CLS <0.1
+- **Bundle Size**: Initial load <200KB
+- **Image Optimization**: WebP/AVIF automático
+
+### SEO y Accessibility
+- **Meta tags completos**: Open Graph, Twitter Cards  
+- **Schema.org**: Organization markup implementado
+- **ARIA labels**: En todos los elementos interactivos
+- **Semantic HTML**: Estructura correcta siempre
+
+## 🔗 Enlaces y Recursos
+
+### Documentación Oficial
+- [Next.js 16 Docs](https://nextjs.org/docs) - Framework principal
+- [Tailwind CSS 4](https://tailwindcss.com/docs) - Styling system
+- [shadcn/ui](https://ui.shadcn.com/) - Component library
+- [Vercel Platform](https://vercel.com/docs) - Deployment platform
+
+### Herramientas de Desarrollo
+- [TypeScript 5](https://www.typescriptlang.org/docs/) - Type safety
+- [Zustand](https://github.com/pmndrs/zustand) - State management
+- [Framer Motion](https://www.framer.com/motion/) - Animations
+- [GSAP](https://gsap.com/docs/) - Advanced animations
 
 ---
 
-*Última actualización: Diciembre 2024 - Generado automáticamente para agentes de desarrollo*
+*Última actualización: Enero 2025 - Generado automáticamente para agentes de desarrollo*
 
-**⚡ NOTA IMPORTANTE:** Este archivo contiene las reglas esenciales para mantener la calidad y consistencia del proyecto CodigoFacil.com. Seguir estas guidelines es OBLIGATORIO para todos los desarrolladores.
+**⚡ NOTA IMPORTANTE:** Este archivo contiene las reglas esenciales para mantener la calidad y consistencia del proyecto CodigoFacil.com. Seguir estas guidelines es OBLIGATORIO para todos los desarrolladores que trabajen en este proyecto.

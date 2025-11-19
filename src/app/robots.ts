@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/private/', '/_next/', '/admin/'],
       }
     ],
-    sitemap: 'https://codigofacil-site.pages.dev/sitemap.xml',
+    sitemap: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://codigofacil.com'}/sitemap.xml`,
   }
 }

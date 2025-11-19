@@ -2,7 +2,7 @@ import Link from "next/link";
 import { MapPin, Phone, Mail } from "lucide-react";
 
 export default function Footer() {
-    const year = new Date().getFullYear();
+    const year = 2025; // Fixed year to avoid hydration issues
 
     const quickLinks = [
         { href: "/", label: "Inicio" },

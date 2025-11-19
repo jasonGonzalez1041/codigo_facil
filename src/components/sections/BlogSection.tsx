@@ -3,44 +3,26 @@
 import { useState } from "react";
 import { ArrowUpRight, Clock, Calendar, Zap } from "lucide-react";
 import { getBlogContent } from "@/lib/blog-content";
+import { getAllPosts } from "@/lib/blog-data";
 
-// Función para formatear markdown a HTML básico
+// Función para formatear markdown de manera segura (sin HTML inválido)
 function formatMarkdownContent(markdown: string): string {
   if (!markdown) return '';
   
+  // Simple and safe markdown formatting that avoids invalid HTML nesting
   return markdown
-    // Headers
-    .replace(/^### (.*$)/gm, '<h3 class="text-xl font-bold mt-8 mb-4">$1</h3>')
-    .replace(/^## (.*$)/gm, '<h2 class="text-2xl font-bold mt-10 mb-6">$1</h2>')
-    .replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold mt-12 mb-8">$1</h1>')
+    // Headers (keep simple)
+    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
     
-    // Bold and italic
-    .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
+    // Bold and italic (simple)
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     
-    // Code blocks
-    .replace(/```(\w+)?\n([\s\S]*?)\n```/g, '<pre class="bg-gray-900 text-gray-100 p-4 rounded-lg my-6 overflow-x-auto"><code>$2</code></pre>')
-    .replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-2 py-1 rounded text-sm">$1</code>')
-    
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">$1</a>')
-    
-    // Lists
-    .replace(/^- (.*$)/gm, '<li class="mb-2">$1</li>')
-    .replace(/(<li.*<\/li>)/s, '<ul class="list-disc pl-6 mb-6">$1</ul>')
-    
-    // Blockquotes
-    .replace(/^> (.*$)/gm, '<blockquote class="border-l-4 border-blue-500 pl-4 italic my-6">$1</blockquote>')
-    
-    // Line breaks
-    .replace(/\n\n/g, '</p><p class="mb-4">')
-    .replace(/^\s*(?!<[h1-6]|<ul|<ol|<pre|<blockquote)/gm, '<p class="mb-4">')
-    .replace(/(?<!>)$/gm, '</p>')
-    
-    // Clean up
-    .replace(/<p class="mb-4"><\/p>/g, '')
-    .replace(/(<\/[^>]+>)<p class="mb-4">/g, '$1');
+    // Convert line breaks to simple breaks
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
 }
 
 // 🎉 NUEVO MODAL CON CONTENIDO MARKDOWN COMPLETO
@@ -108,7 +90,7 @@ function GuideModal({ isOpen, onClose, guide }: { isOpen: boolean; onClose: () =
                                     className="prose prose-base md:prose-lg max-w-none dark:prose-invert prose-blue prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed prose-li:text-gray-700 dark:prose-li:text-gray-300"
                                     dangerouslySetInnerHTML={{ 
                                         __html: formatMarkdownContent(
-                                            getBlogContent(guide.slug)?.content || 
+                                            getBlogContent(guide.slug) || 
                                             `# ${guide.title}\n\n${guide.excerpt}\n\nEste contenido está siendo cargado...`
                                         ) 
                                     }}
@@ -175,48 +157,8 @@ export default function BlogSection() {
         window.open(whatsappUrl, '_blank');
     };
 
-    const evergreenPosts = [
-        {
-            id: 1,
-            title: "Guía Definitiva: Desarrollo Web con Next.js para Principiantes",
-            slug: "guia-desarrollo-web-nextjs-principiantes",
-            excerpt: "Domina Next.js desde cero con esta guía evergreen. Pasos atemporales, mejores prácticas y checklist descargable para crear apps web profesionales.",
-            readTime: "15 min",
-            category: "Desarrollo Web",
-            publishedAt: "2025-01-01",
-            lastUpdated: "2025-01-01",
-            image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
-            evergreen: true,
-            featured: true,
-            color: "from-blue-500 to-cyan-500"
-        },
-        {
-            id: 2,
-            title: "Mejores Prácticas Evergreen para E-commerce Responsive",
-            slug: "mejores-practicas-ecommerce-responsive-evergreen",
-            excerpt: "Estrategias atemporales para crear tiendas online exitosas. UX optimizado, mejores prácticas de conversión y principios fundamentales.",
-            readTime: "12 min",
-            category: "E-commerce",
-            publishedAt: "2025-01-08",
-            lastUpdated: "2025-01-08",
-            image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
-            evergreen: true,
-            color: "from-green-500 to-emerald-500"
-        },
-        {
-            id: 3,
-            title: "Estrategias SEO Evergreen para Sitios Web Digitales",
-            slug: "estrategias-seo-evergreen-sitios-web",
-            excerpt: "Principios SEO duraderos que funcionan año tras año. E-E-A-T, clústers temáticos y técnicas atemporales para autoridad sostenida.",
-            readTime: "18 min",
-            category: "SEO",
-            publishedAt: "2025-01-15",
-            lastUpdated: "2025-01-15",
-            image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=80",
-            evergreen: true,
-            color: "from-purple-500 to-pink-500"
-        }
-    ];
+    // Usar posts reales desde blog-data.ts - mostrar los 3 más recientes
+    const evergreenPosts = getAllPosts().slice(0, 3);
 
     return (
         <section id="blog" className="py-20 bg-gray-50 dark:bg-gray-900">

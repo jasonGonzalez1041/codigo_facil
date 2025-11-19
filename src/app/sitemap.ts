@@ -1,7 +1,18 @@
 import { MetadataRoute } from 'next'
+import { getAllPosts } from '@/lib/blog-data'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://codigofacil-site.pages.dev'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://codigofacil.com'
+  
+  // Obtener todos los posts para generar URLs dinámicamente
+  const posts = getAllPosts()
+  
+  const blogUrls = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.lastUpdated),
+    changeFrequency: 'monthly' as const,
+    priority: post.featured ? 0.9 : 0.7,
+  }))
   
   return [
     {
@@ -16,12 +27,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly', 
       priority: 0.8,
     },
-    {
-      url: `${baseUrl}/blog/guia-desarrollo-web-nextjs-principiantes`,
-      lastModified: new Date('2025-01-01'),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    // Agregar más posts aquí conforme se publiquen
+    ...blogUrls
   ]
 }

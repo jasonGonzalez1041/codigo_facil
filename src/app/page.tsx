@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import ServicesSection from "@/components/sections/ServicesSection";
- import ProjectsSection from "@/components/sections/ProjectsSection"; // Temporalmente comentado
+import ProjectsSection from "@/components/sections/ProjectsSection";
 import BlogSection from "@/components/sections/BlogSection";
 import ContactSection from "@/components/sections/ContactSection";
 import gsap from "gsap";
@@ -20,38 +20,40 @@ export default function HomePage() {
     gsap.registerPlugin(ScrollTrigger);
 
     // Create the fade transition between Hero and Services sections
-    gsap.fromTo(
-      heroRef.current,
-      { opacity: 1 },
-      {
-        opacity: 0,
-        scrollTrigger: {
-          trigger: servicesRef.current,
-          start: "top 80%",
-          end: "top 20%",
-          scrub: true,
+    if (heroRef.current && servicesRef.current) {
+      gsap.fromTo(
+        heroRef.current,
+        { opacity: 1 },
+        {
+          opacity: 0,
+          scrollTrigger: {
+            trigger: servicesRef.current,
+            start: "top 80%",
+            end: "top 20%",
+            scrub: true,
+          }
         }
-      }
-    );
+      );
 
-    // Animate the Services section entrance
-    gsap.fromTo(
-      servicesRef.current,
-      {
-        y: 100,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: servicesRef.current,
-          start: "top 80%",
-          end: "top 30%",
-          scrub: true,
+      // Animate the Services section entrance
+      gsap.fromTo(
+        servicesRef.current,
+        {
+          y: 100,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scrollTrigger: {
+            trigger: servicesRef.current,
+            start: "top 80%",
+            end: "top 30%",
+            scrub: true,
+          }
         }
-      }
-    );
+      );
+    }
 
     // Clean up animations on component unmount
     return () => {
@@ -78,9 +80,9 @@ export default function HomePage() {
       <div id="blog">
         <BlogSection />
       </div>
-        <div id="">
-            <LeadCaptureSection />
-        </div>
+      <div id="lead-capture">
+        <LeadCaptureSection />
+      </div>
       <div id="contacto">
         <ContactSection />
       </div>

@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
 import { Download, CheckCircle, Star, Calculator } from 'lucide-react';
 
 export default function LeadCaptureSection() {
@@ -11,55 +10,47 @@ export default function LeadCaptureSection() {
     const [enviando, setEnviando] = useState(false);
     const [enviado, setEnviado] = useState(false);
 
-    const manejarEnvio = async (e) => {
+    const manejarEnvio = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setEnviando(true);
 
         try {
-            // 1. Enviar notificación a TI
-            await emailjs.send(
-                'service_veiqier', // Tu Service ID
-                'template_eop9zxo', // Tu Template ID
-                {
-                    es_notificacion: true,
-                    nombre: formData.nombre,
-                    email: formData.email,
-                    fecha: new Date().toLocaleDateString('es-ES'),
-                    producto: 'Checklist 25 Puntos + Calculadora ROI',
-                    tipo_consulta: 'Lead Magnet PDF',
+            // 1. Enviar email usando el servidor SMTP local 100% self-hosted
+            const response = await fetch('/api/send-email-local', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY // Solo necesitas la Public Key en variables de entorno
-            );
-
-            // 2. Enviar auto-respuesta al USUARIO
-            await emailjs.send(
-                'service_veiqier', // Tu Service ID
-                'template_eop9zxo', // Tu Template ID
-                {
-                    es_notificacion: false,
-                    nombre: formData.nombre,
+                body: JSON.stringify({
+                    name: formData.nombre,
                     email: formData.email,
-                    producto: 'Checklist 25 Puntos + Calculadora ROI',
-                    download_link: 'https://codigofacil.com/pdf/checklist-25-puntos.pdf',
-                },
-                process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY // Solo necesitas la Public Key en variables de entorno
-            );
+                    phone: '', // No tenemos teléfono en lead magnet
+                    source: 'lead_magnet_checklist'
+                }),
+            });
 
-            // 3. Descarga inmediata del PDF
-            const link = document.createElement('a');
-            link.href = '/pdf/checklist-25-puntos.pdf';
-            link.download = 'Checklist-25-Puntos-Web-Que-Vende.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const result = await response.json();
 
-            // 4. Mostrar estado de éxito
+            if (!result.success) {
+                throw new Error(result.message || 'Error al enviar email');
+            }
+
+            console.log('✅ Email enviado correctamente:', result.message);
+
+            // 2. Mostrar estado de éxito temporal
             setEnviado(true);
             setFormData({ nombre: '', email: '' });
 
+            // 3. Redirección automática a página de gracias después de 2 segundos
+            setTimeout(() => {
+                // Usar la URL de redirección del resultado o fallback
+                const redirectUrl = result.data?.redirectUrl || '/gracias';
+                window.location.href = redirectUrl;
+            }, 2000);
+
         } catch (error) {
-            console.error('Error en el envío:', error);
-            alert('Error al procesar. Por favor, intenta nuevamente.');
+            console.error('❌ Error en el envío:', error);
+            alert(`Error al procesar: ${error instanceof Error ? error.message : 'Error desconocido'}. Por favor, intenta nuevamente.`);
         } finally {
             setEnviando(false);
         }
@@ -75,13 +66,19 @@ export default function LeadCaptureSection() {
                             ¡Descarga Exitosa!
                         </h2>
                         <p className="text-lg text-gray-600 mb-6">
-                            Tu PDF <strong>"Checklist 25 Puntos + Calculadora ROI"</strong> ha sido descargado y
-                            también te lo enviamos por email.
+                            Tu PDF <strong>&quot;Checklist 25 Puntos + Calculadora ROI&quot;</strong> ha sido descargado y
+                            también te lo enviamos por email con el PDF adjunto.
                         </p>
                         <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
                             <p className="text-green-800">
-                                📧 <strong>Revisa tu bandeja de entrada</strong> - Te enviamos una copia por email
-                                con información adicional.
+                                📧 <strong>Revisa tu bandeja de entrada</strong> - Te enviamos el PDF adjunto
+                                más una consultoría GRATIS de 30 minutos.
+                            </p>
+                        </div>
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                            <p className="text-blue-800">
+                                🚀 <strong>Sistema 100% Self-Hosted</strong> - Sin dependencias de terceros, 
+                                mayor privacidad y control total.
                             </p>
                         </div>
                         <button

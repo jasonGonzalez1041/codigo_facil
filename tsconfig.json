@@ -28,8 +28,7 @@
       ]
     },
     "types": [
-      "jest",
-      "@testing-library/jest-dom"
+      "node"
     ]
   },
   "include": [

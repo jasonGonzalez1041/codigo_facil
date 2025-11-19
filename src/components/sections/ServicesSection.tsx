@@ -167,7 +167,7 @@ export default function ServicesSection() {
                             onMouseLeave={() => handleMouseLeave(index)}
                             onClick={() => openServiceModal(service)}
                             className="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden cursor-pointer"
-                            style={{ perspective: "1000px" }}
+                            style={{ perspective: '1000px' }}
                         >
                             <div className="relative p-8 pointer-events-none">
                                 <div className="service-icon w-16 h-16 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 p-3.5 shadow-lg flex items-center justify-center text-3xl mb-6 pointer-events-none">
@@ -198,15 +198,15 @@ export default function ServicesSection() {
                                         Ver detalles
                                         <svg
                                             className="w-4 h-4 ml-2"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
+                                            fill='none'
+                                            stroke='currentColor'
+                                            viewBox='0 0 24 24'
                                         >
                                             <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
                                                 strokeWidth={2}
-                                                d="M9 5l7 7-7 7"
+                                                d='M9 5l7 7-7 7'
                                             />
                                         </svg>
                                     </button>

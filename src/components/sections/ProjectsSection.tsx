@@ -390,7 +390,7 @@ export default function ProjectsSection() {
                                 className="group relative rounded-3xl overflow-hidden cursor-pointer"
                                 style={{
                                     transformStyle: "preserve-3d",
-                                    perspective: "1000px"
+                                    perspective: '1000px'
                                 }}
                             >
                                 {/* Borde animado */}

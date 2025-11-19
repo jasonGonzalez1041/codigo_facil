@@ -25,6 +25,13 @@ const nextConfig = {
     scrollRestoration: true,
   },
   
+  // Configuración para desarrollo - permitir acceso desde IP externa
+  allowedDevOrigins: [
+    'localhost',
+    '127.0.0.1',
+    '147.93.179.132'
+  ],
+  
   // Variables de entorno para Vercel
   env: {
     NEXT_PUBLIC_VERCEL_URL: process.env.VERCEL_URL,
@@ -50,19 +57,8 @@ const nextConfig = {
     ];
   },
   
-  // Configuración de rewrites para mejor SEO
-  async rewrites() {
-    return [
-      {
-        source: '/sitemap.xml',
-        destination: '/api/sitemap',
-      },
-      {
-        source: '/robots.txt',
-        destination: '/api/robots',
-      },
-    ];
-  },
+  // Sitemap y robots.txt son generados automáticamente por Next.js App Router
+  // Los archivos src/app/sitemap.ts y src/app/robots.ts manejan esto
 };
 
 export default nextConfig;

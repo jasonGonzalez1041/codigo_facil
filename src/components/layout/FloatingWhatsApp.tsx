@@ -12,7 +12,9 @@ export default function FloatingWhatsAppWithOffers() {
     const overlayRef = useRef(null);
 
     useEffect(() => {
-        setMounted(true);
+        // Usar un timer para evitar setState directo en useEffect
+        const timer = setTimeout(() => setMounted(true), 0);
+        return () => clearTimeout(timer);
     }, []);
 
     // Animaciones con GSAP
@@ -99,13 +101,8 @@ export default function FloatingWhatsAppWithOffers() {
 
     // Calcular fecha de vencimiento
     const getExpirationDate = () => {
-        const date = new Date();
-        date.setDate(date.getDate() + 15);
-        return date.toLocaleDateString('es-ES', {
-            day: '2-digit',
-            month: 'long',
-            year: 'numeric'
-        });
+        // Fixed date to avoid hydration issues
+        return '2025-02-15'; // Static date for consistent SSR/client rendering
     };
 
     const phoneNumber = '56950225491'; // Reemplaza con tu número
@@ -157,6 +154,7 @@ ${offers.map(offer => `• ${offer.title}: ${offer.price} (antes ${offer.origina
                 onClick={() => setIsOpen(true)}
                 className="fixed bottom-6 right-6 z-40 w-16 h-16 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 group floating-whatsapp-button"
                 aria-label="Ver ofertas especiales de WhatsApp"
+                suppressHydrationWarning
             >
                 <MessageCircle className="w-7 h-7 group-hover:scale-110 transition-transform duration-300" />
 

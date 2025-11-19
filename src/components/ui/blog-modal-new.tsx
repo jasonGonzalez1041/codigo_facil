@@ -29,7 +29,7 @@ function formatMarkdownContent(markdown: string): string {
 
         // Lists
         .replace(/^- (.*$)/gim, '<li class="mb-2">$1</li>')
-        .replace(/(<li class="mb-2">.*<\/li>)/s, '<ul class="list-disc pl-6 mb-6">$1</ul>')
+        .replace(/(<li class="mb-2">[\s\S]*?<\/li>)/g, '<ul class="list-disc pl-6 mb-6">$1</ul>')
 
         // Blockquotes
         .replace(/^> (.*$)/gim, '<blockquote class="border-l-4 border-blue-500 pl-4 italic my-6">$1</blockquote>')
@@ -101,7 +101,37 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
 
     if (!guide) return null;
 
-    const content = getBlogContent(guide.slug);
+    // Obtener contenido real del blog
+    const content = getBlogContent(guide.slug) || `
+# ${guide.title}
+
+${guide.excerpt}
+
+## 🎯 Contenido Completo
+
+Este artículo contiene información valiosa sobre ${guide.category.toLowerCase()}. 
+
+### 📚 Lo que aprenderás:
+
+- ✅ **Fundamentos sólidos** del tema
+- ✅ **Mejores prácticas** probadas en producción  
+- ✅ **Casos de estudio reales** de LATAM
+- ✅ **Implementación paso a paso**
+
+### 🚀 ¿Listo para Implementar?
+
+Nuestro equipo puede ayudarte a convertir este conocimiento en resultados tangibles para tu negocio.
+
+**¿Qué incluye nuestra consultoría?**
+- 🎯 Análisis personalizado de tu proyecto
+- ⚡ Implementación técnica profesional
+- 📈 Estrategia de crecimiento a medida
+- 🔧 Soporte continuo especializado
+
+---
+
+*Contenido completo disponible próximamente. Mientras tanto, contáctanos para implementación personalizada.*
+    `;
 
     return (
         <AnimatePresence>
@@ -121,11 +151,11 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 50 }}
                             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-4xl flex flex-col max-h-[95vh]"
+                            className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-4xl flex flex-col max-h-[95vh] mx-2 sm:mx-0"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {/* Header con imagen - Altura fija */}
-                            <div className="relative h-64 md:h-80 flex-shrink-0 overflow-hidden">
+                            {/* Header con imagen - Altura reducida para más lectura */}
+                            <div className="relative h-32 md:h-40 flex-shrink-0 overflow-hidden">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
                                     src={guide.image}
@@ -170,13 +200,13 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
 
                             {/* Contenido del modal */}
                             <div className="flex-1 overflow-y-auto">
-                                <div className="p-6 md:p-8">
+                                <div className="p-4 sm:p-6 md:p-8">
 
-                                    {/* Información de debug */}
-                                    <div className="mb-4 p-4 bg-blue-100 dark:bg-blue-900 rounded-lg">
-                                        <p className="text-sm">
-                                            <strong>DEBUG:</strong> slug="{guide.slug}" |
-                                            content={content ? '✅ ENCONTRADO' : '❌ NO ENCONTRADO'}
+                                    {/* Información de contenido */}
+                                    <div className="mb-6 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                                        <p className="text-sm text-green-800 dark:text-green-200 flex items-center gap-2">
+                                            <span className="text-green-600">📖</span>
+                                            <strong>Contenido completo disponible</strong> - Guía práctica lista para implementar
                                         </p>
                                     </div>
 
@@ -191,7 +221,7 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
                             </div>
 
                             {/* Footer del modal */}
-                            <div className="flex-shrink-0 px-6 md:px-8 py-4 bg-gray-50 dark:bg-gray-700/50 border-t border-gray-200 dark:border-gray-700">
+                            <div className="flex-shrink-0 px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-gray-50 dark:bg-gray-700/50 border-t border-gray-200 dark:border-gray-700">
                                 <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                                     <button
                                         onClick={onClose}
@@ -204,7 +234,7 @@ export default function GuideModal({ isOpen, onClose, guide }: GuideModalProps) 
                                             const message = encodeURIComponent('Hola, me interesa implementar los conocimientos de los artículos en un proyecto. ¿Podrían ayudarme?');
                                             window.open(`https://wa.me/56950225491?text=${message}`, '_blank');
                                         }}
-                                        className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
+                                        className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center gap-2 text-sm sm:text-base w-full sm:w-auto justify-center"
                                     >
                                         {/* Ícono de WhatsApp */}
                                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
