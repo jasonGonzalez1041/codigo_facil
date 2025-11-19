@@ -41,10 +41,9 @@ export function trackEvent(eventName: string, parameters: EventParams = {}) {
   // Initialize dataLayer if not exists
   window.dataLayer = window.dataLayer || [];
 
-  // Common event data
-  const eventData = {
+  // Common event data - solo agregar timestamp si es necesario para GTM
+  const eventData: Record<string, any> = {
     event: eventName,
-    timestamp: new Date().toISOString(),
     page_url: window.location.href,
     page_title: document.title,
     user_agent: navigator.userAgent,
@@ -249,12 +248,13 @@ export function initScrollTracking() {
 export function initTimeTracking() {
   if (typeof window === 'undefined') return;
 
-  const startTime = Date.now();
+  // Use performance.now() to avoid hydration issues
+  const startTime = performance.now();
   const intervals = [30, 60, 120]; // seconds
   const trackedIntervals = new Set<number>();
 
   const checkTimeOnPage = () => {
-    const currentTime = Date.now();
+    const currentTime = performance.now();
     const timeOnPage = Math.floor((currentTime - startTime) / 1000);
 
     intervals.forEach(interval => {

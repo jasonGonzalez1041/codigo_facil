@@ -12,6 +12,7 @@ interface CountryConfig {
 }
 
 const LATAM_COUNTRIES: Record<string, CountryConfig> = {
+  // América del Norte (LATAM)
   mx: {
     code: 'MX',
     prefix: '+52',
@@ -19,20 +20,96 @@ const LATAM_COUNTRIES: Record<string, CountryConfig> = {
     format: /^\+52[0-9]{10}$/,
     example: '+52 55 1234 5678'
   },
-  ar: {
-    code: 'AR',
-    prefix: '+54',
-    length: 14, // +54 + 11 digits (with area code)
-    format: /^\+54[0-9]{10,11}$/,
-    example: '+54 11 1234 5678'
+  
+  // América Central
+  gt: {
+    code: 'GT',
+    prefix: '+502',
+    length: 12, // +502 + 8 digits
+    format: /^\+502[0-9]{8}$/,
+    example: '+502 5555 1234'
   },
-  cl: {
-    code: 'CL',
-    prefix: '+56',
-    length: 12, // +56 + 9 digits
-    format: /^\+56[0-9]{8,9}$/,
-    example: '+56 9 1234 5678'
+  bz: {
+    code: 'BZ',
+    prefix: '+501',
+    length: 10, // +501 + 7 digits
+    format: /^\+501[0-9]{7}$/,
+    example: '+501 123 4567'
   },
+  sv: {
+    code: 'SV',
+    prefix: '+503',
+    length: 12, // +503 + 8 digits
+    format: /^\+503[0-9]{8}$/,
+    example: '+503 7123 4567'
+  },
+  hn: {
+    code: 'HN',
+    prefix: '+504',
+    length: 12, // +504 + 8 digits
+    format: /^\+504[0-9]{8}$/,
+    example: '+504 9123 4567'
+  },
+  ni: {
+    code: 'NI',
+    prefix: '+505',
+    length: 12, // +505 + 8 digits
+    format: /^\+505[0-9]{8}$/,
+    example: '+505 8123 4567'
+  },
+  cr: {
+    code: 'CR',
+    prefix: '+506',
+    length: 12, // +506 + 8 digits
+    format: /^\+506[0-9]{8}$/,
+    example: '+506 8123 4567'
+  },
+  pa: {
+    code: 'PA',
+    prefix: '+507',
+    length: 12, // +507 + 8 digits
+    format: /^\+507[0-9]{8}$/,
+    example: '+507 6123 4567'
+  },
+
+  // El Caribe
+  cu: {
+    code: 'CU',
+    prefix: '+53',
+    length: 11, // +53 + 8 digits
+    format: /^\+53[0-9]{8}$/,
+    example: '+53 5123 4567'
+  },
+  do: {
+    code: 'DO',
+    prefix: '+1809',
+    length: 14, // +1809 + 7 digits
+    format: /^\+1809[0-9]{7}$/,
+    example: '+1809 123 4567'
+  },
+  pr: {
+    code: 'PR',
+    prefix: '+1787',
+    length: 11, // +1787 + 7 digits
+    format: /^\+1787[0-9]{7}$/,
+    example: '+1787 123 4567'
+  },
+  jm: {
+    code: 'JM',
+    prefix: '+1876',
+    length: 11, // +1876 + 7 digits
+    format: /^\+1876[0-9]{7}$/,
+    example: '+1876 123 4567'
+  },
+  ht: {
+    code: 'HT',
+    prefix: '+509',
+    length: 12, // +509 + 8 digits
+    format: /^\+509[0-9]{8}$/,
+    example: '+509 3123 4567'
+  },
+
+  // América del Sur
   co: {
     code: 'CO',
     prefix: '+57',
@@ -40,12 +117,40 @@ const LATAM_COUNTRIES: Record<string, CountryConfig> = {
     format: /^\+57[0-9]{10}$/,
     example: '+57 300 1234 567'
   },
-  pe: {
-    code: 'PE',
-    prefix: '+51',
-    length: 12, // +51 + 9 digits
-    format: /^\+51[0-9]{9}$/,
-    example: '+51 987 654 321'
+  ve: {
+    code: 'VE',
+    prefix: '+58',
+    length: 13, // +58 + 10 digits
+    format: /^\+58[0-9]{10}$/,
+    example: '+58 412 1234567'
+  },
+  gy: {
+    code: 'GY',
+    prefix: '+592',
+    length: 10, // +592 + 7 digits
+    format: /^\+592[0-9]{7}$/,
+    example: '+592 123 4567'
+  },
+  sr: {
+    code: 'SR',
+    prefix: '+597',
+    length: 10, // +597 + 7 digits
+    format: /^\+597[0-9]{7}$/,
+    example: '+597 123 4567'
+  },
+  gf: {
+    code: 'GF',
+    prefix: '+594',
+    length: 13, // +594 + 9 digits (French Guiana)
+    format: /^\+594[0-9]{9}$/,
+    example: '+594 694 12 34 56'
+  },
+  br: {
+    code: 'BR',
+    prefix: '+55',
+    length: 14, // +55 + 11 digits
+    format: /^\+55[0-9]{10,11}$/,
+    example: '+55 11 91234 5678'
   },
   ec: {
     code: 'EC',
@@ -54,12 +159,12 @@ const LATAM_COUNTRIES: Record<string, CountryConfig> = {
     format: /^\+593[0-9]{9}$/,
     example: '+593 99 123 4567'
   },
-  uy: {
-    code: 'UY',
-    prefix: '+598',
-    length: 12, // +598 + 8 digits
-    format: /^\+598[0-9]{8}$/,
-    example: '+598 99 123 456'
+  pe: {
+    code: 'PE',
+    prefix: '+51',
+    length: 12, // +51 + 9 digits
+    format: /^\+51[0-9]{9}$/,
+    example: '+51 987 654 321'
   },
   bo: {
     code: 'BO',
@@ -74,6 +179,27 @@ const LATAM_COUNTRIES: Record<string, CountryConfig> = {
     length: 13, // +595 + 9 digits
     format: /^\+595[0-9]{9}$/,
     example: '+595 981 123 456'
+  },
+  uy: {
+    code: 'UY',
+    prefix: '+598',
+    length: 12, // +598 + 8 digits
+    format: /^\+598[0-9]{8}$/,
+    example: '+598 99 123 456'
+  },
+  ar: {
+    code: 'AR',
+    prefix: '+54',
+    length: 14, // +54 + 11 digits (with area code)
+    format: /^\+54[0-9]{10,11}$/,
+    example: '+54 11 1234 5678'
+  },
+  cl: {
+    code: 'CL',
+    prefix: '+56',
+    length: 12, // +56 + 9 digits
+    format: /^\+56[0-9]{8,9}$/,
+    example: '+56 9 1234 5678'
   }
 };
 
@@ -144,6 +270,60 @@ export function formatWhatsAppNumber(number: string, country: string = ''): stri
           // +57 300 123 4567
           if (digits.length >= 10) {
             return `${config.prefix} ${digits.substring(0, 3)} ${digits.substring(3, 6)} ${digits.substring(6, 10)}`;
+          }
+          break;
+        case 'br':
+          // +55 11 91234 5678
+          if (digits.length >= 11) {
+            return `${config.prefix} ${digits.substring(0, 2)} ${digits.substring(2, 7)} ${digits.substring(7, 11)}`;
+          } else if (digits.length >= 10) {
+            return `${config.prefix} ${digits.substring(0, 2)} ${digits.substring(2, 6)} ${digits.substring(6, 10)}`;
+          }
+          break;
+        case 've':
+          // +58 412 1234567
+          if (digits.length >= 10) {
+            return `${config.prefix} ${digits.substring(0, 3)} ${digits.substring(3, 10)}`;
+          }
+          break;
+        case 'cu':
+          // +53 5123 4567
+          if (digits.length >= 8) {
+            return `${config.prefix} ${digits.substring(0, 4)} ${digits.substring(4, 8)}`;
+          }
+          break;
+        case 'do':
+        case 'pr':
+        case 'jm':
+          // +1809 123 4567, +1787 123 4567, +1876 123 4567
+          if (digits.length >= 10) {
+            return `${config.prefix} ${digits.substring(0, 3)} ${digits.substring(3, 7)}`;
+          }
+          break;
+        case 'gt':
+        case 'sv':
+        case 'hn':
+        case 'ni':
+        case 'cr':
+        case 'pa':
+        case 'ht':
+          // +502 5555 1234, +503 7123 4567, etc.
+          if (digits.length >= 8) {
+            return `${config.prefix} ${digits.substring(0, 4)} ${digits.substring(4, 8)}`;
+          }
+          break;
+        case 'bz':
+        case 'gy':
+        case 'sr':
+          // +501 123 4567, +592 123 4567, +597 123 4567
+          if (digits.length >= 7) {
+            return `${config.prefix} ${digits.substring(0, 3)} ${digits.substring(3, 7)}`;
+          }
+          break;
+        case 'gf':
+          // +594 694 12 34 56
+          if (digits.length >= 9) {
+            return `${config.prefix} ${digits.substring(0, 3)} ${digits.substring(3, 5)} ${digits.substring(5, 7)} ${digits.substring(7, 9)}`;
           }
           break;
         default:
@@ -254,15 +434,39 @@ export function getExampleNumber(country: string): string {
  */
 export function getSupportedCountries(): Array<{code: string, name: string, prefix: string, example: string}> {
   const countryNames: Record<string, string> = {
+    // América del Norte
     mx: 'México',
-    ar: 'Argentina', 
-    cl: 'Chile',
+    
+    // América Central
+    gt: 'Guatemala',
+    bz: 'Belice',
+    sv: 'El Salvador',
+    hn: 'Honduras',
+    ni: 'Nicaragua',
+    cr: 'Costa Rica',
+    pa: 'Panamá',
+    
+    // El Caribe
+    cu: 'Cuba',
+    do: 'República Dominicana',
+    pr: 'Puerto Rico',
+    jm: 'Jamaica',
+    ht: 'Haití',
+    
+    // América del Sur
     co: 'Colombia',
-    pe: 'Perú',
+    ve: 'Venezuela',
+    gy: 'Guyana',
+    sr: 'Surinam',
+    gf: 'Guayana Francesa',
+    br: 'Brasil',
     ec: 'Ecuador',
-    uy: 'Uruguay',
+    pe: 'Perú',
     bo: 'Bolivia',
-    py: 'Paraguay'
+    py: 'Paraguay',
+    uy: 'Uruguay',
+    ar: 'Argentina',
+    cl: 'Chile'
   };
 
   return Object.entries(LATAM_COUNTRIES).map(([code, config]) => ({

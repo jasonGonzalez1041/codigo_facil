@@ -147,7 +147,7 @@ ${offers.map(offer => `• ${offer.title}: ${offer.price} (antes ${offer.origina
     if (!mounted) return null;
 
     return (
-        <>
+        <div suppressHydrationWarning data-component="floating-whatsapp" data-extension-safe="true">
             {/* Botón flotante principal */}
             <button
                 ref={buttonRef}
@@ -346,6 +346,6 @@ ${offers.map(offer => `• ${offer.title}: ${offer.price} (antes ${offer.origina
           }
         }
       `}</style>
-        </>
+        </div>
     );
 }

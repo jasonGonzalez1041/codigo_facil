@@ -2,34 +2,37 @@
 "use client";
 
 import { useState } from 'react';
+import React from 'react';
 import { BlogPageClient } from './BlogPageClient';
 import GuideModal from '@/components/ui/blog-modal-new';
 import { getAllPosts, type BlogPost } from '@/lib/blog-data';
 
 // Sistema de posts leídos completamente nuevo y limpio
 function useReadPostsSystem() {
-    // Cargar posts leídos desde localStorage solo una vez al inicializar
-    const [readPosts, setReadPosts] = useState<Set<string>>(() => {
-        if (typeof window === 'undefined') return new Set();
-        
-        try {
-            const saved = localStorage.getItem('codigofacil_read_posts_v2');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                if (Array.isArray(parsed)) {
-                    return new Set(parsed);
+    // Evitar hydration mismatch - inicializar vacío y cargar en useEffect
+    const [readPosts, setReadPosts] = useState<Set<string>>(new Set());
+    const [isHydrated, setIsHydrated] = useState(false);
+    
+    // Cargar posts leídos solo en el cliente después de hydratación
+    React.useEffect(() => {
+        if (typeof window !== 'undefined') {
+            try {
+                const saved = localStorage.getItem('codigofacil_read_posts_v2');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed)) {
+                        setReadPosts(new Set(parsed));
+                    }
                 }
+            } catch (error) {
+                console.error('Error loading read posts:', error);
+                // Limpiar localStorage corrupto
+                localStorage.removeItem('codigofacil_read_posts_v2');
+                localStorage.removeItem('readPosts');
             }
-        } catch (error) {
-            console.error('Error loading read posts:', error);
-            // Limpiar localStorage corrupto
-            localStorage.removeItem('codigofacil_read_posts_v2');
-            // También limpiar la versión anterior si existe
-            localStorage.removeItem('readPosts');
         }
-        
-        return new Set();
-    });
+        setIsHydrated(true);
+    }, []);
 
     // Función para marcar post como leído
     const markAsRead = (slug: string) => {
@@ -82,23 +85,35 @@ function useReadPostsSystem() {
         }
     };
 
-    return { markAsRead, isRead, getStats, resetProgress, readPostsCount: readPosts.size };
+    return { markAsRead, isRead, getStats, resetProgress, readPostsCount: readPosts.size, isHydrated };
 }
 
 interface BlogPageProps {
-  params?: any;
-  searchParams?: any;
+  params?: Record<string, string>;
+  searchParams?: Record<string, string | string[]>;
 }
 
-export default function BlogPage(props: BlogPageProps = {}) {
+export default function BlogPage({ params: _params, searchParams: _searchParams }: BlogPageProps) {
     const [selectedGuide, setSelectedGuide] = useState<BlogPost | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isClient, setIsClient] = useState(false);
     
-    // Cargar posts inmediatamente sin useEffect - no hay loading state
-    const allPosts = getAllPosts();
+    // Cargar posts de forma segura para App Router
+    const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
+    
+    React.useEffect(() => {
+        // Cargar posts solo en cliente para evitar ClientPageRoot errors
+        const posts = getAllPosts();
+        setAllPosts(posts);
+    }, []);
     
     // Sistema de posts leídos limpio
-    const { markAsRead, isRead, getStats, resetProgress } = useReadPostsSystem();
+    const { markAsRead, isRead, getStats, resetProgress, isHydrated } = useReadPostsSystem();
+    
+    // Evitar SegmentViewNode errors - verificar cliente
+    React.useEffect(() => {
+        setIsClient(true);
+    }, []);
     
     // Obtener estadísticas actuales
     const stats = getStats(allPosts.length);
@@ -118,6 +133,18 @@ export default function BlogPage(props: BlogPageProps = {}) {
         }
     };
 
+    // Evitar renderizado hasta hidratación completa para prevenir ClientPageRoot/SegmentViewNode errors
+    if (!isClient || !isHydrated || allPosts.length === 0) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 flex items-center justify-center" suppressHydrationWarning>
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <p className="text-gray-600 dark:text-gray-300">Cargando guías...</p>
+                </div>
+            </div>
+        );
+    }
+
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setSelectedGuide(null);
@@ -127,7 +154,7 @@ export default function BlogPage(props: BlogPageProps = {}) {
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 mobile-safe overflow-x-hidden" suppressHydrationWarning>
             {/* Hero Section */}
             <section className="pt-24 sm:pt-32 pb-12 sm:pb-20">
-                <div className="container mx-auto px-4 sm:px-6">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-4xl mx-auto">
                         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
                             Contenido{" "}
@@ -181,7 +208,7 @@ export default function BlogPage(props: BlogPageProps = {}) {
 
             {/* Featured Post */}
             <section className="pb-12">
-                <div className="container mx-auto px-6">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     {allPosts.filter(post => post.featured).map(post => (
                         <div
                             key={post.id}
@@ -338,7 +365,7 @@ export default function BlogPage(props: BlogPageProps = {}) {
 
             {/* CTA Section */}
             <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600">
-                <div className="container mx-auto px-6 text-center">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-3xl font-bold text-white mb-6">
                         ¿Listo para Implementar lo Aprendido?
                     </h2>

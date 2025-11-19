@@ -20,18 +20,18 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "CodigoFacil.com - Desarrollo Web Profesional para LATAM | Desde $99 USD",
-    description: "🚀 Desarrollo web profesional para empresas de Latinoamérica. Sitios web modernos, tiendas online y aplicaciones que impulsan tu negocio. Planes desde $99 USD, hosting incluido y soporte en español. ¡Tu presencia digital lista en 7 días!",
+    title: `${process.env.NEXT_PUBLIC_SITE_NAME || 'CodigoFacil.com'} - Desarrollo Web Profesional para LATAM | Desde $99 USD`,
+    description: process.env.NEXT_PUBLIC_SITE_DESCRIPTION || "🚀 Desarrollo web profesional para empresas de Latinoamérica. Sitios web modernos, tiendas online y aplicaciones que impulsan tu negocio. Planes desde $99 USD, hosting incluido y soporte en español. ¡Tu presencia digital lista en 7 días!",
     keywords: "desarrollo web LATAM, sitios web profesionales, e-commerce latinoamérica, páginas web empresariales, tiendas online, desarrollo Next.js, diseño web responsive, hosting incluido, soporte español",
-    authors: [{ name: "CodigoFacil.com" }],
-    creator: "CodigoFacil.com",
-    publisher: "CodigoFacil.com",
+    authors: [{ name: process.env.NEXT_PUBLIC_COMPANY_NAME || "CodigoFacil.com" }],
+    creator: process.env.NEXT_PUBLIC_COMPANY_NAME || "CodigoFacil.com",
+    publisher: process.env.NEXT_PUBLIC_COMPANY_NAME || "CodigoFacil.com",
     formatDetection: {
         email: false,
         address: false,
         telephone: false,
     },
-    metadataBase: new URL('https://codigofacil.com'),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://codigofacil.com'),
     alternates: {
         canonical: '/',
         languages: {
@@ -45,10 +45,10 @@ export const metadata: Metadata = {
     openGraph: {
         type: 'website',
         locale: 'es_ES',
-        url: 'https://codigofacil.com',
-        title: 'CodigoFacil.com - Desarrollo Web Profesional para LATAM',
+        url: process.env.NEXT_PUBLIC_SITE_URL || 'https://codigofacil.com',
+        title: `${process.env.NEXT_PUBLIC_SITE_NAME || 'CodigoFacil.com'} - Desarrollo Web Profesional para LATAM`,
         description: 'Desarrollo web profesional para empresas de Latinoamérica. Planes desde $99 USD con hosting incluido y soporte en español.',
-        siteName: 'CodigoFacil.com',
+        siteName: process.env.NEXT_PUBLIC_SITE_NAME || 'CodigoFacil.com',
         images: [{
             url: '/og-image.png',
             width: 1200,
@@ -91,13 +91,13 @@ export default function RootLayout({
     const organizationSchema = {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "CodigoFacil.com",
-        "description": "Desarrollo web profesional para empresas de Latinoamérica",
-        "url": "https://codigofacil.com",
-        "logo": "https://codigofacil.com/icon.svg",
+        "name": process.env.NEXT_PUBLIC_SITE_NAME || "CodigoFacil.com",
+        "description": process.env.NEXT_PUBLIC_SITE_DESCRIPTION || "Desarrollo web profesional para empresas de Latinoamérica",
+        "url": process.env.NEXT_PUBLIC_SITE_URL || "https://codigofacil.com",
+        "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://codigofacil.com"}/icon.svg`,
         "contactPoint": {
             "@type": "ContactPoint",
-            "telephone": "+56950225491",
+            "telephone": `+${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "56950225491"}`,
             "contactType": "customer service",
             "areaServed": ["MX", "AR", "CO", "CL", "PE", "EC", "UY", "BO", "PY"],
             "availableLanguage": "Spanish"
@@ -107,7 +107,7 @@ export default function RootLayout({
     };
 
     return (
-        <html lang="es" className="scroll-smooth" suppressHydrationWarning>
+        <html lang="es" className="scroll-smooth" suppressHydrationWarning data-theme="system">
         <head>
             <Script 
                 id="gtm-script"
@@ -127,6 +127,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </head>
         <body
             className={`${inter.variable} ${jetBrainsMono.variable} antialiased mobile-safe`}
+            suppressHydrationWarning
+            data-extension-guard="true"
         >
         <noscript>
             <iframe 

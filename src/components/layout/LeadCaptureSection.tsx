@@ -47,8 +47,16 @@ export default function LeadCaptureSection() {
             // 3. Redirección automática a página de gracias después de 2 segundos
             setTimeout(() => {
                 // Usar la URL de redirección del resultado o fallback
+                // Usar Next.js router para navegación client-side
                 const redirectUrl = result.data?.redirectUrl || '/gracias';
-                window.location.href = redirectUrl;
+                
+                // Evitar hydration issues con navigation
+                if (typeof window !== 'undefined') {
+                    // Usar setTimeout para evitar problemas durante hydration
+                    setTimeout(() => {
+                        window.location.href = redirectUrl;
+                    }, 100);
+                }
             }, 2000);
 
         } catch (error) {

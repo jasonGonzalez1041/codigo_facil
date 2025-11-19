@@ -37,13 +37,15 @@ export function GTMProvider({ children, gtmId }: GTMProviderProps) {
           if (consent) {
             setConsentGiven(JSON.parse(consent));
           } else {
-            // Default to false for LATAM compliance
-            setConsentGiven(false);
+            // Default to null (no preference set) for LATAM compliance
+            setConsentGiven(null);
           }
         } catch (error) {
           console.log('Error checking consent:', error);
-          setConsentGiven(false);
+          setConsentGiven(null);
         }
+      } else {
+        setConsentGiven(null);
       }
     }, 100); // Small delay to ensure client-side hydration
 
@@ -109,7 +111,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       )}
 
       {/* Consent Banner for LATAM compliance - Protected from browser extensions */}
-      {isHydrated && consentGiven === false && (
+      {isHydrated && consentGiven === null && (
         <div className="fixed bottom-0 left-0 right-0 bg-background border-t p-4 shadow-lg z-50" suppressHydrationWarning>
           <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-sm text-muted-foreground">

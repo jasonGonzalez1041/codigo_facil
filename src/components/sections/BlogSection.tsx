@@ -162,7 +162,7 @@ export default function BlogSection() {
 
     return (
         <section id="blog" className="py-20 bg-gray-50 dark:bg-gray-900">
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header de la sección */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">

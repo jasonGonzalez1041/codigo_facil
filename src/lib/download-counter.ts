@@ -29,8 +29,8 @@ class DownloadCounter {
       }
     } catch (error) {
       console.error('❌ Error incrementando descargas:', error);
-      // Fallback: retornar número base + timestamp como variación
-      return 1247 + Math.floor(Date.now() / 100000);
+      // Fallback estático para evitar hydration mismatch
+      return 1247;
     }
   }
 

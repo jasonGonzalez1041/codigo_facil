@@ -56,18 +56,16 @@ export default function Header() {
         if (firstRender.current) {
             firstRender.current = false;
 
-            const savedTheme = localStorage.getItem('theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            const isDarkTheme = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
-
-            document.documentElement.classList.toggle('dark', isDarkTheme);
-
-            // Usar setState de manera más eficiente para evitar cascading renders
+            // Evitar hydration mismatch - cargar tema de forma segura
             setTimeout(() => {
+                const savedTheme = localStorage.getItem('theme');
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const isDarkTheme = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+
+                document.documentElement.classList.toggle('dark', isDarkTheme);
                 setIsDark(isDarkTheme);
                 setIsThemeInitialized(true);
-            }, 0);
+            }, 10); // Pequeño delay para evitar mismatch
 
             return;
         }
@@ -90,67 +88,92 @@ export default function Header() {
 
     // Función para alternar el tema
     const toggleTheme = () => {
-        if (isDark) {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-            setIsDark(false);
-        } else {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-            setIsDark(true);
+        if (typeof window !== 'undefined') {
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                setIsDark(false);
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                setIsDark(true);
+            }
         }
     };
 
-    // Navegación optimizada con caché
+    // Navegación protegida contra RedirectBoundary errors
     const handleNavigation = (target: string) => {
+        // Verificar que estamos en cliente antes de navegar
+        if (typeof window === 'undefined') return;
+        
         // Cerrar menú móvil primero
         setIsMenuOpen(false);
 
-        // Pequeño delay para permitir la animación de cierre
-        setTimeout(() => {
-            // Navegación estática sin hash para rutas principales
-            switch(target) {
-                case 'inicio':
-                    router.push(staticRoutes.home);
-                    break;
-                case 'servicios':
-                    if (isHomePage) {
-                        scrollToSection('servicios');
-                    } else {
-                        router.push(staticRoutes.services);
-                    }
-                    break;
+        // Prevenir navegación durante hidratación
+        if (!isThemeInitialized) {
+            setTimeout(() => handleNavigation(target), 100);
+            return;
+        }
 
-                case 'proyectos':
-                    if (isHomePage) {
-                        scrollToSection('proyectos');
-                    } else {
-                        router.push(staticRoutes.proyectos); // ← Corregido aquí
-                    }
-                    break;
-                case 'blog':
-                    if (isHomePage) {
-                        scrollToSection('blog');
-                    } else {
-                        router.push(staticRoutes.blog);
-                    }
-                    break;
-                case 'precios':
-                    if (isHomePage) {
-                        scrollToSection('precios');
-                    } else {
-                        router.push(staticRoutes.pricing);
-                    }
-                    break;
-                case 'contacto':
-                    if (isHomePage) {
-                        scrollToSection('contacto');
-                    } else {
-                        router.push(staticRoutes.contact);
-                    }
-                    break;
-                default:
-                    router.push(staticRoutes.home);
+        // Delay para permitir animación de cierre y evitar RedirectBoundary
+        setTimeout(() => {
+            try {
+                // Navegación estática sin hash para rutas principales
+                switch(target) {
+                    case 'inicio':
+                        if (pathname !== '/') {
+                            router.push(staticRoutes.home);
+                        }
+                        break;
+                    case 'servicios':
+                        if (isHomePage) {
+                            scrollToSection('servicios');
+                        } else {
+                            router.push(staticRoutes.services);
+                        }
+                        break;
+
+                    case 'proyectos':
+                        if (isHomePage) {
+                            scrollToSection('proyectos');
+                        } else {
+                            router.push(staticRoutes.proyectos);
+                        }
+                        break;
+                    case 'blog':
+                        if (isHomePage) {
+                            scrollToSection('blog');
+                        } else {
+                            router.push(staticRoutes.blog);
+                        }
+                        break;
+                    case 'precios':
+                        if (isHomePage) {
+                            scrollToSection('precios');
+                        } else {
+                            router.push(staticRoutes.pricing);
+                        }
+                        break;
+                    case 'contacto':
+                        if (isHomePage) {
+                            scrollToSection('contacto');
+                        } else {
+                            router.push(staticRoutes.contact);
+                        }
+                        break;
+                    default:
+                        if (pathname !== '/') {
+                            router.push(staticRoutes.home);
+                        }
+                }
+            } catch (error) {
+                console.warn('Navigation error (RedirectBoundary):', error);
+                // Fallback seguro
+                if (pathname !== '/') {
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 100);
+                }
             }
         }, 300);
     };
@@ -304,7 +327,7 @@ export default function Header() {
     const navigationItems = [
         { id: "inicio", label: "Inicio", icon: "🏠" },
         { id: "servicios", label: "Servicios", icon: "⚡" },
-        { id: "proyectos", label: "Proyectos", icon: "💼" }, // ← Agregado ícono aquí
+        // { id: "proyectos", label: "Proyectos", icon: "💼" }, // ← Temporalmente comentado
         { id: "precios", label: "Precios", icon: "💰" },
         { id: "blog", label: "Blog", icon: "📝" },
         { id: "contacto", label: "Contacto", icon: "📱" }
@@ -322,6 +345,9 @@ export default function Header() {
                     ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 shadow-lg z-50"
                     : "bg-transparent backdrop-blur-none border-b border-transparent z-50"
             }`}
+            suppressHydrationWarning
+            data-component="header"
+            data-extension-safe="true"
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-20">
@@ -433,6 +459,7 @@ export default function Header() {
                                     : "text-white hover:bg-white/10"
                             }`}
                             aria-label={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+                            suppressHydrationWarning
                         >
                             {isDark ? (
                                 <Sun className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />

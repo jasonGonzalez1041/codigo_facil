@@ -272,7 +272,7 @@ export default function PricingSection() {
             ref={sectionRef}
             className="py-24 md:py-32 bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 relative overflow-hidden"
         >
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <motion.div
                     ref={titleRef}

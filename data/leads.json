@@ -19,5 +19,43 @@
     "phone": "+52 55 1234 5678",
     "source": "lead_magnet_checklist",
     "timestamp": "2025-11-19T04:35:26.224Z"
+  },
+  {
+    "name": "Test Usuario Sistema",
+    "email": "test.sistema@example.com",
+    "phone": "+56987654321",
+    "source": "lead-magnet-checklist",
+    "timestamp": "2025-11-19T16:31:37.298Z"
+  },
+  {
+    "name": "Prueba Manual",
+    "email": "prueba@test.com",
+    "phone": "+56987654321",
+    "source": "lead-magnet-checklist",
+    "timestamp": "2025-11-19T16:31:42.682Z"
+  },
+  {
+    "name": "Test Contact Fixed",
+    "email": "contact.fixed@test.com",
+    "phone": "+56987654321",
+    "source": "contact_form",
+    "timestamp": "2025-11-19T16:33:32.809Z",
+    "message": "Contacto desde formulario web.\nNombre: Test Contact Fixed\nEmail: contact.fixed@test.com\nTeléfono: +56987654321"
+  },
+  {
+    "name": "María García Test",
+    "email": "maria.test@example.com",
+    "phone": "+52 55 9876 5432",
+    "source": "contact_form",
+    "timestamp": "2025-11-19T16:34:06.121Z",
+    "message": "Contacto desde formulario web.\nNombre: María García Test\nEmail: maria.test@example.com\nTeléfono: +52 55 9876 5432"
+  },
+  {
+    "name": "cristhian",
+    "email": "5358442363@whatsapp.codigofacil.com",
+    "phone": "+53 5844 2363",
+    "source": "contact_form",
+    "timestamp": "2025-11-19T18:00:02.331Z",
+    "message": "Contacto rápido desde formulario paso 1.\nTipo de negocio: 📚 Educación"
   }
 ]
