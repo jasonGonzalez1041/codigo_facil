@@ -5,14 +5,17 @@ import { Download, CheckCircle, Star, Calculator } from 'lucide-react';
 export default function LeadCaptureSection() {
     const [formData, setFormData] = useState({
         nombre: '',
-        email: ''
+        email: '',
+        telefono: ''
     });
     const [enviando, setEnviando] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [enviado, setEnviado] = useState(false);
 
     const manejarEnvio = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setEnviando(true);
+        setError(null);
 
         try {
             // 1. Enviar email usando el servidor SMTP local 100% self-hosted
@@ -24,7 +27,7 @@ export default function LeadCaptureSection() {
                 body: JSON.stringify({
                     name: formData.nombre,
                     email: formData.email,
-                    phone: '', // No tenemos teléfono en lead magnet
+                    phone: formData.telefono,
                     source: 'lead_magnet_checklist'
                 }),
             });
@@ -39,7 +42,7 @@ export default function LeadCaptureSection() {
 
             // 2. Mostrar estado de éxito temporal
             setEnviado(true);
-            setFormData({ nombre: '', email: '' });
+            setFormData({ nombre: '', email: '', telefono: '' });
 
             // 3. Redirección automática a página de gracias después de 2 segundos
             setTimeout(() => {
@@ -50,7 +53,7 @@ export default function LeadCaptureSection() {
 
         } catch (error) {
             console.error('❌ Error en el envío:', error);
-            alert(`Error al procesar: ${error instanceof Error ? error.message : 'Error desconocido'}. Por favor, intenta nuevamente.`);
+            setError(error instanceof Error ? error.message : 'Error al procesar. Por favor, intenta nuevamente.');
         } finally {
             setEnviando(false);
         }
@@ -150,9 +153,15 @@ export default function LeadCaptureSection() {
                         </div>
 
                         <form onSubmit={manejarEnvio} className="space-y-4">
+                            {error && (
+                                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                                    <p className="text-red-800 text-sm">{error}</p>
+                                </div>
+                            )}
+                            
                             <div>
                                 <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Tu Nombre
+                                    Tu Nombre *
                                 </label>
                                 <input
                                     type="text"
@@ -167,7 +176,7 @@ export default function LeadCaptureSection() {
 
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Tu Email
+                                    Tu Email *
                                 </label>
                                 <input
                                     type="email"
@@ -176,6 +185,20 @@ export default function LeadCaptureSection() {
                                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                                     placeholder="tu@email.com"
                                     required
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Teléfono (Opcional)
+                                </label>
+                                <input
+                                    type="tel"
+                                    id="telefono"
+                                    value={formData.telefono}
+                                    onChange={(e) => setFormData({...formData, telefono: e.target.value})}
+                                    placeholder="+56 9 1234 5678"
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
                                 />
                             </div>
