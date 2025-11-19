@@ -67,18 +67,23 @@ export default function ContactFormLatam() {
   const [emailError, setEmailError] = useState('');
 
   useEffect(() => {
-    // Detect user country for WhatsApp validation
-    fetch('https://ipapi.co/json/')
-      .then(res => res.json())
-      .then(data => setUserCountry(data.country_code?.toLowerCase() || ''))
-      .catch(() => setUserCountry(''));
+    // Delay external fetch to avoid hydration issues
+    const timer = setTimeout(() => {
+      // Detect user country for WhatsApp validation (non-blocking)
+      fetch('https://ipapi.co/json/')
+        .then(res => res.json())
+        .then(data => setUserCountry(data.country_code?.toLowerCase() || ''))
+        .catch(() => setUserCountry(''));
 
-    // Track form start
-    trackLeadFormStart({
-      form_type: 'contact_latam',
-      form_location: 'contact_section',
-      source: 'organic'
-    });
+      // Track form start
+      trackLeadFormStart({
+        form_type: 'contact_latam',
+        form_location: 'contact_section',
+        source: 'organic'
+      });
+    }, 100); // Small delay to ensure hydration is complete
+
+    return () => clearTimeout(timer);
   }, []);
 
   const validateStep1 = (): boolean => {
@@ -117,6 +122,10 @@ Presupuesto: ${formData.budget ? (budgetRanges.find(b => b.value === formData.bu
 Timeline: ${formData.timeline ? (timelines.find(t => t.value === formData.timeline)?.label || formData.timeline) : 'No especificado'}
 Tipo de negocio: ${businessTypes.find(b => b.value === formData.businessType)?.label || formData.businessType}`;
 
+      // Crear un email placeholder válido basado en el WhatsApp
+      const whatsappClean = formData.whatsapp.replace(/[^\d]/g, '');
+      const placeholderEmail = `${whatsappClean}@whatsapp.codigofacil.com`;
+
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
@@ -124,7 +133,7 @@ Tipo de negocio: ${businessTypes.find(b => b.value === formData.businessType)?.l
         },
         body: JSON.stringify({
           nombre: formData.name,
-          email: formData.whatsapp, // Usar WhatsApp como email de contacto
+          email: placeholderEmail, // Email placeholder válido
           telefono: formData.whatsapp,
           empresa: formData.company || undefined,
           mensaje: mensaje,
@@ -134,12 +143,13 @@ Tipo de negocio: ${businessTypes.find(b => b.value === formData.businessType)?.l
 
       const result = await response.json();
 
-      if (!result.success) {
-        throw new Error(result.message || 'Error al enviar email');
+      if (result.success) {
+        setEmailSent(true);
+        console.log('✅ Email enviado correctamente:', result.message);
+      } else {
+        console.warn('⚠️ Error en API de email:', result.message);
+        setEmailError('Email no enviado, pero continuaremos por WhatsApp.');
       }
-
-      setEmailSent(true);
-      console.log('✅ Email enviado correctamente:', result.message);
       
     } catch (error) {
       console.error('❌ Error enviando emails:', error);
@@ -294,12 +304,30 @@ Tipo de negocio: ${businessTypes.find(b => b.value === formData.businessType)?.l
                     type="tel"
                     value={formData.whatsapp}
                     onChange={(e) => updateFormData('whatsapp', formatWhatsAppNumber(e.target.value, userCountry))}
-                    placeholder={userCountry === 'mx' ? '+52 55 1234 5678' : userCountry === 'ar' ? '+54 11 1234 5678' : '+56 9 1234 5678'}
+                    placeholder={
+                      userCountry === 'mx' ? '+52 55 1234 5678' : 
+                      userCountry === 'ar' ? '+54 11 1234 5678' : 
+                      userCountry === 'co' ? '+57 300 1234 567' : 
+                      userCountry === 'pe' ? '+51 987 654 321' : 
+                      userCountry === 'cl' ? '+56 9 1234 5678' : 
+                      userCountry === 'br' ? '+55 11 91234 5678' : 
+                      userCountry === 've' ? '+58 412 1234567' : 
+                      userCountry === 'cu' ? '+53 5123 4567' : 
+                      userCountry === 'ec' ? '+593 99 123 4567' : 
+                      userCountry === 'uy' ? '+598 99 123 456' : 
+                      userCountry === 'py' ? '+595 981 123 456' : 
+                      userCountry === 'bo' ? '+591 7 123 4567' : 
+                      userCountry === 'gt' ? '+502 5555 1234' : 
+                      userCountry === 'cr' ? '+506 8123 4567' : 
+                      userCountry === 'pa' ? '+507 6123 4567' : 
+                      userCountry === 'do' ? '+1809 123 4567' : 
+                      '+56 9 1234 5678'
+                    }
                     className={`mt-1 ${errors.whatsapp ? 'border-red-500' : ''}`}
                     aria-describedby={errors.whatsapp ? "whatsapp-error" : "whatsapp-help"}
                   />
                   <p id="whatsapp-help" className="text-xs text-muted-foreground mt-1">
-                    Incluye el código de país (+52 México, +54 Argentina, +56 Chile, etc.)
+                    Incluye el código de país (+52 México, +54 Argentina, +57 Colombia, +51 Perú, +55 Brasil, +53 Cuba, etc.)
                   </p>
                   {errors.whatsapp && (
                     <p id="whatsapp-error" className="text-red-500 text-sm mt-1" role="alert">

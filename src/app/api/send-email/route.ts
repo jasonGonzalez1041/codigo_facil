@@ -85,17 +85,6 @@ type TransformedEmailData = z.infer<typeof TransformedEmailSchema>;
 
 export async function POST(request: NextRequest) {
   try {
-    // Verificar que las variables de entorno estén configuradas
-    if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
-      console.error('❌ Variables de entorno SMTP no configuradas');
-      return NextResponse.json(
-        { 
-          success: false, 
-          message: 'Servidor de email no configurado. Contacta al administrador.' 
-        },
-        { status: 500 }
-      );
-    }
 
     // Leer datos del request
     const body = await request.json();
@@ -131,9 +120,21 @@ export async function POST(request: NextRequest) {
       tipo: validatedData.tipo
     };
 
-    // Enviar email usando el servicio self-hosted
-    const emailService = getEmailService();
-    const result = await emailService.sendEmail(emailData);
+    // Usar el mismo servicio que el lead magnet (funciona correctamente)
+    const { getLocalEmailService } = await import('@/lib/email-service-local');
+    const localEmailService = getLocalEmailService();
+    
+    // Convertir datos para el servicio local
+    const leadData = {
+      name: validatedData.nombre,
+      email: validatedData.email,
+      phone: validatedData.telefono || '',
+      source: 'contact_form',
+      timestamp: new Date(),
+      message: validatedData.mensaje
+    };
+    
+    const result = await localEmailService.sendContactForm(leadData);
 
     if (result.success) {
       // Respuesta exitosa
