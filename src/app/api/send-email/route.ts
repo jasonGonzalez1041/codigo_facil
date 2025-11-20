@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     const validationResult = TransformedEmailSchema.safeParse(body);
 
     if (!validationResult.success) {
-      const zodErrors = validationResult.error.errors.map(err => 
+      const zodErrors = validationResult.error.issues.map(err => 
         `${err.path.join('.')}: ${err.message}`
       );
       
