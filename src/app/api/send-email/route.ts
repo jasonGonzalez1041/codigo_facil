@@ -36,7 +36,7 @@ const SendEmailSchema = z.object({
     .optional(),
   
   tipo: z.enum(['lead_magnet', 'contact_form'], {
-    errorMap: () => ({ message: 'Tipo debe ser "lead_magnet" o "contact_form"' })
+    message: 'Tipo debe ser "lead_magnet" o "contact_form"'
   }).default('lead_magnet'),
   
   // Retrocompatibilidad con nombres en español
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
       // Respuesta exitosa
       return NextResponse.json({
         success: true,
-        message: result.message,
+        message: result.messageId,
         data: {
           nombre: emailData.nombre,
           email: emailData.email,
@@ -150,11 +150,11 @@ export async function POST(request: NextRequest) {
       });
     } else {
       // Error en el envío
-      console.error('Error en servicio de email:', result.message);
+      console.error('Error en servicio de email:', result.messageId);
       return NextResponse.json(
         { 
           success: false, 
-          message: result.message 
+          message: result.messageId || 'Error en el envío del email' 
         },
         { status: 500 }
       );

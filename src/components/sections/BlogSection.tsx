@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, Clock, Calendar, Zap } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Clock, Zap } from "lucide-react";
 import { getBlogContent } from "@/lib/blog-content";
 import { getAllPosts } from "@/lib/blog-data";
 
@@ -184,13 +185,13 @@ export default function BlogSection() {
             </span>
                     </div>
                     <div className="text-center">
-                        <a 
+                        <Link 
                             href="/blog" 
                             className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
                         >
                             📚 Ver Todos los Artículos
                             <ArrowUpRight className="w-5 h-5" />
-                        </a>
+                        </Link>
                     </div>
                 </div>
 

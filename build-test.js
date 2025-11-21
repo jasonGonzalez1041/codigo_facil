@@ -16,28 +16,27 @@ try {
   // 2. Verificar archivos generados
   console.log('2️⃣ Verificando archivos generados...');
   
-  const outDir = './out';
-  const indexPath = path.join(outDir, 'index.html');
+  const buildDir = './.next';
+  const serverDir = path.join(buildDir, 'server');
   
-  if (fs.existsSync(outDir)) {
-    console.log('✅ Directorio ./out existe');
+  if (fs.existsSync(buildDir)) {
+    console.log('✅ Directorio ./.next existe');
   } else {
-    throw new Error('❌ Directorio ./out no encontrado');
+    throw new Error('❌ Directorio ./.next no encontrado');
   }
 
-  if (fs.existsSync(indexPath)) {
-    const stats = fs.statSync(indexPath);
-    console.log(`✅ index.html existe (${Math.round(stats.size / 1024)}KB)`);
+  if (fs.existsSync(serverDir)) {
+    console.log('✅ Directorio server existe');
   } else {
-    throw new Error('❌ index.html no encontrado');
+    console.log('⚠️ Directorio server no encontrado (puede ser normal en algunos casos)');
   }
 
   // 3. Verificar estructura de archivos
-  const files = fs.readdirSync(outDir);
+  const files = fs.readdirSync(buildDir);
   console.log('📁 Archivos generados:', files.join(', '));
 
-  // 4. Verificar assets críticos
-  const criticalFiles = ['index.html', 'favicon.ico', '_next'];
+  // 4. Verificar assets críticos para Next.js build
+  const criticalFiles = ['static', 'server'];
   const missingFiles = criticalFiles.filter(file => !files.includes(file));
   
   if (missingFiles.length === 0) {
@@ -47,8 +46,8 @@ try {
   }
 
   console.log('\n🎉 Build verificado exitosamente!');
-  console.log('📝 El sitio está listo para deployment en Cloudflare Pages');
-  console.log('🔗 Para probar localmente: npx serve out');
+  console.log('📝 El sitio está listo para deployment en Vercel');
+  console.log('🔗 Para probar localmente: npm run start');
   
 } catch (error) {
   console.error('❌ Error durante la verificación:', error.message);

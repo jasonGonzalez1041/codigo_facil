@@ -17,7 +17,9 @@ export function ExtensionGuard({ children, fallback }: ExtensionGuardProps) {
 
   useEffect(() => {
     // Mark as client-side rendered
-    setIsClient(true);
+    if (typeof window !== 'undefined') {
+      setIsClient(true);
+    }
 
     // Detection for common extension interference
     const detectExtensions = () => {
@@ -37,10 +39,11 @@ export function ExtensionGuard({ children, fallback }: ExtensionGuardProps) {
         // Check for unexpected script tags
         () => {
           const scripts = document.querySelectorAll('script[src]');
-          return Array.from(scripts).some(script => 
-            script.src.includes('extension://') || 
-            script.src.includes('chrome-extension://')
-          );
+          return Array.from(scripts).some((script: Element) => {
+            const scriptElement = script as HTMLScriptElement;
+            return scriptElement.src?.includes('extension://') || 
+                   scriptElement.src?.includes('chrome-extension://');
+          });
         }
       ];
 
@@ -89,7 +92,9 @@ export function useExtensionDetection() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    if (typeof window !== 'undefined') {
+      setIsClient(true);
+    }
     
     // Simple extension detection
     const hasExtensionElements = () => {

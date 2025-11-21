@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { getPostBySlug, getAllPosts } from '@/lib/blog-data';
 
 interface BlogPostPageProps {
@@ -44,7 +44,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Blog no encontrado</h1>
-          <a href="/blog" className="text-blue-600 hover:underline">Volver al blog</a>
+          <Link href="/blog" className="text-blue-600 hover:underline">Volver al blog</Link>
         </div>
       </div>
     );
@@ -89,9 +89,9 @@ Nuestro equipo puede ayudarte a implementar estas estrategias específicamente p
           <div className="max-w-4xl mx-auto">
             {/* Breadcrumb */}
             <nav className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-6">
-              <a href="/" className="hover:text-blue-600 dark:hover:text-blue-400">Inicio</a>
+              <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400">Inicio</Link>
               <span>/</span>
-              <a href="/blog" className="hover:text-blue-600 dark:hover:text-blue-400">Blog</a>
+              <Link href="/blog" className="hover:text-blue-600 dark:hover:text-blue-400">Blog</Link>
               <span>/</span>
               <span className="text-gray-900 dark:text-white">{post.title}</span>
             </nav>
@@ -177,19 +177,19 @@ Nuestro equipo puede ayudarte a implementar estas estrategias específicamente p
 
             {/* Navigation */}
             <div className="mt-12 flex justify-between items-center">
-              <a
+              <Link
                 href="/blog"
                 className="flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
               >
                 ← Volver al Blog
-              </a>
+              </Link>
               
-              <a
+              <Link
                 href="/"
                 className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all"
               >
                 Inicio →
-              </a>
+              </Link>
             </div>
           </div>
         </div>

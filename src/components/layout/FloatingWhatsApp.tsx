@@ -17,6 +17,36 @@ export default function FloatingWhatsAppWithOffers() {
         return () => clearTimeout(timer);
     }, []);
 
+    // Prevenir scroll del body cuando el modal está abierto
+    useEffect(() => {
+        if (isOpen) {
+            // Guardar la posición actual del scroll
+            const scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+            document.body.style.overflow = 'hidden';
+        } else {
+            // Restaurar scroll cuando se cierra
+            const scrollY = document.body.style.top;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            }
+        }
+
+        // Cleanup al desmontar
+        return () => {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
+
     // Animaciones con GSAP
     useEffect(() => {
         if (!mounted) return;
@@ -180,7 +210,7 @@ ${offers.map(offer => `• ${offer.title}: ${offer.price} (antes ${offer.origina
             {isOpen && (
                 <div
                     ref={panelRef}
-                    className="fixed bottom-24 right-6 z-50 w-80 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 transform-gpu"
+                    className="fixed bottom-24 left-1/2 transform -translate-x-1/2 sm:left-auto sm:right-6 sm:translate-x-0 z-50 w-80 max-w-[calc(100vw-2rem)] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 transform-gpu"
                 >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-t-2xl p-4 text-white">

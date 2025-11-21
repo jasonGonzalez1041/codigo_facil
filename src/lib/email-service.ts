@@ -29,7 +29,7 @@ class SelfHostedEmailService {
     try {
       // Opción 1: Gmail SMTP (gratuito con app password)
       if (process.env.SMTP_HOST === 'smtp.gmail.com') {
-        this.transporter = nodemailer.createTransporter({
+        this.transporter = nodemailer.createTransport({
           host: 'smtp.gmail.com',
           port: 587,
           secure: false, // true for 465, false for other ports
@@ -41,7 +41,7 @@ class SelfHostedEmailService {
       }
       // Opción 2: Servidor SMTP propio o cualquier otro
       else {
-        this.transporter = nodemailer.createTransporter({
+        this.transporter = nodemailer.createTransport({
           host: process.env.SMTP_HOST || 'localhost',
           port: parseInt(process.env.SMTP_PORT || '587'),
           secure: process.env.SMTP_SECURE === 'true',

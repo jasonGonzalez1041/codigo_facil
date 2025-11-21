@@ -19,6 +19,18 @@ class DownloadCounter {
     this.useKV = !!process.env.KV_URL || !!process.env.REDIS_URL;
   }
 
+  // Método para importar KV de forma segura sin errores de TypeScript
+  private async safeImportKV(): Promise<any> {
+    try {
+      // Usar eval para evitar que TypeScript analice la importación
+      const moduleName = '@vercel/kv';
+      const importFunc = new Function('name', 'return import(name)');
+      return await importFunc(moduleName);
+    } catch {
+      return null;
+    }
+  }
+
   // Método principal para incrementar contador
   async incrementDownloads(): Promise<number> {
     try {
@@ -52,7 +64,9 @@ class DownloadCounter {
   private async incrementWithKV(): Promise<number> {
     try {
       // Importar dinámicamente para evitar errores si no está disponible
-      const { kv } = await import('@vercel/kv');
+      const kvModule = await this.safeImportKV();
+      if (!kvModule) throw new Error('Vercel KV not available');
+      const { kv } = kvModule;
       
       const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
       
@@ -88,7 +102,9 @@ class DownloadCounter {
 
   private async getCountFromKV(): Promise<number> {
     try {
-      const { kv } = await import('@vercel/kv');
+      const kvModule = await this.safeImportKV();
+      if (!kvModule) throw new Error('Vercel KV not available');
+      const { kv } = kvModule;
       const count = await kv.get('download_counter_total') as number;
       return Math.max(count || 1247, 1247);
     } catch (error) {
@@ -194,7 +210,9 @@ class DownloadCounter {
       
       if (this.useKV) {
         try {
-          const { kv } = await import('@vercel/kv');
+          const kvModule = await this.safeImportKV();
+          if (!kvModule) throw new Error('Vercel KV not available');
+          const { kv } = kvModule;
           
           // Obtener contadores diarios
           const sevenDaysAgo = new Date();

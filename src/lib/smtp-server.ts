@@ -7,6 +7,8 @@ interface EmailOptions {
   to: string;
   subject: string;
   html: string;
+  replyTo?: string;
+  headers?: Record<string, string>;
   attachments?: Array<{
     filename: string;
     path: string;
@@ -105,6 +107,8 @@ class LocalSMTPServer {
         to: options.to,
         subject: options.subject,
         html: options.html,
+        replyTo: options.replyTo,
+        headers: options.headers,
         attachments: options.attachments
       };
 

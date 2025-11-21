@@ -14,6 +14,7 @@ interface LeadData {
 interface EmailResult {
   success: boolean;
   messageId?: string;
+  message?: string;
   error?: string;
   leadSaved?: boolean;
 }

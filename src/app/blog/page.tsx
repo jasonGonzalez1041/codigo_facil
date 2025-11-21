@@ -125,13 +125,6 @@ export default function BlogPage({ params: _params, searchParams: _searchParams 
         markAsRead(guide.slug);
     };
 
-    // Función de debug para resetear progreso (solo en desarrollo)
-    const handleResetProgress = () => {
-        if (process.env.NODE_ENV === 'development') {
-            resetProgress();
-            console.log('Progreso de lectura reseteado');
-        }
-    };
 
     // Evitar renderizado hasta hidratación completa para prevenir ClientPageRoot/SegmentViewNode errors
     if (!isClient || !isHydrated || allPosts.length === 0) {
@@ -286,15 +279,6 @@ export default function BlogPage({ params: _params, searchParams: _searchParams 
                                 {' '}de{' '}
                                 <span className="font-semibold">{stats.total}</span> guías
                             </div>
-                            {process.env.NODE_ENV === 'development' && (
-                                <button 
-                                    onClick={handleResetProgress}
-                                    className="text-xs px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
-                                    title="Reset reading progress (development only)"
-                                >
-                                    🔄 Reset
-                                </button>
-                            )}
                         </div>
                     </div>
 
