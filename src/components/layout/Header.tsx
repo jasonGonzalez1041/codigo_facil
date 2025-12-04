@@ -413,7 +413,7 @@ export default function Header() {
                         className="hidden lg:flex items-center space-x-4"
                     >
                         <button
-                            onClick={() => window.open('https://wa.me/56950225491?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20para%20mi%20proyecto%20web', '_blank')}
+                            onClick={() => window.open('https://wa.me/50672904200?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20para%20mi%20proyecto%20web', '_blank')}
                             className={`group relative px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 overflow-hidden ${
                                 scrolled || !isHomePage
                                     ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg hover:shadow-blue-500/25"
@@ -526,7 +526,7 @@ export default function Header() {
                             <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
                                 <button
                                     onClick={() => {
-                                        window.open('https://wa.me/56950225491?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20desde%20el%20móvil', '_blank');
+                                        window.open('https://wa.me/50672904200?text=Hola,%20me%20interesa%20una%20consulta%20gratuita%20desde%20el%20móvil', '_blank');
                                         setIsMenuOpen(false);
                                     }}
                                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2.5 px-4 rounded-lg font-medium text-sm shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2"

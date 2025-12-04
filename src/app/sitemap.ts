@@ -27,6 +27,37 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly', 
       priority: 0.8,
     },
+    // Páginas específicas por país para SEO local
+    {
+      url: `${baseUrl}/desarrollo-web-mexico`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/desarrollo-web-argentina`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/desarrollo-web-colombia`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/desarrollo-web-chile`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/desarrollo-web-peru`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
     ...blogUrls
   ]
 }

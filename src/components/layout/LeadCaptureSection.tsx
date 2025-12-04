@@ -123,7 +123,7 @@ export default function LeadCaptureSection() {
                         </div>
 
                         <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                            🎁 <span className="text-blue-600 dark:text-blue-400">Guía Gratuita</span> para Tu Sitio Web
+                            🎁 <span className="text-red-600 dark:text-red-400">GRATIS</span>: Los 25 Secretos que Usan Empresas que Ganan <span className="text-green-600">$100K+ USD</span>
                         </h2>
 
                         <div className="space-y-4 mb-8">

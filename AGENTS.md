@@ -16,7 +16,7 @@
 - **Estado**: Zustand 5.0.8 para gestión de estado ligera
 - **Animaciones**: Framer Motion 12.23.22 + GSAP 3.13.0 con ScrollTrigger
 - **Deployment**: Vercel Platform (primary) con configuración optimizada
-- **Contacto**: WhatsApp Business (+56950225491) integrado
+- **Contacto**: WhatsApp Business (+50672904200) integrado
 
 ### Dependencias Clave de UI/UX
 - **UI Primitives**: Radix UI (dropdown-menu, dialog, label, slot)
@@ -54,7 +54,7 @@ npm run lint                # ESLint check con Next.js rules
 - **Proyecto REAL en producción** - No es template ni demo
 - **Cliente real**: CodigoFacil.com operando comercialmente
 - **Revenue activo**: Servicios desde $99 USD hasta $20/hora
-- **WhatsApp Business**: +56950225491 (integración crítica para conversiones)
+- **WhatsApp Business**: +50672904200 (integración crítica para conversiones)
 - **Dominio en vivo**: https://codigofacil.com
 
 ### Servicios Comerciales Implementados (6 Principales)
@@ -88,7 +88,7 @@ npm run lint                # ESLint check con Next.js rules
 
 ### Estado Actual de Funcionalidades
 - ✅ **Calculadora de costos**: FUNCIONANDO en producción
-- ✅ **WhatsApp integration**: ACTIVO con número real (+56950225491)
+- ✅ **WhatsApp integration**: ACTIVO con número real (+50672904200)
 - ✅ **SEO para LATAM**: Metadatos completos implementados
 - ✅ **Responsive design**: Mobile-first COMPLETO
 - ✅ **Sistema de modales**: Zustand store funcionando
@@ -405,7 +405,7 @@ import type { Service } from '@/data/services'
 ```
 
 ### Integración WhatsApp Business
-- **Número**: +56950225491 (Chile)
+- **Número**: +50672904200 (Chile)
 - **Mensaje automático** con detalles de cotización
 - **Ofertas flotantes** con prompts dinámicos
 - **Integración directa** desde calculadora de costos
@@ -651,7 +651,7 @@ const whatsappMessage = `Hola! Quiero una cotización para:
 - Características adicionales: ${features}`;
 
 const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(whatsappMessage)}`;
-// Número de contacto: +56950225491 (Chile)
+// Número de contacto: +50672904200 (Chile)
 ```
 
 ### Sistema SMTP Self-Hosted (NUEVO - Implementado)

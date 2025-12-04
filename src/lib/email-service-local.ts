@@ -382,7 +382,7 @@ class LocalEmailService {
               </p>
               
               <div style="text-align: center; margin: 20px 0;">
-                <a href="mailto:${clientResponseEmail}?subject=Re: Tu consulta desde CodigoFacil.com&body=Hola ${encodeURIComponent(data.name)}!%0D%0A%0D%0AGracias por contactarnos desde CodigoFacil.com.%0D%0A%0D%0AHe recibido tu mensaje:%0D%0A"${data.message}"%0D%0A%0D%0A[Escribe tu respuesta aquí]%0D%0A%0D%0ASaludos,%0D%0AEquipo CodigoFacil%0D%0A%0D%0A---%0D%0AWhatsApp: +56950225491%0D%0Awww.codigofacil.com" 
+                <a href="mailto:${clientResponseEmail}?subject=Re: Tu consulta desde CodigoFacil.com&body=Hola ${encodeURIComponent(data.name)}!%0D%0A%0D%0AGracias por contactarnos desde CodigoFacil.com.%0D%0A%0D%0AHe recibido tu mensaje:%0D%0A"${data.message}"%0D%0A%0D%0A[Escribe tu respuesta aquí]%0D%0A%0D%0ASaludos,%0D%0AEquipo CodigoFacil%0D%0A%0D%0A---%0D%0AWhatsApp: +50672904200%0D%0Awww.codigofacil.com" 
                    style="background: #16a34a; color: white; padding: 18px 35px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; display: inline-block; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                   📧 RESPONDER AHORA
                 </a>
@@ -417,7 +417,7 @@ He recibido tu mensaje:
 
 Saludos,
 Equipo CodigoFacil.com
-📱 WhatsApp: +56950225491
+📱 WhatsApp: +50672904200
 🌐 www.codigofacil.com
             </div>
           </div>
@@ -427,7 +427,7 @@ Equipo CodigoFacil.com
           <div style="text-align: center; color: #64748b; font-size: 14px;">
             <p style="margin: 5px 0; font-weight: bold;">🌟 CodigoFacil.com - Sistema de Contacto Automático</p>
             <p style="margin: 5px 0;">📧 Email configurado para respuesta directa al WhatsApp del cliente</p>
-            <p style="margin: 5px 0;">📱 WhatsApp Empresa: +56950225491 | 🌐 www.codigofacil.com</p>
+            <p style="margin: 5px 0;">📱 WhatsApp Empresa: +50672904200 | 🌐 www.codigofacil.com</p>
           </div>
         </div>
       </div>

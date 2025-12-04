@@ -164,8 +164,8 @@ class SelfHostedEmailService {
               <ul style="list-style: none; padding: 0;">
                 <li style="margin: 10px 0;">
                   📱 <strong>WhatsApp:</strong> 
-                  <a href="https://wa.me/56950225491" style="color: #16a34a; text-decoration: none;">
-                    +56 9 5022 5491
+                  <a href="https://wa.me/50672904200" style="color: #16a34a; text-decoration: none;">
+                    +506 72904200
                   </a>
                 </li>
                 <li style="margin: 10px 0;">

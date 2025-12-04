@@ -113,7 +113,7 @@ function GuideModal({ isOpen, onClose, guide }: { isOpen: boolean; onClose: () =
                                 <button
                                     onClick={() => {
                                         const message = `¡Hola! Acabo de leer la guía completa "${guide.title}" y me interesa implementar estas estrategias. ¿Podrían ayudarme?`;
-                                        const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(message)}`;
+                                        const whatsappUrl = `https://wa.me/50672904200?text=${encodeURIComponent(message)}`;
                                         window.open(whatsappUrl, '_blank');
                                     }}
                                     className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center gap-2 whitespace-nowrap"
@@ -154,7 +154,7 @@ export default function BlogSection() {
 
 ¿Podrían ayudarme a convertir este conocimiento en resultados reales?`;
 
-        const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(message)}`;
+        const whatsappUrl = `https://wa.me/50672904200?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
     };
 

@@ -124,7 +124,7 @@ export default function Footer() {
                             {/* Teléfono */}
                             <li>
                                 <a
-                                    href="https://wa.me/56950225491"
+                                    href="https://wa.me/50672904200"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center justify-center sm:justify-start gap-3 hover:text-blue-400 transition-colors duration-300 group"

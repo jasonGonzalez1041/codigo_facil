@@ -173,13 +173,13 @@ Tipo de negocio: ${businessTypes.find(b => b.value === formData.businessType)?.l
     });
 
     trackWhatsAppClick({
-      phone_number: '+56950225491',
+      phone_number: '+50672904200',
       click_location: 'contact_form_step1',
       message_type: 'quick_contact',
       conversion_value: 15
     });
 
-    window.open(`https://wa.me/56950225491?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/50672904200?text=${encodeURIComponent(message)}`, '_blank');
     setIsSubmitting(false);
   };
 
@@ -213,13 +213,13 @@ Tipo de negocio: ${businessTypes.find(b => b.value === formData.businessType)?.l
       });
 
       trackWhatsAppClick({
-        phone_number: '+56950225491',
+        phone_number: '+50672904200',
         click_location: 'contact_form_step2',
         message_type: 'detailed_quote',
         conversion_value: 25
       });
 
-      window.open(`https://wa.me/56950225491?text=${encodeURIComponent(detailedMessage)}`, '_blank');
+      window.open(`https://wa.me/50672904200?text=${encodeURIComponent(detailedMessage)}`, '_blank');
     } catch (error) {
       console.error('Error sending detailed quote:', error);
       setEmailError('Error al procesar. Por favor, intenta nuevamente.');

@@ -22,7 +22,7 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
     title: `${process.env.NEXT_PUBLIC_SITE_NAME || 'CodigoFacil.com'} - Desarrollo Web Profesional para LATAM | Desde $99 USD`,
     description: process.env.NEXT_PUBLIC_SITE_DESCRIPTION || "🚀 Desarrollo web profesional para empresas de Latinoamérica. Sitios web modernos, tiendas online y aplicaciones que impulsan tu negocio. Planes desde $99 USD, hosting incluido y soporte en español. ¡Tu presencia digital lista en 7 días!",
-    keywords: "desarrollo web LATAM, sitios web profesionales, e-commerce latinoamérica, páginas web empresariales, tiendas online, desarrollo Next.js, diseño web responsive, hosting incluido, soporte español",
+    keywords: "desarrollo web LATAM, sitios web profesionales, e-commerce latinoamérica, páginas web empresariales, tiendas online, desarrollo Next.js, diseño web responsive, hosting incluido, soporte español, desarrollo web mexico, desarrollo web argentina, desarrollo web colombia, paginas web baratas, cuanto cuesta pagina web, empresa desarrollo web, sitios web profesionales baratos, tienda online barata, desarrollo web economico",
     authors: [{ name: process.env.NEXT_PUBLIC_COMPANY_NAME || "CodigoFacil.com" }],
     creator: process.env.NEXT_PUBLIC_COMPANY_NAME || "CodigoFacil.com",
     publisher: process.env.NEXT_PUBLIC_COMPANY_NAME || "CodigoFacil.com",
@@ -97,7 +97,7 @@ export default function RootLayout({
         "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://codigofacil.com"}/icon.svg`,
         "contactPoint": {
             "@type": "ContactPoint",
-            "telephone": `+${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "56950225491"}`,
+            "telephone": `+${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "50672904200"}`,
             "contactType": "customer service",
             "areaServed": ["MX", "AR", "CO", "CL", "PE", "EC", "UY", "BO", "PY"],
             "availableLanguage": "Spanish"

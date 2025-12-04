@@ -260,7 +260,7 @@ class LocalSMTPServer {
         email,
         phone,
         pdfName: 'Guía-Gratuita-CodigoFacil.pdf',
-        whatsappNumber: '+56950225491',
+        whatsappNumber: '+50672904200',
         siteUrl: 'https://codigofacil.com'
       });
 

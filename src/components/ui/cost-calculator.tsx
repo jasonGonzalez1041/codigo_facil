@@ -161,18 +161,31 @@ export function CostCalculator() {
                 <div className="space-y-3">
                     <button
                         onClick={() => {
-                            const message = `¡Hola! He calculado mi proyecto web con la calculadora de CodigoFacil.com:
+                            const message = `🚀 ¡CALCULÉ MI PROYECTO WEB Y QUIERO COTIZACIÓN URGENTE!
 
-📊 *Estimación del Proyecto:*
+👤 MIS DATOS:
+• Nombre: _______________
+• Empresa: _____________
+• Email: ________________
+• Teléfono: ______________
+
+💻 PROYECTO CONFIGURADO EN LA CALCULADORA:
 • Páginas: ${pages}
 • Funcionalidades: ${features} especiales
-• Complejidad: ${complexity}
-• Costo estimado: $${formatPrice(estimatedCost)} USD
-• Tiempo: ${timeEstimate} horas
+• Complejidad: ${complexity.toUpperCase()}
+• PRESUPUESTO CALCULADO: $${formatPrice(estimatedCost)} USD
+• Tiempo estimado: ${timeEstimate} horas
 
-🎯 Me interesa una cotización oficial basada en estos parámetros. ¿Podrían ayudarme?`;
+💰 MI PRESUPUESTO REAL: $_______ USD
+📅 FECHA LÍMITE: _______________
+🎯 MI NEGOCIO ES: ______________
 
-                            const whatsappUrl = `https://wa.me/56950225491?text=${encodeURIComponent(message)}`;
+⚡ URGENTE: ¿Tienen descuento por usar la calculadora?
+📞 ¿Cuándo podríamos hablar HOY mismo?
+
+¡No quiero perder esta oportunidad! 🙏`;
+
+                            const whatsappUrl = `https://wa.me/50672904200?text=${encodeURIComponent(message)}`;
                             window.open(whatsappUrl, '_blank');
                         }}
                         className="w-full px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"

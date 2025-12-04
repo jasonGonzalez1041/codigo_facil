@@ -129,47 +129,59 @@ export default function FloatingWhatsAppWithOffers() {
         return () => ctx.revert();
     }, [isOpen, mounted]);
 
-    // Calcular fecha de vencimiento
+    // Calcular fecha de vencimiento (7 días desde hoy para urgencia real)
     const getExpirationDate = () => {
-        // Fixed date to avoid hydration issues
-        return '2025-02-15'; // Static date for consistent SSR/client rendering
+        const date = new Date();
+        date.setDate(date.getDate() + 7);
+        return date.toLocaleDateString('es-ES', { 
+            weekday: 'long',
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
     };
 
-    const phoneNumber = '56950225491'; // Reemplaza con tu número
+    const phoneNumber = '50672904200'; // Número actualizado
     const expirationDate = getExpirationDate();
 
     const offers = [
         {
-            title: "Landing Page",
+            title: "🚀 Landing Page Profesional",
             price: "$49 USD",
-            originalPrice: "$99 USD",
-            description: "Diseño profesional y responsive"
+            originalPrice: "$199 USD",
+            description: "Sitio web profesional + hosting + dominio incluido por 1 año"
         },
         {
-            title: "E-commerce Básico",
-            price: "$199 USD",
-            originalPrice: "$399 USD",
-            description: "Tienda online completa"
+            title: "⚡ Tienda Online Completa",
+            price: "$149 USD",
+            originalPrice: "$599 USD",
+            description: "E-commerce funcionando en 48h + pasarela de pagos + soporte"
         },
         {
-            title: "Consultoría Estratégica",
-            price: "GRATIS",
-            originalPrice: "$50 USD",
-            description: "30 minutos de asesoría"
+            title: "📞 Consulta Estratégica VIP",
+            price: "30 MIN GRATIS",
+            originalPrice: "$150 USD",
+            description: "Análisis completo + plan personalizado para tu negocio"
         }
     ];
 
     const generateWhatsAppMessage = (offerType = 'general') => {
-        const baseMessage = `¡Hola! 👋 
+        const baseMessage = `🚀 Hola! Vi las ofertas especiales en su página web y estoy interesado:
 
-Me interesa la OFERTA LANZAMIENTO LATAM de Código Fácil:
+💻 OFERTAS DISPONIBLES:
+${offers.map(offer => `• ${offer.title}: ${offer.price} (precio regular ${offer.originalPrice})`).join('\n')}
 
-${offers.map(offer => `• ${offer.title}: ${offer.price} (antes ${offer.originalPrice})`).join('\n')}
+📋 INFORMACIÓN DE MI PROYECTO:
+• Presupuesto aproximado: $_______ USD
+• Tipo de negocio: _______________
+• Fecha límite: _______________
+• Teléfono para contacto: _____________
 
 ⏰ Válido hasta: ${expirationDate}
-👥 Primeros 10 clientes
 
-¿Podrías darme más información?`;
+¿Podrían enviarme más información y disponibilidad para una llamada?
+
+Gracias!`;
 
         return encodeURIComponent(baseMessage);
     };

@@ -232,7 +232,7 @@ Nuestro equipo puede ayudarte a convertir este conocimiento en resultados tangib
                                     <button
                                         onClick={() => {
                                             const message = encodeURIComponent('Hola, me interesa implementar los conocimientos de los artículos en un proyecto. ¿Podrían ayudarme?');
-                                            window.open(`https://wa.me/56950225491?text=${message}`, '_blank');
+                                            window.open(`https://wa.me/50672904200?text=${message}`, '_blank');
                                         }}
                                         className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center gap-2 text-sm sm:text-base w-full sm:w-auto justify-center"
                                     >

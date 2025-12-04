@@ -15,7 +15,7 @@ export function createLeadMagnetEmailTemplate(data: EmailTemplateData): string {
     email,
     phone,
     pdfName = 'Checklist-25-Puntos-Web-Que-Vende.pdf',
-    whatsappNumber = '+56950225491',
+    whatsappNumber = '+50672904200',
     siteUrl = 'https://codigofacil.com'
   } = data;
 
@@ -603,7 +603,7 @@ export function createLeadMagnetEmailTemplate(data: EmailTemplateData): string {
 export function createFollowUpEmailTemplate(data: EmailTemplateData): string {
   const {
     name,
-    whatsappNumber = '+56950225491',
+    whatsappNumber = '+50672904200',
     siteUrl = 'https://codigofacil.com'
   } = data;
 

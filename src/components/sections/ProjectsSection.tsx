@@ -502,7 +502,7 @@ export default function ProjectsSection() {
                             </span>
                         </p>
                         <button 
-                            onClick={() => window.open('https://wa.me/56950225491?text=Hola,%20estoy%20interesado%20en%20desarrollar%20un%20proyecto%20similar%20a%20los%20que%20vi%20en%20su%20portfolio.%20%C2%BFPodemos%20conversar?', '_blank')}
+                            onClick={() => window.open('https://wa.me/50672904200?text=Hola,%20estoy%20interesado%20en%20desarrollar%20un%20proyecto%20similar%20a%20los%20que%20vi%20en%20su%20portfolio.%20%C2%BFPodemos%20conversar?', '_blank')}
                             className="group relative px-10 py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-bold text-lg rounded-2xl shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300 overflow-hidden"
                         >
                             <span className="relative z-10 flex items-center gap-3">

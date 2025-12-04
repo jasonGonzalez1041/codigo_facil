@@ -163,7 +163,7 @@ Nuestro equipo puede ayudarte a implementar estas estrategias específicamente p
                   Convierte este conocimiento en resultados reales para tu negocio
                 </p>
                 <a
-                  href={`https://wa.me/56950225491?text=${encodeURIComponent(
+                  href={`https://wa.me/50672904200?text=${encodeURIComponent(
                     `¡Hola! He leído la guía "${post.title}" y me interesa implementar estas estrategias. ¿Podrían ayudarme?`
                   )}`}
                   target="_blank"

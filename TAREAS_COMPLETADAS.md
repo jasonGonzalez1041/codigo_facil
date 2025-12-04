@@ -48,7 +48,7 @@ NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=real_template_id
 - Assets SEO (favicon, og-image)
 - Sitemap y robots.txt dinámicos
 - Estructura de variables de entorno clara
-- WhatsApp integration (+56950225491)
+- WhatsApp integration (+50672904200)
 
 ### ⚠️ **Requiere Configuración Externa**
 - Google Analytics tracking

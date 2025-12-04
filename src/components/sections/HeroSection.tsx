@@ -225,7 +225,7 @@ export default function HeroSection() {
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <button
-                onClick={() => window.open('https://wa.me/50686462423?text=Hola,%20estoy%20interesado%20en%20sus%20servicios%20de%20desarrollo%20web', '_blank')}
+                onClick={() => window.open('https://wa.me/50672904200?text=🚀%20Hola!%20Vi%20su%20página%20web%20y%20estoy%20interesado%20en%20desarrollo%20web%20profesional.%20¿Pueden%20ayudarme%20con%20mi%20proyecto?%20Presupuesto:%20$___USD', '_blank')}
                 className="group relative px-8 py-4 text-lg font-bold text-white rounded-xl overflow-hidden transition-all duration-500 transform hover:scale-110 hover:rotate-1"
                 style={{
                   background: 'linear-gradient(45deg, #25D366, #128C7E, #25D366, #128C7E)',

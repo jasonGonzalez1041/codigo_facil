@@ -231,7 +231,7 @@ export default function GraciasPage() {
             </div>
 
             <a
-              href={`https://wa.me/56950225491?text=${whatsappMessage}`}
+              href={`https://wa.me/50672904200?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl inline-block text-center"
